@@ -32,6 +32,7 @@ Example:
 ```
 stow neovim
 ```
+you can now see that `init.vim`´ points to `.config/nvim/init.vim -> ../../.dotfiles/neovim/.config/nvim/init.vim`
 and stow wil automaticly create symblinks to `~/.config/nvim/init.vim`, in order to uninstall the dotfiles again you can simply have to run:
 ```
 stow -Dv <conf>
