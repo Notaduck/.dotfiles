@@ -1,0 +1,63 @@
+
+!                         Color settings
+!-----------------------------------------------------------------------
+!-----------------------------------------------------------------------
+
+#include ".xrdb/color/PaperColour.fork"
+#include ".xrdb/rofi/PaperColour.fork"
+!#include ".xrdb/color/base16/base16-ocean-256.Xresources"
+
+!-----------------------------------------------------------------------
+!                         Xft settings
+!-----------------------------------------------------------------------
+
+Xft.dpi:                96
+Xft.autohint:           0
+Xft.antialias:          true
+Xft.rgba:               rgb
+Xft.hinting:            true
+Xft.lcdfilter:          lcddefault
+Xft.hintstyle:          hintsfull
+URxvt.font: 9x15
+!-----------------------------------------------------------------------
+!                        URxvt settings
+!-----------------------------------------------------------------------
+
+
+URxvt.internalBorder:    15
+URxvt.externalBorder:    15
+!URxvt.lineSpace:        0
+!urxvt*shading:          30
+URxvt.depth:             32
+URxvt.saveLines:         10000
+URxvt*geometry:          96x30
+URxvt*terminalName:      rxvt-unicode-256color
+URxvt*visualBell:        false
+URxvt.letterSpace: 0
+
+
+!! Scrollbar
+!URxvt.scrollStyle:      rxvt
+URxvt.scrollBar:         false
+URxvt*scrollTtyOutput:   false
+URxvt*scrollWithBuffer:  true
+URxvt*scrollTtyKeypress: true
+
+!! CopyPaste Keys
+URxvt.keysym.Shift-Control-V:           perl:clipboard:paste
+URxvt.keysym.Shift-Control-C:           perl:clipboard:copy
+
+!! Disable the stupid ctrl+shift 'feature'
+URxvt.iso14755:                         false
+URxvt.iso14755_52:                      false
+
+URxvt.perl-ext: zoom
+URxvt.keysym.C-equal: perl:zoom:in
+URxvt.keysym.C-minus: perl:zoom:out
+
+URxvt.perl-ext-common:  ...,font-size
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
+
