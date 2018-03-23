@@ -44,8 +44,8 @@ colors() {
 alias itu="cd ~/Nextcloud/Skole/ITU/2.\ Semester"
 
 # Default text editor
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='nvim'
+export VISUAL='nvim'
 
 # ITU Stuff
 export PATH=$PATH:$HOME/algs4/bin

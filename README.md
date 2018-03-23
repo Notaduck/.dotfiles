@@ -8,6 +8,14 @@
                                                              
 ### Description
 
+> - Browser == `vivaldi` 
+- Compositor == `compton`
+- Network manager == `networkmanager_dmenu` 
+- Pdf viewer == `zathura`
+- Program launcher == `rofi` 
+- Terminal == `termite` 
+- Text editor == `neovim`
+- Window manager == `i3wm`
 ### Installation
 
 The dotfiles are managed with stow and are thefore dead simple to install and uninstall again.  

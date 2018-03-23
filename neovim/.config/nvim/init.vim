@@ -15,7 +15,7 @@ Plug 'w0rp/ale'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'airblade/vim-gitgutter'
 Plug 'JamshedVesuna/vim-markdown-preview' 
-
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -23,6 +23,7 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
 " Initialize plugin system
 call plug#end()
 
@@ -137,3 +138,7 @@ let g:move_key_modifier = 'A'
 "nnoremap <leader>ap :ALEPreviousWrap<cr>
 let vim_markdown_preview_toggle=2
 let vim_markdown_preview_github=1
+
+
+
+let g:livepreview_previewer = 'zathura'
