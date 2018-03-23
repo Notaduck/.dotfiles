@@ -1,4 +1,4 @@
-> 
+ 
 ```  
 ██████╗  ██████╗ ████████╗███████╗██╗██╗     ███████╗███████╗  
 ██╔══██╗██╔═══██╗╚══██╔══╝██╔════╝██║██║     ██╔════╝██╔════╝  
@@ -11,13 +11,14 @@
 ### Description
 
 > - Browser == `vivaldi` 
-- Compositor == `compton`
-- Network manager == `networkmanager_dmenu` 
-- Pdf viewer == `zathura`
-- Program launcher == `rofi` 
-- Terminal == `termite` 
-- Text editor == `neovim`
-- Window manager == `i3wm`
+> - Compositor == `compton`
+> - Network manager == `networkmanager_dmenu` 
+> - Pdf viewer == `zathura`
+> - Program launcher == `rofi` 
+> - Terminal == `termite` 
+> - Text editor == `neovim`
+> - Window manager == `i3wm`  
+
 
 ### Installation
 

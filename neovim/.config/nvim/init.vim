@@ -16,6 +16,8 @@ Plug 'artur-shaik/vim-javacomplete2'
 Plug 'airblade/vim-gitgutter'
 Plug 'JamshedVesuna/vim-markdown-preview' 
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'donRaphaco/neotex', { 'for': 'tex' }
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -142,3 +144,7 @@ let vim_markdown_preview_github=1
 
 
 let g:livepreview_previewer = 'zathura'
+
+let g:neotex_enabled = 1
+let g:neotex_delay = 1000
+let g:tex_flavor = 'latex'
