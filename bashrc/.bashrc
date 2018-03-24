@@ -52,3 +52,11 @@ export PATH=$PATH:$HOME/algs4/bin
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# Function to get the current git banch
+git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+export PS1="\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$(git_branch)\[\033[66m\]\$ \[\033[00m\]" 
+
+
