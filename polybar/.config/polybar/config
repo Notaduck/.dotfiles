@@ -234,6 +234,8 @@ type = internal/cpu
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
+
+label-underline = ${colors.cyan} 
 label =  %percentage%%
 
 ;**********************************************************
@@ -263,7 +265,7 @@ format-disconnected =
 ;format-disconnected = <label-disconnected>
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
-
+label-focused-underline = ${colors.yellow} 
 ramp-signal-0 = 
 ramp-signal-1 = 
 ramp-signal-2 = 
@@ -297,11 +299,13 @@ interval = 3.0
 format-connected = <label-connected>
 format-connected-prefix = " "
 format-connected-prefix-foreground = #5b
-
+format-connected-underline = ${colors.green} 
 ;format-connected-underline = #9f78e1
 ;
 ;format-disconnected-underline = ${self.format-connected-underline}
 
+label-connected-underline = ${colors.green} 
+label-disconnected-underline = ${colors.red} 
 label-connected = "%{A1:connman-gtk &:}%essid%%{A}"
 label-disconnected = "%{A1:connman-gtk &:}%{A}"
 label-disconnected-foreground = #5b
@@ -380,6 +384,7 @@ time-alt = %H:%M:%S
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
 
+label-focused-underline = ${colors.yellow} 
 label =  %time% %date%
 
 
@@ -391,8 +396,12 @@ label =  %time% %date%
 type = internal/volume
 
 format-volume = <label-volume> <bar-volume>
-label-volume = ""
+format-volume-underline = ${colors.yellow}
+label-volume = "    " 
+
 label-volume-foreground = ${root.foreground}
+label-volume-underline = ${colors.yellow} 
+
 
 format-muted-prefix = " "
 format-muted-foreground = ${colors.foreground-alt}
@@ -427,9 +436,9 @@ adapter = AC
 full-at = 98
 
 format-charging = <animation-charging> <label-charging>
-
 format-discharging = <ramp-capacity> <label-discharging>
 
+format-discharging-underline = ${colors.magenta} 
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground}
@@ -454,6 +463,7 @@ warn-temperature = 60
 format = <ramp> <label>
 format-warn = <ramp> <label-warn>
 
+label-underline = ${colors.blue} 
 label =  %temperature%
 label-warn = %temperature%
 label-warn-foreground = ${colors.alarm}
@@ -504,9 +514,10 @@ mount-0 = /
 ;mount-1 = /home
 ;mount-2 = /invalid/mountpoint
 
+label-mounted-underline = ${colors.red} 
 label-mounted =  %free%
-label-unmounted = %mountpoint%: not mounted
-label-unmounted-foreground = ${colors.foreground-alt}
+;label-unmounted = %mountpoint%: not mounted
+;label-unmounted-foreground = ${colors.foreground-alt}
 
 ;**********************************************************
 ;
