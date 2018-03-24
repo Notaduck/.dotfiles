@@ -2,7 +2,7 @@
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
 
-# set background with polybar_refresh
+
 exec_always feh --no-xinerama --bg-scale --randomize ~/.i3/wallpaper/*
 exec --no-startup-id VBoxClient-all
 # Autostart
@@ -136,7 +136,6 @@ bindsym $mod+minus scratchpad show
 #                    Workspace settings                  #
 ##########################################################
 
-
 # Workspace names
 
 # switch to workspace
@@ -150,7 +149,6 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 
-
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
@@ -162,12 +160,9 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 
-
 #navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
-
-
 
 # Open applications on specific workspaces
 assign [class="pycharm"] "3"
@@ -178,8 +173,6 @@ assign [class="slack"] "4"
 
 # Open specific applications in floating mode
 for_window [title="virtualbox"] floating enable
-for_window [title="alsamixer"] floating enable border pixel 1
-for_window [class="Clipgrab"] floating enable
 for_window [title="File Transfer*"] floating enable
 for_window [class="GParted"] floating enable border normal
 for_window [title="i3_help"] floating enable sticky enable border normal
@@ -187,9 +180,7 @@ for_window [class="Lightdm-gtk-greeter-settings"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
 for_window [class="Manjaro Settings Manager"] floating enable border normal
 for_window [class="Manjaro Welcome"] floating enable
-for_window [class="Oblogout"] fullscreen enable
 for_window [class="Pavucontrol"] floating enable
-for_window [class="(?i)System-config-printer.py"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 
 # switch to workspace with urgent window automatically

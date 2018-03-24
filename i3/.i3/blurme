@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Found at https://github.com/ganifladi/blurme
 # Error Prevention: Multiple Instances ----------------------------------
 
 if [[ $(pgrep -cl blurme) > 1 ]]; then
