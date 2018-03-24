@@ -20,24 +20,10 @@ cursor_shape = block
 # Hide links that are no longer valid in url select overlay mode
 filter_unmatched_urls = true
 
-# emit escape sequences for extra modified keys
-#modify_other_keys = false
-
-[hints]
-#font = Monospace 12
-#foreground = #dcdccc
-#background = #3f3f3f
-#active_foreground = #e68080
-#active_background = #3f3f3f
-#padding = 2
-#border = #3f3f3f
-#border_width = 0.5
-#roundness = 2.0
-
 # nvim: ft=dosini cms=#%s
 
 [colors]
-
+# PaperColor.fork
 foreground      = rgb(77,77,76)
 foreground_bold = rgb(77,77,76)
 cursor          = rgb(77,77,76)
