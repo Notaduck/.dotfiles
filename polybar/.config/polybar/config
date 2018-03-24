@@ -7,14 +7,9 @@
 ;
 ;=====================================================
 
-
 ;=====================================================
-;
 ;                       COLORS
-;
 ;=====================================================
-
-
 [colors]
 
 primary = #ffb52a
@@ -42,11 +37,10 @@ cyan        =  ${xrdb:color6:#555}
 cyan-alt    =  ${xrdb:color14:#555}
 white       =  ${xrdb:color7:#555}
 white-alt   =  ${xrdb:color15:#555}
+temp        =  #222E50
 
 ;=====================================================
-;
 ;                       MAINBAR
-;
 ;=====================================================
 
 [bar/main]
@@ -275,7 +269,7 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = enp2s0f1
+interface =  enp62s0u1u2
 interval = 3.0
 
 format-connected-prefix =
@@ -396,11 +390,11 @@ label =  %time% %date%
 type = internal/volume
 
 format-volume = <label-volume> <bar-volume>
-format-volume-underline = ${colors.yellow}
+format-volume-underline = ${colors.temp}
 label-volume = "    " 
 
 label-volume-foreground = ${root.foreground}
-label-volume-underline = ${colors.yellow} 
+label-volume-underline = ${colors.temp} 
 
 
 format-muted-prefix = " "
@@ -439,6 +433,7 @@ format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 
 format-discharging-underline = ${colors.magenta} 
+format-chargin-underline = ${colors.magenta} 
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground}

@@ -58,7 +58,7 @@ syntax on "Enable syntax
 set number "Set line number
 set guicursor= "cursor us always a bloc
 filetype plugin indent on  
-
+set autowriteall ""automatically save any changes made to the buffer before it is hidden.
 " use 4 spaces for tabs
 set tabstop=4 softtabstop=4 shiftwidth=4
 
