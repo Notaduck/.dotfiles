@@ -1,3 +1,12 @@
+
+███╗   ██╗██╗   ██╗██╗███╗   ███╗
+████╗  ██║██║   ██║██║████╗ ████║
+██╔██╗ ██║██║   ██║██║██╔████╔██║
+██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║
+██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║
+╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
+                                 
+" Plugin section {{{
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -15,7 +24,7 @@ Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'NLKNguyen/papercolor-theme'
-
+Plug 'PotatoesMaster/i3-vim-syntax'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -27,10 +36,10 @@ endif
 " Initialize plugin system
 call plug#end()
 
+"}}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                       COLORSCHEME                           "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colours and UI {{{
+
 " PaperColor
 let g:PaperColor_Theme_Options = {
   \   'theme': {
@@ -48,10 +57,29 @@ colorscheme PaperColor
 set background=light
 set termguicolors
 
+" NerdTree {{{
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                       BASIC SETTINGS                        "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Open NERDTree when no file(s) is selectedd
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" close vim if the only window left open is a NERDTree
+map <C-n> :NERDTreeToggle<CR> " Open NERDTree with Ctrl+n
+
+"}}}
+
+" Airline {{{ 
+
+let g:airline_theme='papercolor'
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#enabled = 1
+" Enable ALE for airline 
+let g:airline#extensions#ale#enabled = 1
+" }}}
+"}}}
+
+" General settings {{{
+
 set clipboard=unnamed " Let vim use the systems clipboard
 set mouse=a "Enable mouse support
 syntax on "Enable syntax
@@ -70,21 +98,30 @@ autocmd! bufwritepre * set expandtab | retab! 4
 
 " convert spaces to tabs after writing file (to show guides again)
 autocmd! bufwritepost * set noexpandtab | retab! 4i
+"" Code Folding
+"" space open/closes folds
+nnoremap <space> za
+    set foldmethod=marker
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                   JAVACOMPLETE SETTING                      "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set omnifunc=syntaxcomplete#Complete
-let g:JavaComplete_LibsPath = "/home/daniel/.java/algs4.jar"
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+" Settings for variopus plugins {{{
 
 " Keeps nvim snappy (disable gitgutter if a file has more than n changes)
 let g:gitgutter_max_signs = 500  " default value
 
+" Use Alt+j/k to easily move a line
+let g:move_key_modifier = 'A' 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                       DEOPLETE SETTINGS                     "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" JavaCoplete {{{
+
+set omnifunc=syntaxcomplete#Complete
+let g:JavaComplete_LibsPath = "/home/daniel/.java/algs4.jar"
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" }}}
+
+" Deoplete {{{
+
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#omni_patterns = {}
@@ -97,18 +134,10 @@ let g:deoplete#file#enable_buffer_path = 1
 " Deoplete tab-completion
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                       AIRLINE SETTINGS                      "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:airline_theme='papercolor'
-let g:airline#extensions#tabline#formatter = 'default'
-let g:airline#extensions#tabline#enabled = 1
-" Enable ALE for airline 
-let g:airline#extensions#ale#enabled = 1
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                       ALE SETTINGS                      "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ALE {{{
+
 "highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
 "highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
 "let g:ale_sign_error = '>' " could use emoji
@@ -121,37 +150,25 @@ let g:airline#extensions#ale#enabled = 1
 "nnoremap <leader>an :ALENextWrap<cr>
 "nnoremap <leader>ap :ALEPreviousWrap<cr>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                       NERDTREE SETTINGS                     "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Open NERDTree when no file(s) is selectedd
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" }}}
 
-" close vim if the only window left open is a NERDTree
-map <C-n> :NERDTreeToggle<CR> " Open NERDTree with Ctrl+n
+" Autor Par{{{
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                       AUTOPAIR SETTINGS                     "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Auto close brackets, quotes ect.
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutBackInsert = '<M-b>'
 
-" Autoformat .js on save
-autocmd FileType javascript set formatprg=prettier\ --stdin
+"}}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""
-"   Use Alt+j/k to easily move a line         "
-"""""""""""""""""""""""""""""""""""""""""""""""
-let g:move_key_modifier = 'A'
+" Latex-live-preview {{{
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"               LATEX-LIVE-PREVIEW SETTINGS                   "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:livepreview_previewer = 'zathura'
 let g:livepreview_engine = 'pdflatex'
 
+"}}}
+
+
+
+"}}}
 
 
 
