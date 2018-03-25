@@ -1,11 +1,11 @@
 
-███╗   ██╗██╗   ██╗██╗███╗   ███╗
-████╗  ██║██║   ██║██║████╗ ████║
-██╔██╗ ██║██║   ██║██║██╔████╔██║
-██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║
-██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║
-╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
-                                 
+"███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+"████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+"██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+"██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+"██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+"╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
+                                                  
 " Plugin section {{{
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
@@ -25,6 +25,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -80,7 +83,7 @@ let g:airline#extensions#ale#enabled = 1
 
 " General settings {{{
 
-set clipboard=unnamed " Let vim use the systems clipboard
+set clipboard=unnamedplus " Let vim use the systems clipboard
 set mouse=a "Enable mouse support
 syntax on "Enable syntax
 set number "Set line number
@@ -102,9 +105,10 @@ autocmd! bufwritepost * set noexpandtab | retab! 4i
 "" space open/closes folds
 nnoremap <space> za
     set foldmethod=marker
-" }}}
 
-" Settings for variopus plugins {{{
+    " }}}
+    
+" Se ttings for variopus plugins {{{
 
 " Keeps nvim snappy (disable gitgutter if a file has more than n changes)
 let g:gitgutter_max_signs = 500  " default value
@@ -112,15 +116,27 @@ let g:gitgutter_max_signs = 500  " default value
 " Use Alt+j/k to easily move a line
 let g:move_key_modifier = 'A' 
 
+ " UtilSnips {{{
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<a-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+    " }}}
+
 " JavaCoplete {{{
 
 set omnifunc=syntaxcomplete#Complete
 let g:JavaComplete_LibsPath = "/home/daniel/.java/algs4.jar"
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
-" }}}
+    " }}}
 
-" Deoplete {{{
+" De oVplete {{{
 
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_at_startup = 1
@@ -130,11 +146,11 @@ let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
 let g:deoplete#sources = {}
 let g:deoplete#sources._ = []
 let g:deoplete#file#enable_buffer_path = 1
-
+call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
 " Deoplete tab-completion
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
-" }}}
+    " }}}
 
 " ALE {{{
 
@@ -150,23 +166,21 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 "nnoremap <leader>an :ALENextWrap<cr>
 "nnoremap <leader>ap :ALEPreviousWrap<cr>
 
-" }}}
+    " }}}
 
-" Autor Par{{{
+" Au tor Par{{{
 
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutBackInsert = '<M-b>'
 
-"}}}
+    "}}}
 
-" Latex-live-preview {{{
+" La tex-live-preview {{{
 
 let g:livepreview_previewer = 'zathura'
 let g:livepreview_engine = 'pdflatex'
 
-"}}}
-
-
+    "}}}
 
 "}}}
 
