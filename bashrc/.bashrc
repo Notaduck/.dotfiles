@@ -43,6 +43,10 @@ colors() {
 # alias aliasname='commands'
 alias itu="cd ~/Nextcloud/Skole/ITU/2.\ Semester"
 
+# `cclip' copies and `clipp' pastes'
+alias cclip='xclip -selection clipboard'
+alias clipp='xclip -selection clipboard -o'
+
 # Default text editor
 export EDITOR='nvim'
 export VISUAL='nvim'
