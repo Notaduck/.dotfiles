@@ -50,7 +50,6 @@ endif
 
 call plug#begin('~/config/nvim/plugged')
 
-
 Plug 'scrooloose/nerdtree'
 Plug 'jiangmiao/auto-pairs'
 Plug 'vim-airline/vim-airline'
