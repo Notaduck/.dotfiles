@@ -17,6 +17,8 @@ exec_always --no-startup-id compton --config ~/.config/compton.conf
 
 # start Polybar
 exec --no-startup-id polybar_refresh
+bindsym $mod+m exec --no-startup-id ~/.dotfiles/polybar/.config/polybar/autohide.sh 
+
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
 new_window none 
@@ -289,7 +291,7 @@ set $col7 #528588
 #}
 
 # hide/unhide i3status bar
-bindsym $mod+m bar mode toggle
+#bindsym $mod+m bar mode toggle
 
 # Theme colors
 # class                 border  backgr. text    indic.  child_border
