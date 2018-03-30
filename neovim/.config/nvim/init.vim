@@ -9,23 +9,37 @@
  " Plugin dependencies {{{
 
 " Installs Plug if it isn't allready installed
+
 if has('vim_starting')
     set runtimepath+=~/.config/nvim/plugged/vim-plug
     if !isdirectory(expand('$NVIM_HOME') . '/plugged/vim-plug')
         call system('mkdir -p ~/.config/nvim/plugged/vim-plug')
         call system('git clone https://github.com/junegunn/vim-plug.git ~/.config/nvim/plugged/vim-plug/autoload')
+"       echo system('"Installing vim-plug"')
     end
 endif
 
 if !has('python') && !has('pip')
     call system('pip install --upgrade pip')
     call system('pip install neovim --upgrade')
+    "echo system('Installing upgrade pip and install neovim')
 endif
 
 if !has('python3') && !has('pip3')
     call system('pip3 install --upgrade pip')
     call system('pip3 install neovim --upgrade')
+    "echo system('Installing upgrade pip3 and install neovim')
 endif
+
+"if !has('npm')
+"   call system('sudo pacman -S nodejs npm')
+    "echo system('installing nodejs and npm')
+"endif
+
+"if !has('eslint')
+"   call system('sudo npm install -g eslint')
+    "echo system('installing eslint')
+"endif
 
 let g:python_host_skip_check = 1
 let g:python2_host_skip_check = 1
