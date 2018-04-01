@@ -65,6 +65,7 @@ endif
 call plug#begin('~/config/nvim/plugged')
 
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'jiangmiao/auto-pairs'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -83,7 +84,10 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'SirVer/ultisnips'
 Plug 'zchee/deoplete-jedi', {'for': ['python', 'python3','djangohtml'], 'do': 'pip install jedi;pip3 install jedi'}
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
-
+Plug 'wokalski/autocomplete-flow' " deplete src for js
+  " For func argument completion
+  "Plug 'Shougo/neosnippet'
+  "Plug 'Shougo/neosnippet-snippets'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -124,6 +128,9 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " close vim if the only window left open is a NERDTree
 map <C-n> :NERDTreeToggle<CR> " Open NERDTree with Ctrl+n
+
+" Quit nertree when a file is opened.
+let NERDTreeQuitOnOpen = 1
 
 "}}}
 
@@ -185,7 +192,7 @@ let g:move_key_modifier = 'A'
 
  " UtilSnips {{{
 
-let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']
+let g:UltiSnipsSnippetDirectories = ['/home/daniel/.vim/UltiSnips', 'UltiSnips']
 
  " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 
