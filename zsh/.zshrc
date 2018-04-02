@@ -91,5 +91,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="vim ~/.zshrc"
+alias zshconfig="nvim ~/.zshrc"
+alias zshupdate="source ~/.zshrc"
+alias itu='~/Nextcloud/Skole/ITU/2.\ Semester'
 # alias ohmyzsh="mate ~/.oh-my-zsh"

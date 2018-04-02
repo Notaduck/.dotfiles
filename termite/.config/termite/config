@@ -4,7 +4,8 @@ scroll_on_keystroke = true #  Scroll to the bottom if you push some key
 mouse_autohide = false
 allow_bold = true
 clickable_url = true
-font = Dejavu Sans Mono 11 
+#font = Dejavu Sans Mono 11 
+font = Office Code Pro D medium 11 
 scrollback_lines = 10000
 search_wrap = true
 

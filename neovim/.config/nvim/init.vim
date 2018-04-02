@@ -208,12 +208,12 @@ let g:UltiSnipsEditSplit="vertical"
 " JavaComplete {{{
 
 set omnifunc=syntaxcomplete#Complete
-let g:JavaComplete_LibsPath = "/home/daniel/.java/algs4.jar"
+let g:JavaComplete_LibsPath = "/home/daniel/java/algs4.jar"
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 
-    " }}}
+    " }}} 
 
 " Deoplete {{{
 
@@ -238,12 +238,14 @@ let g:ale_enable = 1
 let g:ale_completion_enabled = 1
 let g:ale_sign_column_always = 1 " Keeps the error column open
 
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
+let g:ale_sign_error = '=>'
+let g:ale_sign_warning = '>?'
 
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+
 
 " Deoplete Python
 AutocmdFT python let g:deoplete#sources#jedi#enable_cache = 1
@@ -253,6 +255,8 @@ AutocmdFT python let g:deoplete#sources#jedi#show_docstring = 1
 AutocmdFT python let g:deoplete#sources#jedi#worker_threads = 4
 AutocmdFT python call deoplete#custom#set('jedi', 'disabled_syntaxes', ['Comment'])
 AutocmdFT python call deoplete#custom#set('jedi', 'matchers', ['matcher_fuzzy'])
+
+
 
 let g:ale_linters = {
         \   'javascript': ['eslint_d'],
