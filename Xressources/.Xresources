@@ -3,7 +3,7 @@
 !-----------------------------------------------------------------------
 !-----------------------------------------------------------------------
 
-#include ".xrdb/color/PaperColour.fork"
+#include ".xrdb/Xres/PaperColour.fork"
 #include ".xrdb/rofi/PaperColour.fork"
 !#include ".xrdb/color/base16/base16-ocean-256.Xresources"
 

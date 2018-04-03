@@ -63,7 +63,9 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 
 call plug#begin('~/config/nvim/plugged')
-
+Plug 'jceb/vim-orgmode'
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-speeddating'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'jiangmiao/auto-pairs'
