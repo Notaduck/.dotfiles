@@ -52,3 +52,7 @@ stow -Dv <conf-dir>
 where the `D` stands for delete and `v` is to increase the verbosity level, which you can change whitin an range from [0,1,2,3,4]
 ### Screenshots
 
+![alt text](https://i.imgur.com/CMjN0CF.jpg "Clean")
+![alt text](https://i.imgur.com/sLYPCZQ.jpg "Zathura and ")
+![alt text](https://i.imgur.com/cA3L5dw.jpg "Stow dir and neofetch")
+![alt text](https://i.imgur.com/4p3Ikoj.jpg "Dotfiles and nvim conf")
