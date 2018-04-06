@@ -153,7 +153,6 @@ set clipboard=unnamedplus " Let vim use the systems clipboard
 set mouse=a "Enable mouse support
 syntax on "Enable syntax
 set number "Set line number
-set guicursor= "cursor us always a bloc
 filetype plugin indent on  
 set autowriteall ""automatically save any changes made to the buffer before it is hidden.
 " use 4 spaces for tabs
@@ -226,6 +225,8 @@ let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
 let g:deoplete#sources = {}
 let g:deoplete#sources._ = []
 let g:deoplete#file#enable_buffer_path = 1
+" Binary path to your flow, defaults to your $PATH flow 
+let g:deoplete#sources#flow#flow_bin = 'flow' 
 call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
 call deoplete#custom#set('_', 'sorters', ['sorter_word'])
 call deoplete#custom#set('ultisnips', 'rank', 9999)
@@ -247,8 +248,6 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-
-
 " Deoplete Python
 AutocmdFT python let g:deoplete#sources#jedi#enable_cache = 1
 AutocmdFT python let g:deoplete#sources#jedi#statement_length = 0
@@ -258,10 +257,12 @@ AutocmdFT python let g:deoplete#sources#jedi#worker_threads = 4
 AutocmdFT python call deoplete#custom#set('jedi', 'disabled_syntaxes', ['Comment'])
 AutocmdFT python call deoplete#custom#set('jedi', 'matchers', ['matcher_fuzzy'])
 
-
+"let g:ale_java_javac_classpath = [String], to load aditional classes
+let g:ale_java_javac_classpath = "/home/daniel/java/algs4.jar"
 
 let g:ale_linters = {
-        \   'javascript': ['eslint_d'],
+        \   'javascript': ['eslint'],
+        \   'java': ['javac','javac-algs4'],
         \   'php': ['php', 'phpcs', 'phpmd'],
         \   'go': ['go build', 'gometalinter'],
         \   'rust': ['rustc'],
@@ -276,6 +277,7 @@ let g:ale_linters = {
         \   'zsh': ['zsh'],
         \   'swift': ['swiftc'],
         \}
+
 let g:ale_fixers = {
         \   'javascript': ['eslint'],
         \   'java': ['google_java_format']
