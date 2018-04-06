@@ -18,6 +18,7 @@
 > - Terminal == `termite` 
 > - Text editor == `neovim`
 > - Window manager == `i3wm`  
+> - Shell == ZSH
 
 
 ### Installation
