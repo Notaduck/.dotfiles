@@ -91,7 +91,16 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="nvim ~/.zshrc"
+alias zshconf="nvim ~/.zshrc"
 alias zshupdate="source ~/.zshrc"
 alias itu='~/Nextcloud/Skole/ITU/2.\ Semester'
+
+# `cclip' copies and `clipp' pastes'
+alias cclip='xclip -selection clipboard'
+alias clipp='xclip -selection clipboard -o'
+
+# `cclip' copies and `clipp' pastes'
+alias cclip='xclip -selection clipboard'
+alias clipp='xclip -selection clipboard -o'
+
 # alias ohmyzsh="mate ~/.oh-my-zsh"
