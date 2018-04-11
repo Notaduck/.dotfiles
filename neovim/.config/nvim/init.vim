@@ -63,6 +63,8 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 
 call plug#begin('~/config/nvim/plugged')
+Plug 'gregsexton/MatchTag'
+Plug 'vim-latex/vim-latex'
 Plug 'jceb/vim-orgmode'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-speeddating'
@@ -293,9 +295,11 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " Latex-live-preview {{{
 
+autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'zathura'
 let g:livepreview_engine = 'pdflatex'
 
+let g:tex_flavor = "latex"
     "}}}
 
 "}}}
