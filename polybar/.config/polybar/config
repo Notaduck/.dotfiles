@@ -79,7 +79,8 @@ font-4 = Office Code Pro D medium 9
 
 modules-left = i3
 modules-center = date github github-itu
-modules-right = filesystem cpu temperature battery wifi vpncheck volume
+
+modules-right = filesystem cpu temperature battery wifi vpncheck keyboard volume
 
 ;tray-position = right
 ;tray-padding = 8
@@ -207,6 +208,21 @@ bar-empty-foreground = ${colors.foreground-alt}
 inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
+
+;**********************************************************
+;                       KEYBOARD
+;**********************************************************
+
+[module/keyboard]
+type = internal/xkeyboard
+
+label-layout =   %layout%
+label-underline = ${colors.cyan} 
+
+; List of indicators to ignore
+blacklist-0 = num lock
+blacklist-1 = scroll lock
+
 ;*********************************************************
 ;                       usb
 ;*********************************************************
