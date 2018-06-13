@@ -1,46 +1,54 @@
 # i3 config file (v4)
+
+###################################################
+#                   Variables                     #
+###################################################
+# set terminal
+set $term --no-startup-id termite 
+
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
 
+###################################################
+#                   Startup settings              #
+###################################################
 
-exec_always feh --no-xinerama --bg-scale --randomize ~/.i3/wallpaper/*
-exec --no-startup-id VBoxClient-all
 # Autostart
-exec --no-startup-ip ~/home/daniel/.i3/blurme -t 0.001 &
+exec --no-startup-id VBoxClient-all
 exec --no-startup-id nextcloud
 exec --no-startup-id slack
 exec --no-startup-id libinput-gestures
 exec --no-startup-id unclutter -keystroke -idle 15
-exec_always --no-startup-id compton --config ~/.config/compton.conf
-# set default desktop layout (default is tiling)
-# workspace_layout tabbed <stacking|tabbed>
+exec --no-startup-id pulseaudio
+exec --no-startup-id pa-applet
 
-# start Polybar
-exec --no-startup-id polybar_refresh
+# Toggle keyboard layout with Alt+shift
+exec --no-startup-id setxkbmap -layout dk,us
+exec --no-startup-id setxkbmap -option 'grp:alt_shift_toggle'
+
+# Autostart everytime i3 reloads
+exec_always feh --no-xinerama --bg-scale --randomize ~/.i3/wallpaper/*
+exec_always --no-startup-id compton --config ~/.config/compton.conf
+exec_always --no-startup-id polybar_refresh
+
+###################################################
+#                   Bindings                      #
+###################################################
+
+
+# Autohide polybar
 bindsym $mod+m exec --no-startup-id ~/.dotfiles/polybar/.config/polybar/autohide.sh 
 
+# Open lightscreen (screenshot tool)
+bindsym $mod+Shift+i exec --no-startup-id lightscreen
 
-# Configure border style <normal|1pixel|pixel xx|none|pixel>
-new_window none 
-new_float normal
-
-# Force java to be opened as float
-for_window [instance="sun-awt-X11-XFramePeer"] floating enable border normal 0
-for_window [instance="sun-awt-X11-XFramePeer, jetbrains-idea"] floating disabled border normal 0
-# Hide borders
-hide_edge_borders none
+# Open git terminal (scratchpad)
+bindsym $mod+g [instance="git"] scratchpad show; [instance="git"] move position center
 
 # change borders
 bindsym $mod+u border none
 bindsym $mod+y border pixel 1
 bindsym $mod+n border normal
-
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:Cantarell 10
-
-# Use Mouse+$mod to drag floating windows
-floating_modifier $mod
 
 # Move workspaces between monitor
 bindsym $mod+Tab exec i3-msg move workspace to output right
@@ -57,22 +65,11 @@ bindsym $mod+i exec --no-startup-id /usr/bin/networkmanager_dmenu -font "Noto sa
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
 
-################################################################################################
-## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
-################################################################################################
-
-####exec --no-startup-id volumeicon
-####bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-exec --no-startup-id pulseaudio
-exec --no-startup-id pa-applet
+# Open pulseaudio UI 
 bindsym $mod+Ctrl+m exec pavucontrol
 
-################################################################################################
-
-# Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
-bindsym $mod+Return exec termite 
+# Open $term emulator
+bindsym $mod+Return exec $term 
 
 # move workspace to right or left monitor output
 bindsym $mod+Alt+Left i3-msg move workspace to output left
@@ -92,7 +89,6 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # workspace back and forth (with/without active container)
-workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
@@ -129,8 +125,37 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
 
+###################################################
+#            Window/Workspace/Border settings     #
+###################################################
 
+# Force java to be opened as float
+for_window [instance="sun-awt-X11-XFramePeer"] floating enable border normal 0
+for_window [instance="sun-awt-X11-XFramePeer, jetbrains-idea"] floating disabled border normal 0
 
+# Configure border style <normal|1pixel|pixel xx|none|pixel>
+new_window none 
+new_float normal
+
+workspace_auto_back_and_forth yes
+###################################################
+#                   Scratchpad settings           #
+###################################################
+
+# Move git term to scratchpad, open it with mod+g
+for_window [instance="git"] floating enable
+for_window [instance="git"] resize set 800 600
+for_window [instance="git"] move scratchpad
+#for_window [instance="git"] border pixel 5
+exec --no-startup-id $term --name="git" 
+
+# SHOULD BE MOVED
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:Cantarell 10
+
+# Use Mouse+$mod to drag floating windows
+floating_modifier $mod
 
 
 
@@ -238,74 +263,16 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-
-
 # Autostart applications
 ## adjustment of i3bar battery reading (only run at the very first login):
-#exec --no-startup-id /usr/bin/adjust_i3statusconf
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec --no-startup-id nitrogen --restore; sleep 1; compton -b
-#exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
-#exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
-# exec --no-startup-id blueman
-# exec_always --no-startup-id sbxkb
 
 # exec --no-startup-id start_conky_green
 exec --no-startup-id xautolock -time 10 -locker blurlock
 
-#setup color
-#set $col1 #343C48
-set $col1 #363636
-set $col2 #4D4D4D
-set $col3 #E5E5E5
-#set $col3 #CCCCCC
-set $col4 #293E4C
-set $col5 #E38179
-set $col6 #363636
-set $col7 #528588
-
-# Start i3bar to display a workspace bar (plus the system information i3status if available)
-#bar {
-#   status_command i3status
-
-## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#   tray_output primary
-#   tray_output eDP1
-
-#   bindsym button4 nop
-#   bindsym button5 nop
-#   font pango:FontAwsome 10
-#   colors {
-#                background             $col1
-#                statusline             $col3
-#                active_workspace       $col4 $col4 $col3
-#                focused_workspace      $col4 $col4 $col3
-#                inactive_workspace     $col6 $col6 $col3
-#                urgent_workspace       $col7 $col7 $col3
-#
-#
-#   }
-    #position top
-#}
-
-# hide/unhide i3status bar
-#bindsym $mod+m bar mode toggle
-
-# Theme colors
-# class                 border  backgr. text    indic.  child_border
-#client.focused          $col2 $col2 $col3
-#client.focused          $col2 $col2 $col2
-#client.unfocused        $col6 $col6 $col6
-#client.focused_inactive $col1 $col1 $col3
-#client.urgent           $col1 $col1 $col3
-#
-#client.background       #2B2C2B
-
 #Set colors from Xresources
-# Change 'color7' and 'color2' to whatever colors you want i3 to use
-# from the generated scheme.
 # NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
 # it fails to get colors from Xresources for some reas
 set_from_resource $fg i3wm.color7 #7a7a7a
@@ -317,12 +284,6 @@ client.focused_inactive $bg     $bg     $fg  $bg       $bg
 client.unfocused        $bg     $bg     $fg  $bg       $bg
 client.urgent           $bg     $bg     $fg  $bg       $bg
 client.placeholder      $bg     $bg     $fg  $bg       $bg
-
-#client.background      $bg
-
-
-
-
 
 #############################
 ### settings for i3-gaps: ###
