@@ -4,7 +4,7 @@
 #                   Variables                     #
 ###################################################
 # set terminal
-set $term --no-startup-id termite 
+set $term --no-startup-id kitty 
 
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
@@ -14,13 +14,14 @@ set $mod Mod4
 ###################################################
 
 # Autostart
-exec --no-startup-id VBoxClient-all
+#exec --no-startup-id VBoxClient-all
 exec --no-startup-id nextcloud
 exec --no-startup-id slack
+exec --no-startup-id umonitor -n
 exec --no-startup-id libinput-gestures
 exec --no-startup-id unclutter -keystroke -idle 15
 exec --no-startup-id pulseaudio
-exec --no-startup-id pa-applet
+#exec --no-startup-id pa-applet
 
 # Toggle keyboard layout with Alt+shift
 exec --no-startup-id setxkbmap -layout dk,us
@@ -29,7 +30,7 @@ exec --no-startup-id setxkbmap -option 'grp:alt_shift_toggle'
 # Autostart everytime i3 reloads
 exec_always feh --no-xinerama --bg-scale --randomize ~/.i3/wallpaper/*
 exec_always --no-startup-id compton --config ~/.config/compton.conf
-exec_always --no-startup-id polybar_refresh
+exec_always --no-startup-id ~/.config/polybar/polybar.sh
 
 ###################################################
 #                   Bindings                      #
