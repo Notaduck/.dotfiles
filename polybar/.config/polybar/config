@@ -217,7 +217,7 @@ card = intel_backlight
 type = internal/xkeyboard
 
 label-layout =   %layout%
-label-underline = ${colors.cyan} 
+label-layout-underline = ${colors.cyan} 
 
 ; List of indicators to ignore
 blacklist-0 = num lock
