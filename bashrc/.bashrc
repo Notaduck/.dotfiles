@@ -54,6 +54,8 @@ export VISUAL='nvim'
 # ITU Stuff
 export PATH=$PATH:$HOME/algs4/bin
 
+export PATH=~/.npm-global/bin:$PATH
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Function to get the current git banch
