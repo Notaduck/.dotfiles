@@ -57,7 +57,7 @@ endif
 
 " }}} 
 
-" Plugin section {{{
+ " Plugin section {{{
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -218,6 +218,22 @@ set foldmethod=marker
 set undofile	
 set undodir=~/.vim/undodir
 
+" Indentation {{{
+" by default, the indent is 2 spaces. 
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+
+" for html/js files, 2 spaces
+autocmd Filetype html setlocal ts=2 sw=2 expandtab
+autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 expandtab
+
+" for java/python files, 4 spaces
+autocmd Filetype python setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
+
+"}}}
+
 " AutoGroup settings{{{
 
 		augroup AutoGroup
@@ -232,8 +248,6 @@ set undodir=~/.vim/undodir
 	
  " Settings for vario pus plugins {{{
 
-" Keeps nvim snappy (disable gitgutter if a file has more than n changes)
-let g:gitgutter_max_signs = 500  " default value
 
 " Use Alt+j/k to easily move a line
 let g:move_key_modifier = 'A' 
@@ -329,7 +343,16 @@ call deoplete#custom#source('ultisnips', 'rank', 9999)
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 	" }}}
+
+" Gitgutter {{{
 	
+		" Keeps nvim snappy (disable gitgutter if a file has more than n changes)
+		let g:gitgutter_max_signs = 500  " default value
+		let g:gitgutter_sign_added = '|'
+		let g:gitgutter_async = 1
+
+" }}}
+
 " JavaComplete {{{
 
 set omnifunc=syntaxcomplete#Complete
