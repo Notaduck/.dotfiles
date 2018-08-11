@@ -1,10 +1,10 @@
 
-"███╗	██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+"███╗ 	██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
 "████╗	██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
 "██╔██╗ ██║█████╗  ██║	 ██║██║   ██║██║██╔████╔██║
 "██║╚██╗██║██╔══╝  ██║	 ██║╚██╗ ██╔╝██║██║╚██╔╝██║
 "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-"╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝		╚═╝
+"╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝ 		╚═╝
 
  " Plugin dependencies {{{
 
@@ -64,6 +64,7 @@ endif
 
 call plug#begin('~/local/share/nvim/plugged')
 " Colorschemes
+Plug 'alvan/vim-closetag'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -160,14 +161,14 @@ set background=light " for the light version
 " NerdTree {{{
 
 " Open NERDTree when no file(s) is selectedd
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " close vim if the only window left open is a NERDTree
-map <C-n> :NERDTreeToggle<CR> " Open NERDTree with Ctrl+n
+" map <C-n> :NERDTreeToggle<CR> " Open NERDTree with Ctrl+n
 
 " Quit nertree when a file is opened.
-let NERDTreeQuitOnOpen = 1
+" let NERDTreeQuitOnOpen = 1
 
 "}}}
 
@@ -190,26 +191,12 @@ set clipboard=unnamedplus " Let vim use the systems clipboard
 set mouse=a "Enable mouse support
 syntax on "Enable syntax
 set number "Set line number
+set cursorline "Highligt currentline 
 filetype plugin indent on  
 set autowriteall ""automatically save any changes made to the buffer before it is hidden.
 
 " " use 4 spaces for tabs
 set tabstop=2 softtabstop=2 shiftwidth=2
-
-" " convert spaces to tabs when reading file
-" autocmd! bufreadpost * set noexpandtab | retab! 4
-
-" " convert tabs to spaces before writing file
-" autocmd! bufwritepre * set expandtab | retab! 4
-
-" " convert spaces to tabs after writing file (to show guides again)
-" autocmd! bufwritepost * set noexpandtab | retab! 4i
-
-"" space open/closes folds
-nnoremap <space> za
-
-" autoformat js files on save
-autocmd BufWritePost *.js AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
 
 "" Code Folding
 set foldmethod=marker
@@ -217,6 +204,16 @@ set foldmethod=marker
 " Maintain undo history between sessions
 set undofile	
 set undodir=~/.vim/undodir
+
+"Shortcuts {{{
+
+" space open/closes folds
+nnoremap <space> za
+
+"Run makefile
+noremap <Leader>m :make <CR>
+
+"}}}
 
 " Indentation {{{
 " by default, the indent is 2 spaces. 
@@ -226,12 +223,12 @@ set tabstop=2
 
 " for html/js files, 2 spaces
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
-autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
 
 " for java/python files, 4 spaces
 autocmd Filetype python setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
-
+map <F5> :setlocal spell! spelllang=da,en_us<CR>
 "}}}
 
 " AutoGroup settings{{{
@@ -244,9 +241,10 @@ autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 		command! -nargs=* AutocmdFT autocmd AutoGroup FileType <args>
 
 		" }}}
+
 	" }}}
 	
- " Settings for vario pus plugins {{{
+ " Settings for various plugins {{{
 
 
 " Use Alt+j/k to easily move a line
@@ -315,6 +313,23 @@ let g:AutoPairsShortcutBackInsert = '<C-b>'
 
 	 "}}}
 
+" Autoclose-tag {{{
+
+	let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
+
+" }}}
+
+" CtrlP{{{
+	let g:ctrlp_by_filename = 1
+	" let g:ctrlp_match_window_bottom = 0
+	" let g:ctrlp_match_window_reversed = 0
+	 
+	" Ignore some folders and files for CtrlP indexing
+	let g:ctrlp_custom_ignore = {
+		\ 'dir': 'node_modules\|DS_Store\|.git'
+		\ }
+"}}}
+
 " Deoplete {{{
 
 let g:deoplete#enable_at_startup = 1
@@ -349,6 +364,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 		" Keeps nvim snappy (disable gitgutter if a file has more than n changes)
 		let g:gitgutter_max_signs = 500  " default value
 		let g:gitgutter_sign_added = '|'
+		let g:gitgutter_sign_removed = '|'
 		let g:gitgutter_async = 1
 
 " }}}
