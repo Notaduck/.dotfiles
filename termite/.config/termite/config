@@ -5,7 +5,7 @@ mouse_autohide = false
 allow_bold = true
 clickable_url = true
 #font = Dejavu Sans Mono 11 
-font = Office Code Pro D medium 11 
+font = Office Code Pro medium 11 
 scrollback_lines = 10000
 search_wrap = true
 
