@@ -158,30 +158,7 @@ colorscheme PaperColor
 " set background=dark " for the dark version
 set background=light " for the light version
 
-" NerdTree {{{
 
-" Open NERDTree when no file(s) is selectedd
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" close vim if the only window left open is a NERDTree
-" map <C-n> :NERDTreeToggle<CR> " Open NERDTree with Ctrl+n
-
-" Quit nertree when a file is opened.
-" let NERDTreeQuitOnOpen = 1
-
-"}}}
-
-" Airline {{{ 
-
-let g:airline_theme='papercolor'
-let g:airline#extensions#tabline#formatter = 'default'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#enabled = 'ale'
-
-
-" }}}
 
 " }}}
 
@@ -306,6 +283,17 @@ let g:ale_fixers = {
 "  }} }
 "}}}
 
+" Airline {{{ 
+
+let g:airline_theme='papercolor'
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#enabled = 'ale'
+
+
+" }}}
+
 " AutorPair{{{
 
 let g:AutoPairsFlyMode = 1
@@ -378,7 +366,21 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 
 	" }}} 
-	
+
+" NerdTree {{{
+
+" Open NERDTree when no file(s) is selectedd
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" close vim if the only window left open is a NERDTree
+" map <C-n> :NERDTreeToggle<CR> " Open NERDTree with Ctrl+n
+
+" Quit nertree when a file is opened.
+" let NERDTreeQuitOnOpen = 1
+
+"}}}
+
 " Pandoc {{{
 
 let b:pandoc_command_latex_engine = 'pdflatex'
