@@ -86,7 +86,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # Example aliases
 alias zshconf="nvim ~/.zshrc"
 alias zshupdate="source ~/.zshrc"
-alias itu='~/Nextcloud/Skole/ITU/2.\ Semester'
+alias itu='~/Nextcloud/Skole/ITU/3_Semester'
 
 # `cclip' copies and `clipp' pastes'
 alias cclip='xclip -selection clipboard'
