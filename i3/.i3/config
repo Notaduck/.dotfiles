@@ -1,13 +1,13 @@
 # i3 config file (v4)
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +10% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+#bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+#bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -19,7 +19,7 @@ bindsym XF86AudioPrev exec playerctl previous
 #                   Variables                     #
 ###################################################
 # set terminal
-set $term --no-startup-id kitty 
+set $term --no-startup-id termite 
 
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
@@ -291,8 +291,8 @@ exec --no-startup-id xautolock -time 10 -locker blurlock
 #Set colors from Xresources
 # NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
 # it fails to get colors from Xresources for some reas
-set_from_resource $fg i3wm.color7 #7a7a7a
-set_from_resource $bg i3wm.color2 #f0f0f0
+set_from_resource $fg i3wm.7 #7a7a7a
+set_from_resource $bg i3wm.15 #f0f0f0
 
 # class                 border  backgr. text indicator child_border
 client.focused          $bg     $bg     $fg  $bg       $bg
