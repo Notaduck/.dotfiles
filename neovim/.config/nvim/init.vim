@@ -62,8 +62,12 @@ endif
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
 
+"required
 call plug#begin('~/local/share/nvim/plugged')
-" Colorschemes
+Plug 'vim-scripts/Align'
+Plug 'vim-scripts/SQLUtilities'
+Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 Plug 'alvan/vim-closetag'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-commentary'
@@ -189,6 +193,8 @@ nnoremap <space> za
 
 "Run makefile
 noremap <Leader>m :make <CR>
+
+" Open WhichKey
 
 "}}}
 
@@ -353,6 +359,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 		let g:gitgutter_max_signs = 500  " default value
 		let g:gitgutter_sign_added = '|'
 		let g:gitgutter_sign_removed = '|'
+		let g:gitgutter_sign_modified = '|'
 		let g:gitgutter_async = 1
 
 " }}}
@@ -389,6 +396,11 @@ let g:pandoc#filetypes#pandoc_markdown = 0
 
 " }}}
 
+" Mysql pipe {{{
+" MySQL
+let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:dbname=sports'
+" }}}
+
  " UtilSnips {{{
 
 let g:UltiSnipsSnippetDirectories = ['/home/daniel/.vim/UltiSnips', 'UltiSnips']
@@ -422,3 +434,7 @@ let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_progname = 'nvr'
 let g:tex_flavor = 'latex'
 	"}}}
+	
+	" WhichKey {{{
+
+	" }}}
