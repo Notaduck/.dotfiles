@@ -186,6 +186,9 @@ set foldmethod=marker
 set undofile	
 set undodir=~/.vim/undodir
 
+" type :w!! if you forgot to run sudo nvim (but do it fast)
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+
 "Shortcuts {{{
 
 " space open/closes folds
