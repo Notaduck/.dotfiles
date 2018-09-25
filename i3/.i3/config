@@ -98,11 +98,23 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
+# change focus (vim style)
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
 # move focused window
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# move focused window (vim style)
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # workspace back and forth (with/without active container)
 bindsym $mod+b workspace back_and_forth
@@ -165,14 +177,17 @@ for_window [class="Manjaro Settings Manager"] floating enable border normal
 for_window [class="Manjaro Welcome"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="(?i)virtualbox"] floating enable border normal
-for_window [class="sun-awt-X11-XFramePeer"] floating enable border normal 0 # Open Java applications as float
+for_window [class="sun-awt-X11-XFramePeer"] floating enable border normal 
 for_window [class="sun-awt-X11-XDialogPeer"] floating enable border normal
 
 # Open applications on specific workspaces
 assign [class="vivaldi-stable"] "1"
 assign [class="jetbrains-rider"] "2"
 assign [class="pycharm"] "2"
+assign [class="DBeaver"] 2
 assign [class="Slack"] "4"
+assign [class="Spotify"] 6
+
 ###################################################
 #                   Scratchpad settings           #
 ###################################################
