@@ -31,6 +31,10 @@ if !has('python3') && !has('pip3')
 	"echo system('Installing upgrade pip3 and install neovim')
 endif
 
+if !has('~/.vim/tmp/')
+	call system('mkdir -p ~/.vim/tmp')
+endif
+
 "if !has('npm')
 "	call system('sudo pacman -S nodejs npm')
 	"echo system('installing nodejs and npm')
