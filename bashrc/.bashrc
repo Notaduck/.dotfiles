@@ -54,7 +54,15 @@ export VISUAL='nvim'
 # ITU Stuff
 export PATH=$PATH:$HOME/algs4/bin
 
+# add npm to work global
 export PATH=~/.npm-global/bin:$PATH
+
+
+export PATH="${PATH}:${HOME}/.local/bin/"
+
+# entity framework tool for c#
+export PATH="$PATH:/root/.dotnet/tools"
+
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 

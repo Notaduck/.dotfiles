@@ -42,7 +42,7 @@ set selection-clipboard clipboard
 # enable syntex
 set synctex true
 
-statusbar-basename						"true"
+statusbar-basename						"false"
 
 #set synctex-editor-command "vim --remote-silent +%{line} %{input}"
 set synctex-editor-command "nvim --remote-silent +%{line} %{input}"

@@ -92,8 +92,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'honza/vim-snippets'
-Plug 'xolox/vim-session' 
+" Plug 'honza/vim-snippets'
+"Plug 'xolox/vim-session' 
 Plug 'xolox/vim-misc'
 Plug 'matze/vim-move'
 Plug 'tpope/vim-fugitive'
@@ -356,7 +356,7 @@ call deoplete#custom#source('_', 'sorters', ['sorter_word'])
 call deoplete#custom#source('ultisnips', 'rank', 9999)
 
 " Deoplete tab-completion
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 	" }}}
 
@@ -414,7 +414,7 @@ let g:UltiSnipsSnippetDirectories = ['/home/daniel/.vim/UltiSnips', 'UltiSnips']
 
  " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 
-let g:UltiSnipsExpandTrigger="<a-tab>"
+" let g:UltiSnipsExpandTrigger="<a-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
