@@ -68,36 +68,36 @@ endif
 
 "required
 call plug#begin('~/local/share/nvim/plugged')
-Plug 'vim-scripts/Align'
-Plug 'vim-scripts/SQLUtilities'
-Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
-Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
-Plug 'alvan/vim-closetag'
+"Plug 'vim-scripts/Align'
+"Plug 'vim-scripts/SQLUtilities'
+"Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
+"Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+"Plug 'alvan/vim-closetag'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
+"Plug 'tpope/vim-surround'
+"Plug 'jiangmiao/auto-pairs'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'junegunn/limelight.vim'
 Plug 'lervag/vimtex', { 'for': 'tex' }
-Plug 'jaxbot/browserlink.vim' "https://github.com/jaxbot/browserlink.vim
-Plug 'vim-scripts/L9'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'vim-scripts/FuzzyFinder'
-Plug 'gregsexton/MatchTag'
+"Plug 'jaxbot/browserlink.vim' "https://github.com/jaxbot/browserlink.vim
+"Plug 'vim-scripts/L9'
+"Plug 'skywind3000/asyncrun.vim'
+"Plug 'vim-scripts/FuzzyFinder'
+"Plug 'gregsexton/MatchTag'
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+"Plug 'scrooloose/nerdtree'
+"Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'honza/vim-snippets'
-"Plug 'xolox/vim-session' 
-Plug 'xolox/vim-misc'
+"" Plug 'honza/vim-snippets'
+""Plug 'xolox/vim-session' 
+"Plug 'xolox/vim-misc'
 Plug 'matze/vim-move'
 Plug 'tpope/vim-fugitive'
-Plug 'cj/vim-webdevicons'
+"Plug 'cj/vim-webdevicons'
 Plug 'w0rp/ale' 
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' } 
 Plug 'airblade/vim-gitgutter'
@@ -105,10 +105,10 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'SirVer/ultisnips'
 Plug 'zchee/deoplete-jedi', {'for': ['python', 'python3','djangohtml'], 'do': 'pip install jedi;pip3 install jedi'}
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
-Plug 'wokalski/autocomplete-flow' " deplete src for js
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'RRethy/vim-illuminate'
+"Plug 'wokalski/autocomplete-flow' " deplete src for js
+"Plug 'Shougo/neosnippet'
+"Plug 'Shougo/neosnippet-snippets'
+"Plug 'RRethy/vim-illuminate'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -118,8 +118,8 @@ else
 endif
 
 " Thme section {{{
-Plug 'cocopon/iceberg.vim' 
-Plug 'rakr/vim-one'
+" Plug 'cocopon/iceberg.vim' 
+" Plug 'rakr/vim-one'
 Plug 'NLKNguyen/papercolor-theme'
 " }}}
 
@@ -200,8 +200,6 @@ nnoremap <space> za
 
 "Run makefile
 noremap <Leader>m :make <CR>
-
-" Open WhichKey
 
 "}}}
 
