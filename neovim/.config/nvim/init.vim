@@ -75,7 +75,8 @@ call plug#begin('~/local/share/nvim/plugged')
 "Plug 'alvan/vim-closetag'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-commentary'
-"Plug 'tpope/vim-surround'
+"Plug 'vim-scripts/auto-pairs-gentle
+Plug 'tpope/vim-surround'
 "Plug 'jiangmiao/auto-pairs'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-after'
@@ -305,10 +306,9 @@ let g:airline#extensions#enabled = 'ale'
 
 " }}}
 
-" AutorPair{{{
+" Autor Pair Gentle{{{
 
-let g:AutoPairsFlyMode = 1
-let g:AutoPairsShortcutBackInsert = '<C-b>'
+	let g:AutoPairsUseInsertedCount = 1
 
 	 "}}}
 
