@@ -68,37 +68,20 @@ endif
 
 "required
 call plug#begin('~/local/share/nvim/plugged')
-"Plug 'vim-scripts/Align'
-"Plug 'vim-scripts/SQLUtilities'
-"Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
-"Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
-"Plug 'alvan/vim-closetag'
+Plug 'junegunn/goyo.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-commentary'
-"Plug 'vim-scripts/auto-pairs-gentle
 Plug 'tpope/vim-surround'
-"Plug 'jiangmiao/auto-pairs'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'junegunn/limelight.vim'
 Plug 'lervag/vimtex', { 'for': 'tex' }
-"Plug 'jaxbot/browserlink.vim' "https://github.com/jaxbot/browserlink.vim
-"Plug 'vim-scripts/L9'
-"Plug 'skywind3000/asyncrun.vim'
-"Plug 'vim-scripts/FuzzyFinder'
-"Plug 'gregsexton/MatchTag'
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-"Plug 'scrooloose/nerdtree'
-"Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"" Plug 'honza/vim-snippets'
-""Plug 'xolox/vim-session' 
-"Plug 'xolox/vim-misc'
 Plug 'matze/vim-move'
 Plug 'tpope/vim-fugitive'
-"Plug 'cj/vim-webdevicons'
 Plug 'w0rp/ale' 
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' } 
 Plug 'airblade/vim-gitgutter'
@@ -106,10 +89,6 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'SirVer/ultisnips'
 Plug 'zchee/deoplete-jedi', {'for': ['python', 'python3','djangohtml'], 'do': 'pip install jedi;pip3 install jedi'}
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
-"Plug 'wokalski/autocomplete-flow' " deplete src for js
-"Plug 'Shougo/neosnippet'
-"Plug 'Shougo/neosnippet-snippets'
-"Plug 'RRethy/vim-illuminate'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -118,9 +97,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-" Thme section {{{
-" Plug 'cocopon/iceberg.vim' 
-" Plug 'rakr/vim-one'
+" Themes {{{
 Plug 'NLKNguyen/papercolor-theme'
 " }}}
 
@@ -191,9 +168,6 @@ set foldmethod=marker
 set undofile	
 set undodir=~/.vim/undodir
 
-" type :w!! if you forgot to run sudo nvim (but do it fast)
-cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
-
 "Shortcuts {{{
 
 " space open/closes folds
@@ -202,6 +176,8 @@ nnoremap <space> za
 "Run makefile
 noremap <Leader>m :make <CR>
 
+" Set spell checking
+map <F5> :setlocal spell! spelllang=da,en_us<CR>
 "}}}
 
 " Indentation {{{
@@ -217,7 +193,6 @@ autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
 " for java/python files, 4 spaces
 autocmd Filetype python setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
-map <F5> :setlocal spell! spelllang=da,en_us<CR>
 "}}}
 
 " AutoGroup settings{{{
@@ -408,7 +383,8 @@ let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:dbname=sports'
 
  " UtilSnips {{{
 
-let g:UltiSnipsSnippetDirectories = ['/home/daniel/.vim/UltiSnips', 'UltiSnips']
+" let g:UltiSnipsSnippetDirectories = ['/home/daniel/.vim/UltiSnips', 'UltiSnips']
+let g:UltiSnipsSnippetDirectories = ['/home/daniel/.dotfiles/neovim/.config/nvim/UltiSnips', 'UltiSnips']
 
  " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 
