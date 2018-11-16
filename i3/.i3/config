@@ -184,7 +184,7 @@ for_window [class="sun-awt-X11-XDialogPeer"] floating enable border normal
 assign [class="vivaldi-stable"] "1"
 assign [class="jetbrains-rider"] "2"
 assign [class="pycharm"] "2"
-assign [class="DBeaver"] 2
+#assign [class="DBeaver"] 2
 assign [class="Slack"] "4"
 assign [class="Spotify"] 6
 
