@@ -25,43 +25,43 @@ filter_unmatched_urls = true
 
 [colors]
 # PaperColor.fork
-foreground      = rgb(77,77,76)
+foreground      = rgb(216,222,233)
 foreground_bold = rgb(77,77,76)
-cursor          = rgb(77,77,76)
-background      = rgb(223,221,213)
+cursor          = rgb(216,222,233)
+background      = rgb(46,52,64)
 
 # 16 color space
 
 # Black, Gray, Silver, White
-color0  = rgb(237,237,237)
-color8  = rgb(150,150,148)
+color0  = rgb(59,66,82)
+color8  = rgb(76,86,106)
 
 # Red
-color1  = rgb(215,0,95)
-color9  = rgb(215,0,95)
+color1  = rgb(191,97,106)
+color9  = rgb(191,97,106)
 
 # Green
-color2  = rgb(113,140,0)
-color10 = rgb(113,140,0)
+color2  = rgb(163,190,140)
+color10 = rgb(163,190,140)
 
 # Yellow / orange
-color3  = rgb(215,95,0)
-color11 = rgb(215,95,0)
+color3  = rgb(235,203,139)
+color11 = rgb(235,203,139)
 
 # Blue
-color4  = rgb(66,113,174)
-color12 = rgb(66,113,174)
+color4  = rgb(129,161,193)
+color12 = rgb(129,161,193)
 
 # Magenta
-color5  = rgb(137,89,168)
-color13 = rgb(137,89,168)
+color5  = rgb(180,142,173)
+color13 = rgb(180,142,173)
 
 # Cyan
-color6  = rgb(62,153,159)
-color14 = rgb(62,153,159)
+color6  = rgb(136,192,208)
+color14 = rgb(143,188,187)
 
 # White
 
-color7 = rgb(77,77,76)
-color15 = rgb(77,77,76)
+color7 = rgb(229,233,240)
+color15 = rgb(236,239,244)
 [end-colors]
