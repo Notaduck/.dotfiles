@@ -30,6 +30,7 @@ set $mod Mod4
 
 # Autostart
 #exec --no-startup-id VBoxClient-all
+# exec_always --no-startup-id nm-applet
 exec --no-startup-id nextcloud
 exec --no-startup-id slack
 exec --no-startup-id umonitor -n
@@ -164,11 +165,13 @@ new_float normal
 
 workspace_auto_back_and_forth yes
 
-# Diable float
+# Disable float
 for_window [class="jetbrains-idea-ce"] floating disable 
 
 # Open specific applications in floating mode
 for_window [title="virtualbox"] floating enable
+for_window [title="Discord Update"] floating enable
+for_window [title="Jetbrains Toolbox"] floating enable
 for_window [title="File Transfer*"] floating enable
 for_window [class="GParted"] floating enable border normal
 for_window [title="i3_help"] floating enable sticky enable border normal
