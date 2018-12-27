@@ -68,6 +68,8 @@ endif
 
 "required
 call plug#begin('~/local/share/nvim/plugged')
+Plug 'mhinz/vim-startify'
+Plug 'honza/vim-snippets'
 Plug 'junegunn/goyo.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-commentary'
@@ -76,7 +78,8 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'junegunn/limelight.vim'
-Plug 'lervag/vimtex', { 'for': 'tex' }
+"Plug 'lervag/vimtex', { 'for': 'latex' }
+Plug 'lervag/vimtex'
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -89,6 +92,7 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'SirVer/ultisnips'
 Plug 'zchee/deoplete-jedi', {'for': ['python', 'python3','djangohtml'], 'do': 'pip install jedi;pip3 install jedi'}
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
+Plug 'scrooloose/nerdtree'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -168,13 +172,21 @@ set foldmethod=marker
 set undofile	
 set undodir=~/.vim/undodir
 
-"Shortcuts {{{
+" Filteypes{{{
+	autocmd filetype *.sql set filetype=mysql 
+"}}}
 
+"Shortcuts {{{
+" Run current Python file
+nnoremap <Leader>p :exec '!python' shellescape(@%, 1)<cr>
 " space open/closes folds
 nnoremap <space> za
 
 "Run makefile
 noremap <Leader>m :make <CR>
+
+" open main pdf
+noremap <Leader>p :! nohup zathura ./main.pdf &<CR><CR>
 
 " Set spell checking
 map <F5> :setlocal spell! spelllang=da,en_us<CR>
@@ -255,11 +267,13 @@ let g:ale_linters = {
 		\	'css': ['csslint', 'stylelint'],
 		\	'nim': ['nim', 'nimsuggest'],
 		\	'vim': ['vint'],
-		\	'python': ['python', 'pyflakes', 'flake8'],
+		\	'python': ['autopep8'],
 		\	'shell': ['sh', 'shellcheck'],
 		\	'zsh': ['zsh'],
 		\	'swift': ['swiftc'],
 		\	'json' : ['prettier'],
+		\	'yml' : ['prettier'],
+		\	'yaml' : ['prettier'],
 		\}
 
 let g:ale_fixers = {
@@ -368,6 +382,15 @@ nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 
 "}}}
 
+" Startify {{{
+
+    let g:startify_bookmarks = [
+            \ { 'c': '~/.config/nvim/init.vim' },
+            \ { 'p': '~/.config/polybar/config'},
+						\ { 'i': '~/.i3/config'}
+            \ ]
+" }}}
+
 " Pandoc {{{
 
 let b:pandoc_command_latex_engine = 'pdflatex'
@@ -378,7 +401,7 @@ let g:pandoc#filetypes#pandoc_markdown = 0
 
 " Mysql pipe {{{
 " MySQL
-let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:dbname=sports'
+" let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:dbname=sports'
 " }}}
 
  " UtilSnips {{{

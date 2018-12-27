@@ -54,6 +54,7 @@ DISABLE_AUTO_UPDATE="true"
 plugins=(
   git
   zsh-autosuggestions 
+	zsh-completions
   )
 
 source $ZSH/oh-my-zsh.sh
