@@ -481,6 +481,7 @@ mapped = true
 ; Interval for volume increase/decrease (in percent points) (unreleased)
 ; Default: 5
 interval = 5
+
 ;**********************************************************
 ;                       BATTERY
 ;**********************************************************
@@ -491,25 +492,22 @@ adapter = AC
 full-at = 99
 poll-interval = 5
 
-format-charging = <animation-charging> <label-charging>
-format-discharging = <ramp-capacity> <label-discharging>
-
-format-discharging-underline = ${colors.magenta} 
+format-charging = <label-charging> 
 format-chargin-underline = ${colors.magenta} 
 
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground}
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-underline = ${colors.magenta} 
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
+label-discharging = %percentage%%  
+label-charging = %percentage%% 
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
 ramp-capacity-foreground = ${colors.foreground}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground}
-animation-charging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
@@ -529,21 +527,6 @@ ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
-;**********************************************************
-;                       Spotify
-;**********************************************************
-[module/mySpotify]
-
-;inherit = module/theme
-interval = 1
-type = custom/script
-exec = /home/daniel/.config/polybar/mediaplayer
-click-left = i3-msg workspace number 6
-label = %output:0:30:...%
-format-prefix = " "
-format-underline = #20dfdf
-format-foreground = ${colors.foreground}
-format-background = #0d5959
 
 ;**********************************************************
 ;                       VPN

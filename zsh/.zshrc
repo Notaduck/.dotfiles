@@ -4,6 +4,9 @@
 # Path to your oh-my-zsh installation.
   export ZSH=/home/daniel/.oh-my-zsh
 
+export PATH=~/.npm-global/bin:$PATH
+	export PATH=$PATH:~/.npm-global/lib/
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -88,7 +91,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 alias zshconf="nvim ~/.zshrc"
 alias zshupdate="source ~/.zshrc"
 alias itu='~/Nextcloud/Skole/ITU/3_Semester'
-
+alias rm="trash-rm"
 # `cclip' copies and `clipp' pastes'
 alias cclip='xclip -selection clipboard'
 alias clipp='xclip -selection clipboard -o'

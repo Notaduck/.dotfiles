@@ -68,6 +68,10 @@ endif
 
 "required
 call plug#begin('~/local/share/nvim/plugged')
+Plug 'epilande/vim-es2015-snippets'
+Plug 'epilande/vim-react-snippets'
+Plug 'mattn/emmet-vim'
+Plug 'jiangmiao/auto-pairs'
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/goyo.vim'
@@ -225,7 +229,6 @@ autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 
 " Use Alt+j/k to easily move a line
 let g:move_key_modifier = 'A' 
-
 " ALE {{{
 
 let g:ale_enable = 1 
@@ -299,6 +302,8 @@ let g:airline#extensions#enabled = 'ale'
 
 	let g:AutoPairsUseInsertedCount = 1
 
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutBackInsert = '<M-b>'
 	 "}}}
 
 " Autoclose-tag {{{

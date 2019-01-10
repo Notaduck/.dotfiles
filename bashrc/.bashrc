@@ -56,7 +56,7 @@ export PATH=$PATH:$HOME/algs4/bin
 
 # add npm to work global
 export PATH=~/.npm-global/bin:$PATH
-
+export PATH=$PATH:~/.yarn/bin
 
 export PATH="${PATH}:${HOME}/.local/bin/"
 
