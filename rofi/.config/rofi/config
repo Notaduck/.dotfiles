@@ -1,17 +1,12 @@
-# Config for rofi-wifi-menu
-
-# position values: 
-# 1 2 3
-# 8 0 4
-# 7 6 5 
-POSITION=3
-
-#y-offset
-YOFF=17
-
-#x-offset
-XOFF=0
-
-rofi.ssh-command:          {terminal} -e "{ssh-client} {host}"
-#fields to be displayed
-FIELDS=SSID,SECURITY,BARS
+rofi.show-icons:            false
+rofi.modi:                  drun,run,window,ssh
+rofi.lines:                 7
+rofi.line-padding:          10
+rofi.matching:              fuzzy
+rofi.bw:                    0
+rofi.padding:               0
+rofi.separator-style:       none
+rofi.hide-scrollbar:        true
+rofi.line-margin:           0
+rofi.font:                  Office Code Pro 10
+rofi.theme: ./nord.rasi 
