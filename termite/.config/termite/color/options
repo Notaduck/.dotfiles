@@ -1,0 +1,24 @@
+[options]
+scroll_on_output = true # Scroll to the bottom when some command gives output
+scroll_on_keystroke = true #  Scroll to the bottom if you push some key
+mouse_autohide = false
+allow_bold = true
+clickable_url = true
+#font = Dejavu Sans Mono 11 
+font = Office Code Pro Medium 11 
+scrollback_lines = 10000
+search_wrap = true
+
+# "system", "on" or "off"
+cursor_blink = system
+
+# "block", "underline" or "ibeam"
+cursor_shape = block
+
+# $BROWSER is used by default if set, with xdg-open as a fallback
+browser = vivaldi-stable
+
+# Hide links that are no longer valid in url select overlay mode
+filter_unmatched_urls = true
+
+# nvim: ft=dosini cms=#%s
