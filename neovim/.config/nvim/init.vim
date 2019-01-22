@@ -68,6 +68,9 @@ endif
 
 "required
 call plug#begin('~/local/share/nvim/plugged')
+Plug 'jparise/vim-graphql'
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'epilande/vim-es2015-snippets'
 Plug 'epilande/vim-react-snippets'
 Plug 'mattn/emmet-vim'
@@ -78,12 +81,12 @@ Plug 'junegunn/goyo.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-after'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc', { 'for': 'pandoc' }
+Plug 'vim-pandoc/vim-pandoc-after', { 'for': 'pandoc' }
+Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': 'pandoc' }
 Plug 'junegunn/limelight.vim'
 "Plug 'lervag/vimtex', { 'for': 'latex' }
-Plug 'lervag/vimtex'
+Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -107,9 +110,9 @@ endif
 
 " Themes {{{
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'arcticicestudio/nord-vim'
 Plug	'ajh17/Spacegray.vim'
 " }}}
-
 
 " Initialize plugin system
 call plug#end()
@@ -119,19 +122,20 @@ call plug#end()
 " Colours and UI {{{
 
  " PaperColor
- let g:PaperColor_Theme_Options = {
-	\	'theme': {
-	\		'default.light': {
-	\		  'override' : {
-	\			'color00' : ['#dfddd5',''],
-	\			'linenumber_bg' : ['#dfddd5', '232'],
-	\			'vertsplit_bg' : ['#dfddd5', '255'],
-	\		  }
-	\		}
-	\	}
-	\ }
+ " let g:PaperColor_Theme_Options = {
+	" \	'theme': {
+	" \		'default.light': {
+	" \		  'override' : {
+	" \			'color00' : ['#dfddd5',''],
+	" \			'linenumber_bg' : ['#dfddd5', '232'],
+	" \			'vertsplit_bg' : ['#dfddd5', '255'],
+	" \		  }
+	" \		}
+	" \	}
+	" \ }
+" colorscheme PaperColor
+colorscheme nord
 set laststatus=2
-colorscheme PaperColor
 "Credit joshdick
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -149,16 +153,13 @@ if (empty($TMUX))
   endif
 endif
 
-
-colorscheme PaperColor 
 " set background=dark " for the dark version
-set background=light " for the light version
-
-
+" set background=light " for the light version
 
 " }}}
 
 " General settings {{{
+
 set directory^=$HOME/.vim/tmp// " Place all swap files under .vim/tmp
 set clipboard=unnamedplus " Let vim use the systems clipboard
 set mouse=a "Enable mouse support
@@ -227,8 +228,6 @@ autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 	" }}}
 	
  " Settings for various plugins {{{
-
-
 " Use Alt+j/k to easily move a line
 let g:move_key_modifier = 'A' 
 " ALE {{{
@@ -237,7 +236,8 @@ let g:ale_enable = 1
 let g:ale_completion_enabled = 1
 let g:ale_sign_column_always = 1 " Keeps the error column open
 
-let g:ale_sign_error = '=>'
+" let g:ale_sign_error = '=>'
+let g:ale_sign_error = ''
 let g:ale_sign_warning = '>?'
 
 let g:ale_echo_msg_error_str = 'E'
@@ -258,7 +258,8 @@ AutocmdFT python call deoplete#custom#source('jedi', 'matchers', ['matcher_fuzzy
 
 
 "let g:ale_java_javac_classpath = [String], to load aditional classes
-let g:ale_java_javac_classpath = "/home/daniel/java/algs4.jar"
+" let g:ale_java_javac_classpath = "/home/daniel/java/algs4.jar"
+let g:ale_java_javac_classpath = "/usr/local/algs4/algs4.jar"
 
 let g:ale_linters = {
 		\	'javascript': ['eslint'],
@@ -291,11 +292,14 @@ let g:ale_fixers = {
 
 " Airline {{{ 
 
-let g:airline_theme='papercolor'
+" let g:airline_theme='papercolor'
+let g:airline_theme='nord'
+let g:airline_whitespace_disabled = 1
 let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#enabled = 'ale'
+let g:airline_powerline_fonts = 1
 
 
 " }}}
@@ -351,7 +355,6 @@ call deoplete#custom#source('ultisnips', 'rank', 9999)
 
 " Deoplete tab-completion
 " inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
 	" }}}
 
 " Gitgutter {{{

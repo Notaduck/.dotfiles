@@ -165,7 +165,8 @@
 
 [frame]
     width = 5
-    color = "#d3d2d0"
+		frame_color = "#E5E9F0"
+		separator_color = "#E5E9F0"
 
 [shortcuts]
 
@@ -191,20 +192,29 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#dfddd5"
-    foreground = "#198844"
-    timeout = 10
-
+    # Paper color
+		#background = "#dfddd5"
+    #foreground = "#198844"
+    #timeout = 10
+    background = "#3B4252"
+    foreground = "#4C566A"
+		timeout = 4
 [urgency_normal]
-    background = "#dfddd5"
-    foreground = "#657b83"
-    timeout = 10
-
+    # Paper color
+#    background = "#dfddd5"
+#    foreground = "#657b83"
+#    timeout = 10
+    background = "#434C5E"
+    foreground = "#E5E9F0"
+		 timeout = 6
 [urgency_critical]
-    background = "#dfddd5"
-    foreground = "#dc322f"
-    timeout = 0
-
+     # Paper color
+#    background = "#dfddd5"
+#    foreground = "#dc322f"
+#    timeout = 0
+    background = "#88C0D0"
+    foreground = "#ECEFF4"
+		 timeout = 8
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
