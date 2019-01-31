@@ -1,6 +1,6 @@
 # zathurarc
 
-set font                        "Cantarell 10"
+set font                        "Office Code Pro 10"
 set default-bg                  "#dfddd5" #00
 set default-fg                  "#586e75" #01
 
@@ -33,7 +33,6 @@ set recolor-darkcolor           "#586e75" #06
 set recolor                     "true"
 
 # setting recolor-keep true will keep any color your pdf has.
-# if it is false, itll just be black and white
 set recolor-keephue             "false"
 
 # add copied text to clipboard
@@ -42,6 +41,5 @@ set selection-clipboard clipboard
 # enable syntex
 set synctex true
 
-statusbar-basename						"false"
 
 set synctex-editor-command "nvim --remote-silent +%{line} %{input}"

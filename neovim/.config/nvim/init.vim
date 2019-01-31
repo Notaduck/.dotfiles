@@ -81,9 +81,9 @@ Plug 'junegunn/goyo.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'vim-pandoc/vim-pandoc', { 'for': 'pandoc' }
-Plug 'vim-pandoc/vim-pandoc-after', { 'for': 'pandoc' }
-Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': 'pandoc' }
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-after'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'junegunn/limelight.vim'
 "Plug 'lervag/vimtex', { 'for': 'latex' }
 Plug 'lervag/vimtex', { 'for': 'tex' }
@@ -159,6 +159,8 @@ endif
 " }}}
 
 " General settings {{{
+set runtimepath+=/home/daniel/.vim/deoplete
+set runtimepath+=/home/daniel/.vim/deoplete-fsharp
 
 set directory^=$HOME/.vim/tmp// " Place all swap files under .vim/tmp
 set clipboard=unnamedplus " Let vim use the systems clipboard
@@ -184,15 +186,13 @@ set undodir=~/.vim/undodir
 "}}}
 
 "Shortcuts {{{
-" Run current Python file
-nnoremap <Leader>p :exec '!python' shellescape(@%, 1)<cr>
 " space open/closes folds
 nnoremap <space> za
 
 "Run makefile
 noremap <Leader>m :make <CR>
 
-" open main pdf
+" open main.pdf with zathura
 noremap <Leader>p :! nohup zathura ./main.pdf &<CR><CR>
 
 " Set spell checking
@@ -284,7 +284,7 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
 		\	'javascript': ['eslint','prettier_eslint'],
-		\	'java': ['google_java_format'],
+		\	'java': ['uncrustify','google_java_format'],
 		\	'json' : ['prettier'],
 		\}
 "  }} }
@@ -325,7 +325,8 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 	 
 	" Ignore some folders and files for CtrlP indexing
 	let g:ctrlp_custom_ignore = {
-		\ 'dir': 'node_modules\|DS_Store\|.git'
+		\ 'dir': 'node_modules\|DS_Store\|.git',
+		\ 'file': '.class',
 		\ }
 "}}}
 
@@ -343,6 +344,16 @@ let g:deoplete#sources#ternjs#types = 1
 let g:deoplete#sources#ternjs#types = 1
 let g:deoplete#sources#ternjs#sort = 0
 
+" remove dupulicate candidates
+call deoplete#custom#source('_',
+  \ 'converters', ['remove_overlap'])
+
+" refresh_always must be v:false
+call deoplete#custom#option({
+  \ 'auto_complete_delay': 0,
+  \ 'ignore_case': v:true,
+  \ 'refresh_always': v:false,
+\ })
 " Binary path to your flow, defaults to your $PATH flow 
 let g:deoplete#sources#flow#flow_bin = 'flow' 
 "call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
@@ -406,7 +417,9 @@ nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 let b:pandoc_command_latex_engine = 'pdflatex'
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
 let g:pandoc#filetypes#pandoc_markdown = 0
-
+augroup pandoc_syntax
+        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+    augroup END
 " }}}
 
 " Mysql pipe {{{
