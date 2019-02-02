@@ -5,18 +5,25 @@ import urllib.request
 
 parser = argparse.ArgumentParser(description = "This i a simple python script to download gitignorefiles")
 parser.add_argument('-l','--language', required=True, type=str, metavar='', help='language')
+parser.add_argument()
 args = parser.parse_args()
+
+debug = False
 
 def download():
     url = "https://raw.githubusercontent.com/notaduck/gitignore/master/" + args.language + ".gitignore"
-    print(url)
+    if debug:
+        print(url)
     try:
         urllib.request.urlretrieve(url, '.gitignore')
     except urllib.request.HTTPError:
         print("It doesn't look like that the gitignore file for " + args.language + " is in the repo")
 
+def list():
+
 
 if __name__ == '__main__':
+    if args.
     download()
 
 # vim: set syntax=python:
