@@ -68,6 +68,10 @@ endif
 
 "required
 call plug#begin('~/local/share/nvim/plugged')
+Plug 'fsharp/vim-fsharp', {
+      \ 'for': 'fsharp',
+      \ 'do':  'make fsautocomplete',
+      \}
 Plug 'jparise/vim-graphql'
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
@@ -273,7 +277,7 @@ let g:ale_linters = {
 		\	'css': ['csslint', 'stylelint'],
 		\	'nim': ['nim', 'nimsuggest'],
 		\	'vim': ['vint'],
-		\	'python': ['autopep8'],
+		\	'python': ['flake8','pylint'],
 		\	'shell': ['sh', 'shellcheck'],
 		\	'zsh': ['zsh'],
 		\	'swift': ['swiftc'],
@@ -286,6 +290,7 @@ let g:ale_fixers = {
 		\	'javascript': ['eslint','prettier_eslint'],
 		\	'java': ['uncrustify','google_java_format'],
 		\	'json' : ['prettier'],
+		\ 'python' : ['autopep8']
 		\}
 "  }} }
 "}}}
@@ -327,7 +332,7 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 	let g:ctrlp_custom_ignore = {
 		\ 'dir': 'node_modules\|DS_Store\|.git',
 		\ 'file': '.class',
-		\ }
+		\}
 "}}}
 
 " Deoplete {{{
