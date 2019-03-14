@@ -74,7 +74,7 @@ module-margin-right = 4
 font-0 = FontAwesome:size=9;0
 font-1 = "Iosevka:pixelsize=10:antialias=true;0"
 
-modules-left = i3
+modules-left = i3 test 
 modules-center = date github github-itu
 
 modules-right = filesystem  battery wifi  keyboard volume
@@ -145,6 +145,7 @@ ws-icon-6 = 7;
 ws-icon-7 = 8;
 ws-icon-8 = 9;
 ws-icon-9 = 10;
+;ws-icon-default = 
 
 strip-wsnumbers = true
 
@@ -166,7 +167,7 @@ label-urgent-underline = ${colors.red}
 label-urgent-padding = 2
 
 label-visible = "%name%: %icon%"
-label-visible-foreground = ${colors.background-alt}
+label-visible-foreground = ${colors.foreground}
 label-visible-padding = 2
 
 ;**********************************************************
@@ -226,15 +227,29 @@ format = "<label>"
 ;**********************************************************
 ;                       CPU
 ;**********************************************************
+; [module/cpu]
+; type = internal/cpu
+; interval = 2
+; format-prefix = " "
+; format-prefix-foreground = ${colors.foreground-alt}
+
+; label-underline = ${colors.cyan} 
+; label =  %percentage%%
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+; exec = /home/$USER/.config/polybar/cpuGovernorIcon.sh
+;format-prefix = ""
+format-prefix = %output%
+;format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = #f90000
+format-underline = #f90000
+label = Cpu %percentage:2%%
 
-label-underline = ${colors.cyan} 
-label =  %percentage%%
-
+[module/test]
+type = custom/script
+exec ~/.config/polybar/test.sh
+interval = 10
 ;**********************************************************
 ;                       MEMORY
 ;**********************************************************

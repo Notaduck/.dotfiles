@@ -4,6 +4,7 @@
 
 [[ $- != *i* ]] && return
 
+
 colors() {
     local fgc bgc vals seq0
 
@@ -39,7 +40,6 @@ colors() {
 #fortune -s -n 120 wisdom linux computers science
 #echo "-----------------------------------------"
 #echo
-
 # alias aliasname='commands'
 alias itu="cd ~/Nextcloud/Skole/ITU/2.\ Semester"
 
