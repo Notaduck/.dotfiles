@@ -1,44 +1,60 @@
+# Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
+# Copyright (c) 2016-present Sven Greb <code@svengreb.de>
+
+# Project:    Nord Termite
+# Repository: https://github.com/arcticicestudio/nord-termite
+# License:    MIT
+[options]
+scroll_on_output = true # Scroll to the bottom when some command gives output
+scroll_on_keystroke = true #  Scroll to the bottom if you push some key
+mouse_autohide = false
+allow_bold = true
+clickable_url = true
+#font = Dejavu Sans Mono 11 
+font = Office Code Pro Medium 11 
+scrollback_lines = 10000
+search_wrap = true
+
+# "system", "on" or "off"
+cursor_blink = system
+
+# "block", "underline" or "ibeam"
+cursor_shape = block
+
+# $BROWSER is used by default if set, with xdg-open as a fallback
+browser = vivaldi-stable
+
+# Hide links that are no longer valid in url select overlay mode
+filter_unmatched_urls = true
+
+# nvim: ft=dosini cms=#%s
+
 [colors]
-# PaperColor.fork
-foreground      = rgb(77,77,76)
-foreground_bold = rgb(77,77,76)
-cursor          = rgb(77,77,76)
-background      = rgb(223,221,213)
+cursor = #d8dee9
+cursor_foreground = #2e3440
 
-# 16 color space
+foreground = #d8dee9
+foreground_bold = #d8dee9
+background = #2e3440
 
-# Black, Gray, Silver, White
-color0  = rgb(237,237,237)
-color8  = rgb(150,150,148)
+highlight = #4c566a
 
-# Red
-color1  = rgb(215,0,95)
-color9  = rgb(215,0,95)
-
-# Green
-color2  = rgb(113,140,0)
-color10 = rgb(113,140,0)
-
-# Yellow / orange
-color3  = rgb(215,95,0)
-color11 = rgb(215,95,0)
-
-# Blue
-color4  = rgb(66,113,174)
-color12 = rgb(66,113,174)
-
-# Magenta
-color5  = rgb(137,89,168)
-color13 = rgb(137,89,168)
-
-# Cyan
-color6  = rgb(62,153,159)
-color14 = rgb(62,153,159)
-
-# White
-
-color7 = rgb(77,77,76)
-color15 = rgb(77,77,76)
+color0  = #3b4252
+color1  = #bf616a
+color2  = #a3be8c
+color3  = #ebcb8b
+color4  = #81a1c1
+color5  = #b48ead
+color6  = #88c0d0
+color7  = #e5e9f0
+color8  = #4c566a
+color9  = #bf616a
+color10 = #a3be8c
+color11 = #ebcb8b
+color12 = #81a1c1
+color13 = #b48ead
+color14 = #8fbcbb
+color15 = #eceff4
 
 
 # Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>

@@ -12,3 +12,12 @@ println
 dev
 PO's
 s
+ToDictionary
+ToList
+ToArray
+LINQ
+OrderBy
+GroupBy
+ElementAt
+Func
+async

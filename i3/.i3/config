@@ -36,8 +36,7 @@ exec --no-startup-id slack
 exec --no-startup-id umonitor -n
 exec --no-startup-id libinput-gestures
 exec --no-startup-id unclutter -keystroke -idle 15
-exec --no-startup-id pulseaudio --kill
-exec --no-startup-id pulseaudio --start
+exec --no-startup-id i3-msg 'exec /usr/bin/pulseaudio --start'
 #exec --no-startup-id pa-applet
 
 # Toggle keyboard layout with Alt+shift
@@ -53,6 +52,8 @@ exec_always --no-startup-id ~/.config/polybar/polybar.sh
 #                   Bindings                      #
 ###################################################
 
+# Launc flameshot
+bindsym Print exec flameshot gui
 
 # Autohide polybar
 bindsym $mod+m exec --no-startup-id ~/.dotfiles/polybar/.config/polybar/autohide.sh 
@@ -63,6 +64,8 @@ bindsym $mod+Shift+i exec --no-startup-id lightscreen
 # Open git terminal (scratchpad)
 bindsym $mod+g [instance="git"] scratchpad show; [instance="git"] move position center
 
+# Open weechat terminal (scratchpad)
+bindsym $mod+v [instance="weechat"] scratchpad show; [instance="weechat"] move position center
 # change borders
 bindsym $mod+u border none
 bindsym $mod+y border pixel 1
@@ -119,12 +122,13 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 # workspace back and forth (with/without active container)
-bindsym $mod+b workspace back_and_forth
+# bindsym $mod+b workspace back_and_forth
+bindsym $mod+b exec book-search 
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # split orientation
 #bindsym $mod+h split h;exec notify-send 'tile horizontally'
-bindsym $mod+v split v;exec notify-send 'tile vertically'
+# bindsym $mod+v split v;exec notify-send 'tile vertically'
 bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
@@ -203,6 +207,12 @@ for_window [instance="git"] move scratchpad
 #for_window [instance="git"] border pixel 5
 exec --no-startup-id $term --name="git" 
 
+# Move weechat term to scratchpad, open it with mod+g
+for_window [instance="weechat"] floating enable
+for_window [instance="weechat"] resize set 800 600
+for_window [instance="weechat"] move scratchpad
+#for_window [instance="weechat"] border pixel 5
+exec --no-startup-id $term --name="weechat" 
 # SHOULD BE MOVED
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
