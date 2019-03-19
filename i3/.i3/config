@@ -30,7 +30,7 @@ set $mod Mod4
 
 # Autostart
 #exec --no-startup-id VBoxClient-all
-# exec_always --no-startup-id nm-applet
+exec_always --no-startup-id nm-applet
 exec --no-startup-id nextcloud
 exec --no-startup-id slack
 exec --no-startup-id umonitor -n
@@ -66,6 +66,9 @@ bindsym $mod+g [instance="git"] scratchpad show; [instance="git"] move position 
 
 # Open weechat terminal (scratchpad)
 bindsym $mod+v [instance="weechat"] scratchpad show; [instance="weechat"] move position center
+
+# Open weechat terminal (scratchpad)
+bindsym $mod+t [instance="todo"] scratchpad show; [instance="todo"] move position center
 # change borders
 bindsym $mod+u border none
 bindsym $mod+y border pixel 1
@@ -209,10 +212,19 @@ exec --no-startup-id $term --name="git"
 
 # Move weechat term to scratchpad, open it with mod+g
 for_window [instance="weechat"] floating enable
-for_window [instance="weechat"] resize set 800 600
+for_window [instance="weechat"] resize set 1200 800
 for_window [instance="weechat"] move scratchpad
 #for_window [instance="weechat"] border pixel 5
-exec --no-startup-id $term --name="weechat" 
+exec --no-startup-id $term --name="weechat" --exec=weechat
+
+
+
+# Move git term to scratchpad, open it with mod+g
+for_window [instance="todo"] floating enable
+for_window [instance="todo"] resize set 800 600
+for_window [instance="todo"] move scratchpad
+#for_window [instance="git"] border pixel 5
+exec --no-startup-id $term --name="todo" 
 # SHOULD BE MOVED
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -291,10 +303,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym odiaeresis resize grow width 5 px or 5 ppt
+        bindsym l resize shrink width 5 px or 5 ppt
+        bindsym j resize grow height 5 px or 5 ppt
+        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym h resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 5 px or 5 ppt
