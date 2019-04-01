@@ -1,0 +1,50 @@
+snippet today "Date"
+`date +%F`
+endsnippet
+
+
+
+# The w at the end of the first line means that this snip­pet will ex­pand at word bound­aries, so e.g. hellomk won’t ex­pand, but hello mk will.
+snippet mk "Math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+    snip.rv = ' '
+else:
+    snip.rv = ''
+`$2
+endsnippet
+
+snippet dm "Math" wA
+\[
+$1
+.\] $0
+endsnippet
+
+snippet beg "begin{} / end{}" bA
+\begin{$1}
+	$0
+\end{$1}
+endsnippet
+
+
+snippet '([A-Za-z])_(\d+)\s' "auto subscript2" wrA
+Hello `!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+endsnippet
+
+snippet '([A-Za-z])\^(\d+)\s' "auto superscript" wrA
+`!p snip.rv = match.group(1)`^{`!p snip.rv = match.group(2)`}
+endsnippet
+
+snippet '(.)\s\s(\w+?|\d+?) // (.*)\s(.)' "auto superscript" wrA
+`!p snip.rv = match.group(1)` \frac{`!p snip.rv = match.group(2)`}{`!p snip.rv = match.group(3)`}`!p snip.rv = match.group(4)`
+endsnippet
+
+snippet '(.)\s\s(->)\s(.)' "auto right arrow" wrA
+'!p snip.rv = match.group(1)' \rightarrow '!p snip.rv = match.group(2)'
+endsnippet
+
+
+snippet '(.)\s\s(->)\s(.)' "auto left arrow" wrA
+'!p snip.rv = match.group(1)' \leftarrow '!p snip.rv = match.group(2)'
+endsnippet
+
