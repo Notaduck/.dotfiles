@@ -1,9 +1,10 @@
-# If you come from bash you might have to change your $PATH.
+
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=/home/daniel/.oh-my-zsh
 export PATH=~/.scripts:$PATH
+export EDITOR=nvim
 
 export PATH=~/.npm-global/bin:$PATH
 export PATH=$PATH:~/.npm-global/lib/
@@ -24,7 +25,7 @@ HYPHEN_INSENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -71,11 +72,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -89,16 +90,26 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
+
 alias zshconf="nvim ~/.zshrc"
 alias zshupdate="source ~/.zshrc"
+alias vim="nvim"
 alias itu='~/Nextcloud/Skole/ITU/4_semester'
-# alias rm="trash-rm"
+alias rm='rmtrash'
 # `cclip' copies and `clipp' pastes'
 alias cclip='xclip -selection clipboard'
 alias clipp='xclip -selection clipboard -o'
 
+alias cf='cfiles'
+
 # `cclip' copies and `clipp' pastes'
 alias cclip='xclip -selection clipboard'
 alias clipp='xclip -selection clipboard -o'
+# alias ptf ='xclip -selection clipboard -o'
+
+# Usage: <Some_Content> | paste
+alias tb="nc termbin.com 9999"
 
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

@@ -2,6 +2,7 @@
 # ~/.bashrc
 #
 
+export PATH=~/.scripts:$PATH
 [[ $- != *i* ]] && return
 
 

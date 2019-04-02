@@ -7,169 +7,158 @@
 ;
 ;=====================================================
 
-;=====================================================
-;                       COLORS
-;=====================================================
-[colors]
+; Colors {{{;
 
-primary = #ffb52a
-secondary = #e60053
-alarm = =  ${xrdb:color9:#555}
-alert = ${xrdb:color1:#555}
+		[colors]
 
-background = ${xrdb:background:#555}
-background-alt = ${xrdb:color12:#555}
+		primary = #ffb52a
+		secondary = #e60053
+		alarm = =  ${xrdb:color9:#555}
+		alert = ${xrdb:color1:#555}
 
-foreground = ${xrdb:foreground:#555}
-foreground-alt = ${xrdb:color8:#555}
+		background = ${xrdb:background:#555}
+		background-alt = ${xrdb:color12:#555}
 
-red         =  ${xrdb:color1:#555}
-red-alt     =  ${xrdb:color9:#555}
-green       =  ${xrdb:color2:#555}
-green-alt   =  ${xrdb:color10:#555}
-yellow      =  ${xrdb:color3:#555}
-yellow-alt  =  ${xrdb:color11:#555}
-blue        =  ${xrdb:color4:#555}
-blue-alt    =  ${xrdb:color12:#555}
-magenta     =  ${xrdb:color5:#555}
-magenta-alt =  ${xrdb:color13:#555}
-cyan        =  ${xrdb:color6:#555}
-cyan-alt    =  ${xrdb:color14:#555}
-white       =  ${xrdb:color7:#555}
-white-alt   =  ${xrdb:color15:#555}
-temp        =  #D8DEE9
+		foreground = ${xrdb:foreground:#555}
+		foreground-alt = ${xrdb:color8:#555}
 
-;=====================================================
-;                       MAINBAR
-;=====================================================
+		red         =  ${xrdb:color1:#555}
+		red-alt     =  ${xrdb:color9:#555}
+		green       =  ${xrdb:color2:#555}
+		green-alt   =  ${xrdb:color10:#555}
+		yellow      =  ${xrdb:color3:#555}
+		yellow-alt  =  ${xrdb:color11:#555}
+		blue        =  ${xrdb:color4:#555}
+		blue-alt    =  ${xrdb:color12:#555}
+		magenta     =  ${xrdb:color5:#555}
+		magenta-alt =  ${xrdb:color13:#555}
+		cyan        =  ${xrdb:color6:#555}
+		cyan-alt    =  ${xrdb:color14:#555}
+		white       =  ${xrdb:color7:#555}
+		white-alt   =  ${xrdb:color15:#555}
+		temp        =  #D8DEE9
 
-[bar/main]
-monitor = ${env:MONITOR}
+;}}}
+; Mainbar{{{
 
-width = 100%
-height = 25
-;radius = 5
-offset-x  = 30
-offset-y  = 40
-override-redirect = false
+		[bar/main]
+		monitor = ${env:MONITOR}
 
-;fixed-center = true
+		width = 100%
+		height = 25
+		;radius = 5
+		offset-x  = 30
+		offset-y  = 40
+		override-redirect = false
 
-background = ${colors.background}
-foreground = ${colors.temp} 
+		;fixed-center = true
 
-line-size = 3
-line-color = #f00
+		background = ${colors.background}
+		foreground = ${colors.temp} 
 
-;border-size = 0
-border-color = #000000
+		line-size = 3
+		line-color = #f00
 
-spacing = 0
-padding-left = 0
-padding-right = 2
-module-margin-left = 0
-module-margin-right = 4
+		;border-size = 0
+		border-color = #000000
+
+		spacing = 0
+		padding-left = 0
+		padding-right = 2
+		module-margin-left = 0
+		module-margin-right = 4
 
 
-font-0 = FontAwesome:size=9;0
-font-1 = "Iosevka:pixelsize=10:antialias=true;0"
+		font-0 = FontAwesome:size=9;0
+		font-1 = "Iosevka:pixelsize=10:antialias=true;0"
 
-modules-left = i3 test 
-modules-center = date github github-itu
+		modules-left = i3 test 
+		modules-center = date github github-itu
 
-modules-right = filesystem  battery wifi  keyboard volume
+		modules-right = filesystem  battery wifi  keyboard volume 
 
-; tray-position = center 
-; tray-padding = 5 
-; tray-transparent = false
-; tray-background = ${colors.background}
+		; tray-position = center 
+		; tray-padding = 5 
+		; tray-transparent = false
+		; tray-background = ${colors.background}
 
-;=====================================================
-;
-;                       SECONDARYBAR
-;
-;=====================================================
+; }}}
+; Secondary bar {{{
 
-[bar/secondary]
-monitor = ${env:MONITOR}
-width = 100%
-height = 27
-radius = 0
-fixed-center = false
+		[bar/secondary]
+		monitor = ${env:MONITOR}
+		width = 100%
+		height = 27
+		radius = 0
+		fixed-center = false
 
-background = ${colors.background}
-foreground = ${colors.foreground}
+		background = ${colors.background}
+		foreground = ${colors.foreground}
 
-line-size = 3
-line-color = #f00
+		line-size = 3
+		line-color = #f00
 
-border-size = 0
-border-color = #00000000
+		border-size = 0
+		border-color = #00000000
 
-padding-left = 0
-padding-right = 2
+		padding-left = 0
+		padding-right = 2
 
-module-margin-left = 1
-module-margin-right = 2
+		module-margin-left = 1
+		module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
-font-3 = "FontAwesome:pixelsize=14;0"
+		font-0 = fixed:pixelsize=10;1
+		font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+		font-2 = siji:pixelsize=10;1
+		font-3 = "FontAwesome:pixelsize=14;0"
 
-modules-left = i3
+		modules-left = i3
 
+; }}}
+; Modules {{{
 
-;**********************************************************
-;
-;                       MODULES
-;
-;**********************************************************
+; I3WM {{{
+			
+		[module/i3]
+		type = internal/i3
+		# Icons
+		;ws-icon-[0-9]+ = label;icon
+		ws-icon-0 = 1;
+		ws-icon-1 = 2;
+		ws-icon-2 = 3;
+		ws-icon-3 = 4;
+		ws-icon-4 = 5;
+		ws-icon-5 = 6;
+		ws-icon-6 = 7;
+		ws-icon-7 = 8;
+		ws-icon-8 = 9;
+		ws-icon-9 = 10;
+		;ws-icon-default = 
 
+		strip-wsnumbers = true
 
-;**********************************************************
-;                       I3WM
-;**********************************************************
+		format = <label-state> <label-mode>
+		index-sort = true
+		wrapping-scroll = false
+		; Only show workspaces on the same output as the bar
+		pin-workspaces = true
 
-[module/i3]
-type = internal/i3
-# Icons
-;ws-icon-[0-9]+ = label;icon
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 10;
-;ws-icon-default = 
+		label-focused = "%name%: %icon%"
+		label-focused-underline = ${colors.red} 
+		label-focused-padding = 2
 
-strip-wsnumbers = true
+		label-unfocused = "%name%: %icon%"
+		label-unfocused-padding = 2
 
-format = <label-state> <label-mode>
-index-sort = true
-wrapping-scroll = false
-; Only show workspaces on the same output as the bar
-pin-workspaces = true
+		label-urgent = "%name%: %icon%"
+		label-urgent-underline = ${colors.red}
+		label-urgent-padding = 2
 
-label-focused = "%name%: %icon%"
-label-focused-underline = ${colors.red} 
-label-focused-padding = 2
+		label-visible = "%name%: %icon%"
+		label-visible-foreground = ${colors.foreground}
+		label-visible-padding = 2
 
-label-unfocused = "%name%: %icon%"
-label-unfocused-padding = 2
-
-label-urgent = "%name%: %icon%"
-label-urgent-underline = ${colors.red}
-label-urgent-padding = 2
-
-label-visible = "%name%: %icon%"
-label-visible-foreground = ${colors.foreground}
-label-visible-padding = 2
-
+; }}}
 ;**********************************************************
 ;                       XBACKLIGHT
 ;**********************************************************
@@ -469,6 +458,7 @@ label-mounted =  %free%
 ;label-unmounted = %mountpoint%: not mounted
 ;label-unmounted-foreground = ${colors.foreground-alt}
 
+; }}}
 ;**********************************************************
 ;
 ;                       SETTINGS
@@ -477,6 +467,7 @@ label-mounted =  %free%
 
 [settings]
 screenchange-reload = true
+
 
 [global/wm]
 margin-top = 5

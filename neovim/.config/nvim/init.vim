@@ -72,6 +72,7 @@ Plug 'fsharp/vim-fsharp', {
       \ 'for': 'fsharp',
       \ 'do':  'make fsautocomplete',
       \}
+Plug 'aserebryakov/vim-todo-lists'
 Plug 'jparise/vim-graphql'
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
@@ -89,7 +90,6 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'junegunn/limelight.vim'
-"Plug 'lervag/vimtex', { 'for': 'latex' }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'vim-airline/vim-airline'
@@ -102,7 +102,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'SirVer/ultisnips'
 Plug 'zchee/deoplete-jedi', {'for': ['python', 'python3','djangohtml'], 'do': 'pip install jedi;pip3 install jedi'}
-" Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
+Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
 Plug 'scrooloose/nerdtree'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -139,6 +139,12 @@ call plug#end()
 	" \ }
 " colorscheme PaperColor
 colorscheme nord
+
+augroup ColorOverrides
+	autocmd!
+	autocmd ColorScheme nord highlight Conceal guibg=NONE ctermbg=NONE
+augroup end
+
 set laststatus=2
 "Credit joshdick
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -465,6 +471,8 @@ let g:UltiSnipsEditSplit="vertical"
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_progname = 'nvr'
 let g:tex_flavor = 'latex'
+set conceallevel=2
+" let g:tex_conceal='abdmg'
 	"}}}
 	
 	" WhichKey {{{

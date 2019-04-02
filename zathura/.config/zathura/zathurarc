@@ -1,37 +1,41 @@
 # zathurarc
 
 set font                        "Office Code Pro 10"
-set default-bg                  "#dfddd5" #00
-set default-fg                  "#586e75" #01
+# Base16 Nord
+# Author: arcticicestudio
 
-set statusbar-fg                "#586e75" #04
-set statusbar-bg                "#c5c5c5"  #01
+set default-bg                  "#2E3440"
+set default-fg                  "#3B4252"
 
-set inputbar-bg                 "#c5c5c5" #00 currently not used
-set inputbar-fg                 "#586e75" #02
+set statusbar-fg                "#D8DEE9"
+set statusbar-bg                "#434C5E"
 
-set notification-error-bg       "#2aa198" #08
-set notification-error-fg       "#586e75" #00
+set inputbar-bg                 "#2E3440"
+set inputbar-fg                 "#8FBCBB"
 
-set notification-warning-bg     "#198844" #08
-set notification-warning-fg     "#dfddd5" #00
+set notification-bg             "#2E3440"
+set notification-fg             "#8FBCBB"
 
-set highlight-color             "#abaeaf" #0A
-set highlight-active-color      "#586e75" #0D
+set notification-error-bg       "#2E3440"
+set notification-error-fg       "#88C0D0"
 
-set completion-highlight-fg     "#ffffff" #02
-set completion-highlight-bg     "#dc322f" #0C
+set notification-warning-bg     "#2E3440"
+set notification-warning-fg     "#88C0D0"
 
-set completion-bg               "#dfddd5" #02
-set completion-fg               "#586e75" #0C
+set highlight-color             "#5E81AC"
+set highlight-active-color      "#EBCB8B"
 
-set notification-bg             "#dfddd5" #0B
-set notification-fg             "#586e75" #00
+set completion-bg               "#3B4252"
+set completion-fg               "#EBCB8B"
 
-set recolor-lightcolor          "#dfddd5" #00
-set recolor-darkcolor           "#586e75" #06
-set recolor                     "true"
+set completion-highlight-fg     "#8FBCBB"
+set completion-highlight-bg     "#EBCB8B"
 
+set recolor-lightcolor          "#2E3440"
+set recolor-darkcolor           "#ECEFF4"
+
+set recolor                     "false"
+set recolor-keephue             "false"
 # setting recolor-keep true will keep any color your pdf has.
 set recolor-keephue             "false"
 
