@@ -11,16 +11,16 @@ set statusbar-fg                "#D8DEE9"
 set statusbar-bg                "#434C5E"
 
 set inputbar-bg                 "#2E3440"
-set inputbar-fg                 "#8FBCBB"
+set inputbar-fg                 "#bf616a"
 
 set notification-bg             "#2E3440"
-set notification-fg             "#8FBCBB"
+set notification-fg             "#bf616a"
 
 set notification-error-bg       "#2E3440"
-set notification-error-fg       "#88C0D0"
+set notification-error-fg       "#bf616a"
 
 set notification-warning-bg     "#2E3440"
-set notification-warning-fg     "#88C0D0"
+set notification-warning-fg     "#bf616a"
 
 set highlight-color             "#5E81AC"
 set highlight-active-color      "#EBCB8B"
@@ -28,16 +28,18 @@ set highlight-active-color      "#EBCB8B"
 set completion-bg               "#3B4252"
 set completion-fg               "#EBCB8B"
 
-set completion-highlight-fg     "#8FBCBB"
+set completion-highlight-fg     "#bf616a"
 set completion-highlight-bg     "#EBCB8B"
 
 set recolor-lightcolor          "#2E3440"
 set recolor-darkcolor           "#ECEFF4"
 
-set recolor                     "false"
-set recolor-keephue             "false"
+set recolor                     "true"
+
 # setting recolor-keep true will keep any color your pdf has.
 set recolor-keephue             "false"
+
+set guioptions "c"
 
 # add copied text to clipboard
 set selection-clipboard clipboard
