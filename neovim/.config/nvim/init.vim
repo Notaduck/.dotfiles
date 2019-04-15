@@ -239,7 +239,7 @@ autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 	
  " Settings for various plugins {{{
 " Use Alt+j/k to easily move a line
-let g:move_key_modifier = 'A' 
+let g:move_key_modifier = 'C' 
 " ALE {{{
 
 let g:ale_enable = 1 
