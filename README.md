@@ -7,7 +7,7 @@
 ██████╔╝╚██████╔╝   ██║   ██║     ██║███████╗███████╗███████║  
 ╚═════╝  ╚═════╝    ╚═╝   ╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝                                                               
 ```
-**THE SCREENSHOTS DOES NOT REFLECT THE CURRENT COLOR SCHEME (*which is NORD*) **
+**THE SCREENSHOTS DOES NOT REFLECT THE CURRENT COLOR SCHEME (which is NORD) **
 
 ### Description
 
