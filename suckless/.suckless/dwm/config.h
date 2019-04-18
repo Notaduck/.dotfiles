@@ -35,7 +35,7 @@ static const Rule rules[] = {
 	{ "Gimp",						 NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",			   NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Vivalde-stable",  NULL,       NULL,       1,			       0,           -1 },
-	{ "weechat",			   NULL,       NULL,       4,			       0,           -1 },
+	{ "st-256color",     "weechat",  "weechat",  4,			       0,           -1 },
 };
 
 /* layout(s) */
@@ -45,11 +45,11 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[T]",   tile },    /* first entry is default */
-	{ "[F]",   NULL },    /* no layout function means floating behavior */
-	{ "[M]",   monocle }, /* monocle is good for maximizing the preservation and focusing of the window */
-	{ "(@)",   spiral },
-	{ "[\\]",  dwindle },
+	{ "[FIB]",	 spiral },  /* first entry is default */
+	{ "[T]",		 tile },    
+	{ "[F]",		 NULL },    /* no layout function means floating behavior */
+	{ "[M]",		 monocle }, /* monocle is good for maximizing the preservation and focusing of the window */
+	{ "[RFIB]",  dwindle },
 };
 
 /* key definitions */
@@ -72,15 +72,19 @@ static const char *volupcmd[]      = { "amixer", "-q", "set", "Master", "5%+", N
 static const char *voldncmd[]      = { "amixer", "-q", "set", "Master", "5%-", NULL };
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 static const char *flameshotcmd[]	   = { "flameshot gui", NULL };
+static const char *lastpasscmd[]	   = { "lastpass-dmenu", "copy", NULL };
 
 
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ControlMask,             XK_p,      spawn,          {.v = lastpasscmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ControlMask,        		XK_comma,  cyclelayout,    {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },

@@ -81,6 +81,7 @@ fi
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+export LPASS_CLIPBOARD_COMMAND="xclip -selection clipboard -in -l 1"
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
