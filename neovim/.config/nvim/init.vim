@@ -278,7 +278,7 @@ let g:ale_linters = {
 		\	'go': ['go build', 'gometalinter'],
 		\	'rust': ['rustc'],
 		\	'html': ['tidy', 'htmlhint'],
-		\	'c': ['clang'],
+		\	'c': ['clang', 'uncrustify'],
 		\	'cpp': ['clang++'],
 		\	'css': ['csslint', 'stylelint'],
 		\	'nim': ['nim', 'nimsuggest'],

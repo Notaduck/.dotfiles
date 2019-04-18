@@ -256,13 +256,15 @@
 					for_window [instance="git"] floating enable
 					for_window [instance="git"] resize set 800 600
 					for_window [instance="git"] move scratchpad
-					#for_window [instance="git"] border pixel 5
+					for_window [instance="git"] border pixel 5 
+					#for_window [instance="git"] border pixel 
 					exec --no-startup-id $term --name="git" 
 
 					# Move weechat term to scratchpad, open it with mod+g
 					for_window [instance="weechat"] floating enable
 					for_window [instance="weechat"] resize set 1200 800
 					for_window [instance="weechat"] move scratchpad
+					for_window [instance="weechat"] border pixel 5
 					#for_window [instance="weechat"] border pixel 5
 					exec --no-startup-id $term --name="weechat" --exec=weechat
 
