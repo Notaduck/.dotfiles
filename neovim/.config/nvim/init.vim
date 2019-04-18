@@ -28,17 +28,15 @@ endif
 if !has('python3') && !has('pip3')
 	call system('pip3 install --upgrade pip')
 	call system('pip3 install neovim --upgrade')
-	"echo system('Installing upgrade pip3 and install neovim')
 endif
 
 if !has('~/.vim/tmp/')
 	call system('mkdir -p ~/.vim/tmp')
 endif
 
-"if !has('npm')
-"	call system('sudo pacman -S nodejs npm')
-	"echo system('installing nodejs and npm')
-"endif
+if !has('npm')
+	call system('sudo pacman -S nodejs npm')
+endif
 
 "if !has('eslint')
 "	call system('sudo npm install -g eslint')
@@ -68,17 +66,7 @@ endif
 
 "required
 call plug#begin('~/local/share/nvim/plugged')
-Plug 'fsharp/vim-fsharp', {
-      \ 'for': 'fsharp',
-      \ 'do':  'make fsautocomplete',
-      \}
 Plug 'aserebryakov/vim-todo-lists'
-Plug 'jparise/vim-graphql'
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': 'javascript' }
-Plug 'epilande/vim-es2015-snippets'
-Plug 'epilande/vim-react-snippets'
-Plug 'mattn/emmet-vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
@@ -91,7 +79,6 @@ Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'junegunn/limelight.vim'
 Plug 'lervag/vimtex', { 'for': 'tex' }
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'matze/vim-move'
@@ -104,6 +91,7 @@ Plug 'SirVer/ultisnips'
 Plug 'zchee/deoplete-jedi', {'for': ['python', 'python3','djangohtml'], 'do': 'pip install jedi;pip3 install jedi'}
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
 Plug 'scrooloose/nerdtree'
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -181,6 +169,9 @@ set cursorline "Highligt currentline
 filetype plugin indent on  
 set autowriteall ""automatically save any changes made to the buffer before it is hidden.
 
+setlocal spell
+set spelllang=da,en_us
+
 " " use 4 spaces for tabs
 set tabstop=2 softtabstop=2 shiftwidth=2
 
@@ -207,6 +198,8 @@ noremap <Leader>p :! nohup zathura ./main.pdf &<CR><CR>
 
 " Set spell checking
 map <F5> :setlocal spell! spelllang=da,en_us<CR>
+" correct the error from left to right
+inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 "}}}
 
 " Indentation {{{
@@ -240,6 +233,7 @@ autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
  " Settings for various plugins {{{
 " Use Alt+j/k to easily move a line
 let g:move_key_modifier = 'C' 
+
 " ALE {{{
 
 let g:ale_enable = 1 

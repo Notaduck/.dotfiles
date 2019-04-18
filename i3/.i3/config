@@ -1,4 +1,5 @@
 # i3 config file (v4)
+
 # Variables {{{
 
 		# set terminal
@@ -8,6 +9,7 @@
 		set $mod Mod4
 
 	#}}}
+
 # Startup settings {{{
 
 		# Autostart applications
@@ -38,6 +40,7 @@
     exec_always --no-startup-id ~/.config/polybar/polybar.sh
 
 #}}}
+
 # Bindings {{{
 
 		# Pulse Audio controls
@@ -215,6 +218,7 @@
 
 	}
 #}}}
+
 # Window/Workspace/Border settings{{{
 
 			# Configure border style <normal|1pixel|pixel xx|none|pixel>
@@ -277,11 +281,13 @@
 			#}}}
 
 #}}}
+
 # Various settings {{{
 
 	floating_modifier $mod
 
 #}}}
+
 # Workspace settings{{{ 
 
 			# switch to workspace
@@ -327,6 +333,7 @@
 			client.unfocused        $bg						$bg				  	$fg						$bg
 			client.urgent           $bg						$bg						$fg					 	$yellow  
 #}}}
+
 # Settings for gaps {{{
 
 		# Set inner/outer gaps
@@ -382,3 +389,4 @@
 						bindsym Escape mode "default"
 		}
 #}}}
+

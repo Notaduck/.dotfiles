@@ -59,7 +59,7 @@ export UPDATE_ZSH_DAYS=13
 plugins=(
   git
   zsh-autosuggestions 
-	zsh-completions
+	# zsh-completions
   )
 
 source $ZSH/oh-my-zsh.sh
@@ -96,6 +96,7 @@ alias zshupdate="source ~/.zshrc"
 alias vim="nvim"
 alias itu='~/Nextcloud/Skole/ITU/4_semester'
 alias rm='rmtrash'
+alias def='definition'
 # `cclip' copies and `clipp' pastes'
 alias cclip='xclip -selection clipboard'
 alias clipp='xclip -selection clipboard -o'
