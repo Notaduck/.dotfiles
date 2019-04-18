@@ -1,0 +1,37 @@
+diff --git a/config.def.h b/config.def.h
+index 5352f43..d9dbb3b 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -156,8 +156,14 @@ static unsigned int defaultattr = 11;
+  */
+ static MouseShortcut mshortcuts[] = {
+ 	/* button               mask            string */
+-	{ Button4,              XK_ANY_MOD,     "\031" },
+-	{ Button5,              XK_ANY_MOD,     "\005" },
++	{ Button4,              XK_NO_MOD,      "\031" },
++	{ Button5,              XK_NO_MOD,      "\005" },
++};
++
++MouseKey mkeys[] = {
++	/* button               mask            function        argument */
++	{ Button4,              ShiftMask,      kscrollup,      {.i =  1} },
++	{ Button5,              ShiftMask,      kscrolldown,    {.i =  1} },
+ };
+ 
+ /* Internal keyboard shortcuts. */
+diff --git a/config.h b/config.h
+index fe5de05..ac7d03c 100644
+--- a/config.h
++++ b/config.h
+@@ -156,6 +156,11 @@ static MouseShortcut mshortcuts[] = {
+ 	{ Button5,              XK_ANY_MOD,     "\005" },
+ };
+ 
++MouseKey mkeys[] = {
++	/* button               mask            function        argument */
++	{ Button4,              ShiftMask,      kscrollup,      {.i =  1} },
++	{ Button5,              ShiftMask,      kscrolldown,    {.i =  1} },
++};
+ /* Internal keyboard shortcuts. */
+ #define MODKEY Mod1Mask
+ #define TERMMOD (ControlMask|ShiftMask)
