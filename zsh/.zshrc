@@ -5,6 +5,7 @@
 export ZSH=/home/daniel/.oh-my-zsh
 export PATH=~/.scripts:$PATH
 export EDITOR=nvim
+export LANG=en_DK.utf8
 
 export PATH=~/.npm-global/bin:$PATH
 export PATH=$PATH:~/.npm-global/lib/
