@@ -45,11 +45,10 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[FIB]",	 spiral },  /* first entry is default */
 	{ "[T]",		 tile },    
+	{ "[FIB]",	 spiral },  /* first entry is default */
 	{ "[F]",		 NULL },    /* no layout function means floating behavior */
 	{ "[M]",		 monocle }, /* monocle is good for maximizing the preservation and focusing of the window */
-	{ "[RFIB]",  dwindle },
 };
 
 /* key definitions */
@@ -74,6 +73,8 @@ static const char *voldncmd[]      = { "amixer", "-q", "set", "Master", "5%-", N
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 static const char *flameshotcmd[]	   = { "flameshot gui", NULL };
 static const char *lastpasscmd[]	   = { "lastpass-dmenu", "copy", NULL };
+static const char *brightnessupcmd[]	   = { "cwm-brightness", "up", NULL };
+static const char *brightnessdowncmd[]	   = { "cwm-brightness", "down", NULL };
 
 
 
@@ -120,6 +121,8 @@ static Key keys[] = {
   { False,                        XF86XK_AudioMute,          spawn,          {.v = mutecmd } },
   { False,                        XF86XK_AudioRaiseVolume,   spawn,          {.v = volupcmd } },
   { False,                        XF86XK_AudioLowerVolume,   spawn,          {.v = voldncmd } },
+  { False,                        XF86XK_MonBrightnessUp,    spawn,          {.v = brightnessupcmd } },
+  { False,                        XF86XK_MonBrightnessDown,  spawn,          {.v = brightnessdowncmd } },
 	{ False,                        XK_Print,                  spawn,          {.v = flameshotcmd } },
 };
 
