@@ -1,4 +1,5 @@
---- dwm/dwm.c.orig	2015-11-22 13:26:16.664650238 -0700 +++ dwm/dwm.c	2015-11-22 13:25:57.407984351 -0700
+--- dwm/dwm.c.orig	2015-11-22 13:26:16.664650238 -0700
++++ dwm/dwm.c	2015-11-22 13:25:57.407984351 -0700
 @@ -52,8 +52,8 @@
  #define ISVISIBLE(C)            ((C->tags & C->mon->tagset[C->mon->seltags]))
  #define LENGTH(X)               (sizeof X / sizeof X[0])
@@ -32,8 +33,8 @@
 +	if (c->isfloating || selmon->lt[selmon->sellt]->arrange == NULL) {
 +		gapincr = gapoffset = 0;
 +	} else {
-+		/* Remove border and gap if layout is monocle */
-+		if (selmon->lt[selmon->sellt]->arrange == monocle ) {
++		/* Remove border and gap if layout is monocle or only one client */
++		if (selmon->lt[selmon->sellt]->arrange == monocle || n == 1) {
 +			gapoffset = 0;
 +			gapincr = -2 * borderpx;
 +			wc.border_width = 0;
