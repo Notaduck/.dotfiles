@@ -19,45 +19,45 @@ if has('vim_starting')
 	end
 endif
 
-if !has('python') && !has('pip')
-	call system('pip install --upgrade pip')
-	call system('pip install neovim --upgrade')
-	"echo system('Installing upgrade pip and install neovim')
-endif
-
-if !has('python3') && !has('pip3')
-	call system('pip3 install --upgrade pip')
-	call system('pip3 install neovim --upgrade')
-endif
-
-if !has('~/.vim/tmp/')
-	call system('mkdir -p ~/.vim/tmp')
-endif
-
-if !has('npm')
-	call system('sudo pacman -S nodejs npm')
-endif
-
-"if !has('eslint')
-"	call system('sudo npm install -g eslint')
-	"echo system('installing eslint')
+"if !has('python') && !has('pip')
+"	call system('pip install --upgrade pip')
+"	call system('pip install neovim --upgrade')
+"	"echo system('Installing upgrade pip and install neovim')
 "endif
 
-let g:python_host_skip_check = 1
-let g:python2_host_skip_check = 1
-let g:python3_host_skip_check = 1
+"if !has('python3') && !has('pip3')
+"	call system('pip3 install --upgrade pip')
+"	call system('pip3 install neovim --upgrade')
+"endif
 
-if executable('python2.7')
-	"let g:python_host_prog = system('which python')
-	let g:python_host_prog = "/usr/bin/python2.7"
-endif
+"if !has('~/.vim/tmp/')
+"	call system('mkdir -p ~/.vim/tmp')
+"endif
 
-if executable('python3')
-	"let g:python3_host_prog = system('which python3')
-	let g:python3_host_prog = "/usr/bin/python3"
-endif
+"if !has('npm')
+"	call system('sudo pacman -S nodejs npm')
+"endif
 
-" }}} 
+""if !has('eslint')
+""	call system('sudo npm install -g eslint')
+"	"echo system('installing eslint')
+""endif
+
+"let g:python_host_skip_check = 1
+"let g:python2_host_skip_check = 1
+"let g:python3_host_skip_check = 1
+
+"if executable('python2.7')
+"	"let g:python_host_prog = system('which python')
+"	let g:python_host_prog = "/usr/bin/python2.7"
+"endif
+
+"if executable('python3')
+"	"let g:python3_host_prog = system('which python3')
+"	let g:python3_host_prog = "/usr/bin/python3"
+"endif
+
+"" }}} 
 
  " Plugin section {{{
 " Specify a directory for plugins
@@ -78,7 +78,7 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'junegunn/limelight.vim'
-Plug 'lervag/vimtex', { 'for': 'tex' }
+Plug 'lervag/vimtex'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'matze/vim-move'
