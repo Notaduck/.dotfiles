@@ -1,0 +1,68 @@
+#!/bin/env sh
+
+ ISRUNNING="$(pgrep spotify)"
+
+# Start spotify if it isn't running
+if [ -z "$ISRUNNING" ]
+then
+		nohup spotify &
+fi
+
+
+notify-send "Brightness: $(printf %.0f%% $(xbacklight -get))" -h string:x-canonical-private-synchronous:my-notification
+
+display_usage() {
+  echo
+  echo "Usage: $0"
+  echo
+  echo " -h, --help   Display usage instructions"
+	echo " -n, --next		Next song"
+  echo " -p, --prev   Previous song"
+  echo " -s, --start  Start/Pause"
+  echo
+}
+
+next_song(){
+	command dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+	notify-send "Next song" -h string:spotify:controller
+}
+
+prev_song(){
+	command dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+	notify-send "Previous song" -h string:spotify:controller
+}
+
+start_pause_song(){
+	command dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+	notify-send "Play/Pause song" -h string:spotify:controller
+}
+
+raise_error() {
+  local error_message="$@"
+  echo "${error_message}" 1>&2;
+}
+
+argument="$1"
+if [[ -z $argument ]] ; then
+  raise_error "Expected argument to be present"
+  display_usage
+else
+  case $argument in
+    -h|--help)
+      display_usage
+      ;;
+    -n|--next)
+			next_song
+      ;;
+    -p|--prev)
+      prev_song 
+      ;;
+    -s|--start)
+			start_pause_song
+      ;;
+    *)
+      raise_error "Unknown argument: ${argument}"
+      display_usage
+      ;;
+  esac
+fi
