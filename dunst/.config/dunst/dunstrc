@@ -192,29 +192,26 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    # Paper color
-		#background = "#dfddd5"
-    #foreground = "#198844"
-    #timeout = 10
-    background = "#3B4252"
-    foreground = "#4C566A"
-		timeout = 4
+    background = "#2f343f"
+    foreground = "#f5f8f6"
+    timeout = 2
+    # Icon for notifications with low urgency, uncomment to enable
+    #icon = /path/to/icon
+
 [urgency_normal]
-    # Paper color
-#    background = "#dfddd5"
-#    foreground = "#657b83"
-#    timeout = 10
-    background = "#434C5E"
-    foreground = "#E5E9F0"
-		 timeout = 6
+    background = "#2f343f"
+    foreground = "#f5f8f6"
+    timeout = 4
+    # Icon for notifications with normal urgency, uncomment to enable
+    #icon = /path/to/icon
+
 [urgency_critical]
-     # Paper color
-#    background = "#dfddd5"
-#    foreground = "#dc322f"
-#    timeout = 0
-    background = "#88C0D0"
-    foreground = "#ECEFF4"
-		 timeout = 8
+    background = "#2f343f"
+    foreground = "#f5f8f6"
+    frame_color = "#e3788f"
+    timeout = 0
+    # Icon for notifications with critical urgency, uncomment to enable
+    #icon = /path/to/icon
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
