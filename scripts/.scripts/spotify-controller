@@ -1,15 +1,5 @@
 #!/bin/env sh
 
- ISRUNNING="$(pgrep spotify)"
-
-# Start spotify if it isn't running
-if [ -z "$ISRUNNING" ]
-then
-		nohup spotify &
-fi
-
-
-notify-send "Brightness: $(printf %.0f%% $(xbacklight -get))" -h string:x-canonical-private-synchronous:my-notification
 
 display_usage() {
   echo
@@ -42,8 +32,14 @@ raise_error() {
   echo "${error_message}" 1>&2;
 }
 
+
 argument="$1"
-if [[ -z $argument ]] ; then
+ISRUNNING="$(pgrep spotify)"
+
+# Start spotify if it isn't running
+if [ -z "$ISRUNNING" ] ; then
+		nohup spotify &
+elif [[ -z $argument ]] ; then
   raise_error "Expected argument to be present"
   display_usage
 else

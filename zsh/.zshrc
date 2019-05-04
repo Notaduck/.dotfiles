@@ -5,6 +5,7 @@
 export ZSH=/home/daniel/.oh-my-zsh
 export PATH=~/.scripts:$PATH
 export EDITOR=nvim
+export BROWSER=vivaldi-stable
 export LANG=en_DK.utf8
 export LC_ALL=en_DK.UTF-8
 

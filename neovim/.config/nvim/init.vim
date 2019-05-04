@@ -66,6 +66,10 @@ endif
 
 "required
 call plug#begin('~/local/share/nvim/plugged')
+Plug 'fsharp/vim-fsharp', {
+      \ 'for': 'fsharp',
+      \ 'do':  'make fsautocomplete',
+      \}
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mhinz/vim-startify'

@@ -2,10 +2,9 @@
 
 #include <X11/XF86keysym.h>
 #include "fibonacci.c"
-#include "selfrestart.c"
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int gappx     = 7;        /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -20,11 +19,11 @@ static const char col_cyan[]        = "#005577";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-};
+	[SchemeSel]  = { col_gray4, col_cyan,  col_gray4  },
 
+};
 /* tagging */
-static const char *tags[] = { "WEB", "TERM", "DEV", "CHAT", "RAND"  };
+static const char *tags[] = { "WEB", "TERM", "DEV", "CHAT", "MEDIA", "RAND"  };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -35,7 +34,8 @@ static const Rule rules[] = {
 	{ "Gimp",						 NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",			   NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Vivalde-stable",  NULL,       NULL,       1,			       0,           -1 },
-	{ "st-256color",     "weechat",  "weechat",  4,			       0,           -1 },
+	{ "Spotify",				 NULL,       NULL,       5,			       0,           -1 },
+	{ "st-256color",     "weechat",  NULL,		   5,			       0,           -1 },
 };
 
 /* layout(s) */
@@ -47,8 +47,8 @@ static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[T]",		 tile },    
 	{ "[FIB]",	 spiral },  /* first entry is default */
-	{ "[F]",		 NULL },    /* no layout function means floating behavior */
 	{ "[M]",		 monocle }, /* monocle is good for maximizing the preservation and focusing of the window */
+	{ "[F]",		 NULL },    /* no layout function means floating behavior */
 };
 
 /* key definitions */
@@ -66,6 +66,7 @@ static const char scratchpadname[] = "scratchpad";
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *network_dmenu[] = { "networkmanager_dmenu", NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 static const char *mutecmd[]       = { "amixer", "-q", "set", "Master", "toggle", NULL };
@@ -77,17 +78,20 @@ static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34
 static const char *flameshotcmd[]	   = { "flameshot gui", NULL };
 static const char *lastpasscmd[]	   = { "lastpass-dmenu", "copy", NULL };
 
-static const char *brightnessupcmd[]	   = { "cwm-brightness", "up", NULL };
-static const char *brightnessdowncmd[]	   = { "cwm-brightness", "down", NULL };
+static const char *brightnessup[]	   = { "zsh", "-c", ". ~/.zshrc; brightness up"};
+static const char *brightnessdown[]	   = { "zsh", "-c", ". ~/.zshrc; brightness down"};
 
 
+static const char *spotify_playcmd[]	   = { "zsh", "-c", ". ~/.zshrc; spotify-controller -s"};
+static const char *spotify_nextcmd[]	   = { "zsh", "-c", ". ~/.zshrc; spotify-controller -n"};
+static const char *spotify_prevcmd[]	   = { "zsh", "-c", ". ~/.zshrc; spotify-controller -p"};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = lastpasscmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ControlMask,           XK_a,		   togglescratch,  {.v = scratchpadcmd } },
+	{ MODKEY|ShiftMask,             XK_i, spawn,							 {.v = network_dmenu } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ControlMask,        		XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
@@ -111,7 +115,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-  { MODKEY|ShiftMask,             XK_r,      self_restart,   {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -125,8 +128,11 @@ static Key keys[] = {
   { False,                        XF86XK_AudioMute,          spawn,          {.v = mutecmd } },
   { False,                        XF86XK_AudioRaiseVolume,   spawn,          {.v = volupcmd } },
   { False,                        XF86XK_AudioLowerVolume,   spawn,          {.v = voldncmd } },
-  { False,                        XF86XK_MonBrightnessUp,    spawn,          {.v = brightnessupcmd } },
-  { False,                        XF86XK_MonBrightnessDown,  spawn,          {.v = brightnessdowncmd } },
+  { False,                        XF86XK_MonBrightnessUp,    spawn,          {.v = brightnessup } },
+  { False,                        XF86XK_MonBrightnessDown,  spawn,          {.v = brightnessdown } },
+  { False,                        XF86XK_AudioPlay,					 spawn,          {.v = spotify_playcmd } },
+  { False,                        XF86XK_AudioNext,					 spawn,          {.v = spotify_nextcmd } },
+  { False,                        XF86XK_AudioPrev,					 spawn,          {.v = spotify_prevcmd } },
 	{ False,                        XK_Print,                  spawn,          {.v = flameshotcmd } },
 };
 
