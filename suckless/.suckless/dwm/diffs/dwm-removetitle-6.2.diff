@@ -1,0 +1,38 @@
+From 1c612db8a70828f25cc20b669a3950bc29c1ce4f Mon Sep 17 00:00:00 2001
+From: astier <aleksandrs.stier@uni-bielefeld.de>
+Date: Thu, 21 Feb 2019 16:39:23 +0100
+Subject: [PATCH] Remove client-title from the statusbar
+
+Remove the title of the currently selected client from the statusbar.
+This is useful for people who find no value in displaying the title
+and want to declutter their statusbar. Also it leads to simpler code
+since this patch only removes code.
+---
+ dwm.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
+
+diff --git a/dwm.c b/dwm.c
+index 4465af1..3845492 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -729,15 +729,8 @@ drawbar(Monitor *m)
+ 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+ 
+ 	if ((w = m->ww - sw - x) > bh) {
+-		if (m->sel) {
+-			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+-			if (m->sel->isfloating)
+-				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+-		} else {
+-			drw_setscheme(drw, scheme[SchemeNorm]);
+-			drw_rect(drw, x, 0, w, bh, 1, 1);
+-		}
++		drw_setscheme(drw, scheme[SchemeNorm]);
++		drw_rect(drw, x, 0, w, bh, 1, 1);
+ 	}
+ 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
+ }
+-- 
+2.20.1
+
