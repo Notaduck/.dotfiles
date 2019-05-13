@@ -1,6 +1,7 @@
 
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+export _JAVA_AWT_WM_NONREPARENTING=1
 # Path to your oh-my-zsh installation.
 export ZSH=/home/daniel/.oh-my-zsh
 export PATH=~/.scripts:$PATH

@@ -77,10 +77,10 @@
 
 		modules-right = filesystem  battery wifi  keyboard volume 
 
-		; tray-position = center 
-		; tray-padding = 5 
-		; tray-transparent = false
-		; tray-background = ${colors.background}
+		tray-position = center 
+		tray-padding = 5 
+		tray-transparent = false
+		tray-background = ${colors.background}
 
 ; }}}
 ; Secondary bar {{{

@@ -106,6 +106,7 @@ endif
 
 " Themes {{{
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'chriskempson/base16-vim'
 Plug 'arcticicestudio/nord-vim'
 Plug	'ajh17/Spacegray.vim'
 " }}}
