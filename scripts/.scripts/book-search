@@ -50,7 +50,7 @@ gen_list(){
 main() {
   get_books
   book=$( (gen_list) | rofi -dmenu -i -matching fuzzy -only-match -location 0 -p "Books > " )
-  xdg-open "${BOOKS[$book]}"
+  zathura "${BOOKS[$book]}"
 }
 
 main

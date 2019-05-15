@@ -1,10 +1,25 @@
 --- x.c
 +++ x.c
-@@ -248,7 +248,6 @@ bpress(XEvent *e)
+@@ -409,6 +409,7 @@ bpress(XEvent *e)
  {
  	struct timespec now;
  	MouseShortcut *ms;
--	MouseKey *mk;
++	MouseKey *mk;
+ 	int snap;
  
  	if (IS_SET(MODE_MOUSE) && !(e->xbutton.state & forceselmod)) {
- 		mousereport(e);
+@@ -424,6 +425,14 @@ bpress(XEvent *e)
+ 		}
+ 	}
+ 
++	for (mk = mkeys; mk < mkeys + LEN(mkeys); mk++) {
++		if (e->xbutton.button == mk->b
++				&& match(mk->mask, e->xbutton.state)) {
++			mk->func(&mk->arg);
++			return;
++		}
++	}
++
+ 	if (e->xbutton.button == Button1) {
+ 		/*
+ 		 * If the user clicks below predefined timeouts specific

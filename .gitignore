@@ -7,7 +7,8 @@ drw.o
 dwm
 dwm.o
 util.o
-
+*.*.rej
+*.rej
 
 # Prerequisites
 *.d
