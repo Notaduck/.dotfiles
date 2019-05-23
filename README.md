@@ -7,8 +7,8 @@
 ██████╔╝╚██████╔╝   ██║   ██║     ██║███████╗███████╗███████║  
 ╚═════╝  ╚═════╝    ╚═╝   ╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝                                                               
 ```
->THE SCREENSHOTS DOES NOT REFLECT THE CURRENT COLOR SCHEME (which is NORD)
-> In order to get the same colorscheme as the screenshot the terminal colorscheme should be changed with the following cmd `color PaperColour.fork` and vim's colorscheme should be changed as well.
+**THE SCREENSHOTS DOES NOT REFLECT THE CURRENT COLOR SCHEME (which is NORD)
+In order to get the same colorscheme as the screenshot the terminal colorscheme should be changed with the following cmd `color PaperColour.fork` and vim's colorscheme should be changed as well.**
 
 ### Description
 
