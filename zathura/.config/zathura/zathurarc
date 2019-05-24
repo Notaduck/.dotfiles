@@ -4,13 +4,13 @@ set font                        "Office Code Pro 10"
 # Base16 Nord
 # Author: arcticicestudio
 
-set default-bg                  "#2E3440"
+set default-bg                  "#D8DEE9"
 set default-fg                  "#3B4252"
 
-set statusbar-fg                "#D8DEE9"
-set statusbar-bg                "#434C5E"
+set statusbar-bg                "#D8DEE9"
+set statusbar-fg                "#434C5E"
 
-set inputbar-bg                 "#2E3440"
+set inputbar-bg                 "#D8DEE9"
 set inputbar-fg                 "#bf616a"
 
 set notification-bg             "#2E3440"

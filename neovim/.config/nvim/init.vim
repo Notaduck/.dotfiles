@@ -70,6 +70,7 @@ Plug 'fsharp/vim-fsharp', {
       \ 'for': 'fsharp',
       \ 'do':  'make fsautocomplete',
       \}
+Plug 'vim-scripts/bash-support.vim'
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mhinz/vim-startify'
@@ -174,8 +175,8 @@ set cursorline "Highligt currentline
 filetype plugin indent on  
 set autowriteall ""automatically save any changes made to the buffer before it is hidden.
 
-setlocal spell
-set spelllang=da,en_us
+" setlocal spell
+" set spelllang=da,en_us
 
 " " use 4 spaces for tabs
 set tabstop=2 softtabstop=2 shiftwidth=2
