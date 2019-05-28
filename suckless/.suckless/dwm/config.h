@@ -43,7 +43,8 @@ static const Layout layouts[] = {
 	{ "[T]",      tile },    /* first entry is default */
 	{ "[F]",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
-	{ "[FIB]",		spiral }
+	{ "[FIB]",		spiral },
+	{	NULL,				NULL}
 };
 
 /* key definitions */
@@ -77,6 +78,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
+	{ MODKEY,					              XK_i,      view_adjacent,  { .i = +1 } },
+	{ MODKEY,										    XK_u,      view_adjacent,  { .i = -1 } },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
