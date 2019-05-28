@@ -3,9 +3,6 @@ vim-markdown-preview.html
 nvim.log
 
 # DWM
-drw.o
-dwm
-dwm.o
 util.o
 *.*.rej
 *.rej
