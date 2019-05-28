@@ -1,5 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+#
+export PATH=/home/$USER/.scripts:$PATH
+export PATH=~/.npm-global/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/daniel/.oh-my-zsh"
@@ -96,6 +99,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # For a full list of active aliases, run `alias`.
 #
 alias vim="nvim"
+alias def="definition"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"

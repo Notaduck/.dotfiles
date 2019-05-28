@@ -19,14 +19,14 @@ cur=$(xbacklight -get)
 case "$1" in
 	"up")
 			xbacklight -inc $incr
-			send_notification
+			# send_notification
 	;;
 	"down")
 		if [[ $cur -le 5 ]]; then
 			xbacklight -set 1
 		else
 			xbacklight -dec $incr
-			send_notification
+			# send_notification
 		fi
 	;;
 	*)

@@ -186,6 +186,8 @@ launch_daemons() {
 get_bat() {
     if [ -f /tmp/bar/bat ] && [ "$(< /tmp/bar/bat)" != NONE ] ; then
         echo "[ $(< /tmp/bar/bat) ]"
+
+^C
     fi
 }
 
@@ -194,6 +196,7 @@ get_wifi() {
         echo "[ $(< /tmp/bar/wifi) ]"
     fi
 }
+
 
 init
 launch_daemons

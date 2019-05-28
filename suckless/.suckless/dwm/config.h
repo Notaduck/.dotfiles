@@ -1,6 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 #include "fibonacci.c"
 #include "./themes/nord.c"
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 4;        /* border pixel of windows */
@@ -53,6 +54,13 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *networkmanager_dmenu[] = {"networkmanager_dmenu", NULL};
 static const char *termcmd[]  = { "st", NULL };
 
+static const char *upvol[]   = { "/home/daniel/.scripts/pavcol.sh", "up",     NULL };
+static const char *downvol[] = { "/home/daniel/.scripts/pavcol.sh", "down",   NULL };
+static const char *mutevol[] = { "/home/daniel/.scripts/pavcol.sh", "toggle", NULL };
+
+static const char *brightnessup[] = { "/home/daniel/.scripts/brightness", "up", NULL };
+static const char *brightnessdown[] = { "/home/daniel/.scripts/brightness", "down", NULL };
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -93,6 +101,11 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ 0,													  XF86XK_AudioLowerVolume,	spawn, {.v = downvol } },
+	{ 0,														XF86XK_AudioMute,					spawn, {.v = mutevol } },
+	{ 0,														XF86XK_AudioRaiseVolume,	spawn, {.v = upvol } },
+	{ 0,														XF86XK_MonBrightnessUp,		spawn, {.v = brightnessup } },
+	{ 0,														XF86XK_MonBrightnessDown,	spawn, {.v = brightnessdown } },
 };
 
 /* button definitions */
