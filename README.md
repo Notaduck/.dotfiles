@@ -12,6 +12,8 @@ In order to get the same colorscheme as the screenshot the terminal colorscheme 
 
 ### Description
 
+Some applications is crossed over, since I don't use them any more but the configuration files will still be in the repo.
+
 > - Browser == `vivaldi` 
 > - Compositor == `compton`
 > - Network manager == `networkmanager_dmenu` 
@@ -19,7 +21,7 @@ In order to get the same colorscheme as the screenshot the terminal colorscheme 
 > - Program launcher == `rofi` 
 > - Terminal == `termite` 
 > - Text editor == `neovim`
-> - Window manager == `i3wm`  
+> - Window manager == ~~`i3wm`~~  `dwm`
 > - Shell == `ZSH`
 
 
