@@ -163,8 +163,8 @@ endif
 " }}}
 
 " General settings {{{
-set runtimepath+=/home/daniel/.vim/deoplete
-set runtimepath+=/home/daniel/.vim/deoplete-fsharp
+set runtimepath+=/home/$USER/.vim/deoplete
+set runtimepath+=/home/$USER/.vim/deoplete-fsharp
 
 set directory^=$HOME/.vim/tmp// " Place all swap files under .vim/tmp
 set clipboard=unnamedplus " Let vim use the systems clipboard
@@ -272,7 +272,7 @@ AutocmdFT python call deoplete#custom#source('jedi', 'matchers', ['matcher_fuzzy
 
 
 "let g:ale_java_javac_classpath = [String], to load aditional classes
-" let g:ale_java_javac_classpath = "/home/daniel/java/algs4.jar"
+" let g:ale_java_javac_classpath = "~/java/algs4.jar"
 let g:ale_java_javac_classpath = "/usr/local/algs4/algs4.jar"
 
 let g:ale_linters = {
@@ -397,7 +397,7 @@ call deoplete#custom#source('ultisnips', 'rank', 9999)
 " JavaComplete {{{
 
 set omnifunc=syntaxcomplete#Complete
-let g:JavaComplete_LibsPath = "/home/daniel/java/algs4.jar"
+let g:JavaComplete_LibsPath = "~/java/algs4.jar"
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
@@ -445,7 +445,7 @@ augroup pandoc_syntax
  " UtilSnips {{{
 
 " let g:UltiSnipsSnippetDirectories = ['/home/daniel/.vim/UltiSnips', 'UltiSnips']
-let g:UltiSnipsSnippetDirectories = ['/home/daniel/.dotfiles/neovim/.config/nvim/UltiSnips', 'UltiSnips']
+let g:UltiSnipsSnippetDirectories = ['~.dotfiles/neovim/.config/nvim/UltiSnips', 'UltiSnips']
 
  " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 

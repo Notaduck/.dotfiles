@@ -1323,7 +1323,7 @@ resizeclient(Client *c, int x, int y, int w, int h)
 		/* if (selmon->lt[selmon->sellt]->arrange == monocle || n == 1) { */
 		if ( n == 1) {
 			wc.border_width = 0;
-			gapoffset = gappx;
+			gapoffset = gappx * 1.8;
 			gapincr = 2 * gappx;
 		}
 		else if (selmon->lt[selmon->sellt]->arrange == monocle ) {

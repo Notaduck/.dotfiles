@@ -11,7 +11,7 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "WEB", "TERM", "DEV", "MEDIA", "RAND" };
+static const char *tags[] = { "WEB", "TERM", "DEV", "CHAT" ,"MEDIA", "RAND" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -53,6 +53,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *networkmanager_dmenu[] = {"networkmanager_dmenu", NULL};
 static const char *termcmd[]  = { "st", NULL };
+static const char *flameshotcmd[]  = { "flameshot", "gui", NULL };
 
 static const char *upvol[]   = { "/home/daniel/.scripts/pavcol.sh", "up",     NULL };
 static const char *downvol[] = { "/home/daniel/.scripts/pavcol.sh", "down",   NULL };
@@ -60,6 +61,12 @@ static const char *mutevol[] = { "/home/daniel/.scripts/pavcol.sh", "toggle", NU
 
 static const char *brightnessup[] = { "/home/daniel/.scripts/brightness", "up", NULL };
 static const char *brightnessdown[] = { "/home/daniel/.scripts/brightness", "down", NULL };
+
+
+static const char *spotify_toggle[] = { "/home/daniel/.scripts/spotify-controller", "toggle", NULL };
+static const char *spotify_next[] = { "/home/daniel/.scripts/spotify-controller", "next", NULL };
+static const char *spotify_prev[] = { "/home/daniel/.scripts/spotify-controller", "prev", NULL };
+
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -106,6 +113,10 @@ static Key keys[] = {
 	{ 0,														XF86XK_AudioRaiseVolume,	spawn, {.v = upvol } },
 	{ 0,														XF86XK_MonBrightnessUp,		spawn, {.v = brightnessup } },
 	{ 0,														XF86XK_MonBrightnessDown,	spawn, {.v = brightnessdown } },
+	{ 0,														XF86XK_AudioPlay,					spawn, {.v = spotify_toggle } },
+	{ 0,														XF86XK_AudioNext,					spawn, {.v = spotify_next } },
+	{ 0,														XF86XK_AudioPrev,					spawn, {.v = spotify_prev } },
+	{ 0,														XF86XK_Search,				  	spawn, {.v = flameshotcmd } },
 };
 
 /* button definitions */
