@@ -91,7 +91,7 @@
 		bindsym $mod+Shift+q kill
 
 		# start program launcher[Rofi]]
-		bindsym $mod+d exec --no-startup-id /home/daniel/.config/rofi/launcher
+		bindsym $mod+d exec --no-startup-id /home/$USER/.config/rofi/launcher
 		#bindsym $mod+d exec --no-startup-id rofi -show run
 
 		# netwrkmanager_dmenu
@@ -136,7 +136,7 @@
 
 		# workspace back and forth (with/without active container)
 		# bindsym $mod+b workspace back_and_forth
-		bindsym $mod+b exec /home/daniel/.scripts/book-search 
+		bindsym $mod+b exec /home/$USER/.scripts/book-search 
 		bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 		# split orientation
