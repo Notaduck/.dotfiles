@@ -327,7 +327,7 @@ click-left = notify-send "Hello"
 type = internal/github
 
 ; Accessing an access token stored in file
-token = ${file:/home/daniel/.config/polybar/access.token} 
+token = ${file:/home/$USER/.config/polybar/access.token} 
 
 ; Accessing an access token stored in an environment variable
 ;token = ${env:GITHUB_ACCESS_TOKEN}

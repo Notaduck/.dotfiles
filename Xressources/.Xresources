@@ -3,10 +3,10 @@
 !-----------------------------------------------------------------------
 !-----------------------------------------------------------------------
 
-/* #include "/home/daniel/.xrdb/Xres/PaperColour.fork" */
-#include "/home/daniel/.xrdb/Xres/nord"
-/* #include "/home/daniel/.xrdb/rofi/PaperColour.fork" */
-#include "/home/daniel/.xrdb/rofi/nord"
+/* #include "/home/$USER/.xrdb/Xres/PaperColour.fork" */
+#include "/home/$USER/.xrdb/Xres/nord"
+/* #include "/home/$USER/.xrdb/rofi/PaperColour.fork" */
+#include "/home/$USER/.xrdb/rofi/nord"
 !#include ".xrdb/color/base16/base16-ocean-256.Xresources"
 
 !-----------------------------------------------------------------------
