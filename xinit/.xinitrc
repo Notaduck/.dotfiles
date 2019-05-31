@@ -1,12 +1,23 @@
+# Variables
+TERM='st'
+IRC_CLIENT='weechat'
+
 # lock after 5 min
 # xautolock -time 5 -locker 'betterlockscreen -l' 
+
+# Launch weechat
+# $TERM -n $IRC_CLIENT -c $IRC_CLIENT 
 
 # Start the gnome-keyring-daemon
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
+
 # set the background
 feh --bg-fill ~/Pictures/Wallpaper/forrest.jpg 
+
+# Start pulseadui in order to get my headset workin
+pulseaduio --start
 
 # set the layout to be danish and map capslock to escape
 setxkbmap -model dell -layout dk -option caps:escape 
@@ -43,3 +54,5 @@ while :; do
 		ssh-agent dwm
 done
 
+# Launxh nextcloud in the background
+exec nextcloud --background

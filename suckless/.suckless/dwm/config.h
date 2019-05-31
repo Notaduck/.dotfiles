@@ -54,6 +54,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *networkmanager_dmenu[] = {"networkmanager_dmenu", NULL};
 static const char *termcmd[]  = { "st", NULL };
 static const char *flameshotcmd[]  = { "flameshot", "gui", NULL };
+static const char *lockcmd[]  = { "/usr/bin/betterlockscreen", "-l", NULL };
 
 static const char *upvol[]   = { "/home/daniel/.scripts/pavcol.sh", "up",     NULL };
 static const char *downvol[] = { "/home/daniel/.scripts/pavcol.sh", "down",   NULL };
@@ -80,6 +81,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_l,      spawn,					 {.v = lockcmd } },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,					              XK_Right,      view_adjacent,  { .i = +1 } },
