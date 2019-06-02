@@ -1,6 +1,7 @@
 # Variables
 export TERMINAL='st'
 export IRC_CLIENT='weechat'
+LAPTOPKEYBOARD=$( xinput --list --id-only 'AT Translated Set 2 keyboard')
 
 # Start the gnome-keyring-daemon
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
@@ -23,7 +24,7 @@ feh --bg-fill ~/Pictures/Wallpaper/forrest.jpg &
 pulseaduio --start &
 
 # set the layout to be danish and map capslock to escape, and swap super <--> alt
-setxkbmap -model dell -layout dk -option "caps:escape, altwin:swap_lalt_lwin" &
+setxkbmap -device $LAPTOPKEYBOARD -model dell -layout dk -option "caps:escape, altwin:swap_lalt_lwin" &
 
 # Launxh nextcloud in the background
 exec nextcloud --background &
@@ -38,7 +39,7 @@ function WIFI()
 	NETWORK=$(iwconfig $INTERFACE | grep -oP "ESSID:\K(.*)" | sed -e 's/"//g')
 
 	if [[ $NETWORK = *"off/any"* ]]; then
-		echo "  not connected"
+		echo " not connected " 
   else
 		echo " " $NETWORK " "
 	fi
@@ -50,9 +51,14 @@ function DATE()
 	echo "$( date +"%F %R " )" 
 }
 
+function LAYOUT()
+{
+	LANGUAGE=$(setxkbmap -query | grep layout | awk '{print $2}')
+	echo "  $LANGUAGE"
+}
 while true; do
-   xsetroot -name "$( DATE ) $( WIFI )"
-   sleep 5s    # Update time every minute
+   xsetroot -name "$(LAYOUT) $(DATE) $(WIFI)"
+   sleep 2s    # Update time every minute
 done &
 
 # exec dwm
