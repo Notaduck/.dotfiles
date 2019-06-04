@@ -20,21 +20,21 @@ SKIPOVERCHECK=1
 
 display(){
   #if [ "$MUTED" = yes ]; then
-    #echo "🔇  muted"
-  if [ "$VOLPERC" -lt 1 ]; then
-    echo "muted"
-  elif [ "$VOLPERC" -lt 33 ]; then
-    echo "${VOLPERC}%"
-  elif [ "$VOLPERC" -lt 66 ]; then
-    echo "${VOLPERC}%"
-  else
-    echo "${VOLPERC}%"
-  fi
-}
+			#echo "🔇  muted"
+		if [ "$VOLPERC" -lt 1 ]; then
+			echo "muted"
+		elif [ "$VOLPERC" -lt 33 ]; then
+			echo "${VOLPERC}%"
+		elif [ "$VOLPERC" -lt 66 ]; then
+			echo "${VOLPERC}%"
+		else
+			echo "${VOLPERC}%"
+		fi
+	}
 
-up(){
-	VOLSTEP="$(( $VOLPERC+$STEP ))";
-}
+	up(){
+		VOLSTEP="$(( $VOLPERC+$STEP ))";
+	}
 
 down(){
 	VOLSTEP="$(( $VOLPERC-$STEP ))";

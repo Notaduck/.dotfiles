@@ -1,5 +1,5 @@
-
 "███╗ 	██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+
 "████╗	██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
 "██╔██╗ ██║█████╗  ██║	 ██║██║   ██║██║██╔████╔██║
 "██║╚██╗██║██╔══╝  ██║	 ██║╚██╗ ██╔╝██║██║╚██╔╝██║
@@ -84,6 +84,7 @@ Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'junegunn/limelight.vim'
 Plug 'lervag/vimtex'
+Plug 'conornewton/vim-pandoc-markdown-preview'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'matze/vim-move'
@@ -240,8 +241,8 @@ autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 
 	" }}}
 	
- " Settings for various plugins {{{
-" Use Alt+j/k to easily move a line
+
+
 let g:move_key_modifier = 'C' 
 
 " ALE {{{
@@ -333,7 +334,7 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " }}}
 
-" CtrlP{{{
+
 	let g:ctrlp_by_filename = 1
 	" let g:ctrlp_match_window_bottom = 0
 	" let g:ctrlp_match_window_reversed = 0
@@ -435,6 +436,11 @@ let g:pandoc#filetypes#pandoc_markdown = 0
 augroup pandoc_syntax
         au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
     augroup END
+
+		" Preview {{{
+			let g:md_pdf_engine='pdflatex'	
+			let g:md_pdf_viewer='zathura'
+		" }}}
 " }}}
 
 " Mysql pipe {{{
