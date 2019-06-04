@@ -1,0 +1,49 @@
+# Launch terminal
+super + shift + Return
+	st	
+
+# Launch Clipmenu 
+super + shift + p 
+	clipmenu 
+
+# launch flameshot screenshot tool
+Print
+	flameshot gui	
+
+# Launc networkmanager_dmenu
+super + shift + i
+	networkmanager_dmenu
+
+# lock
+super + shift + l
+	betterlockscreen -l
+
+#Brightness up
+XF86MonBrightnessUp
+	brightness up
+
+#Brightness down
+XF86MonBrightnessDown
+	brightness down 
+
+# Volume down
+XF86AudioLowerVolume 
+	pavcol.sh down
+	
+# Volume up 
+XF86AudioRaiseVolume 
+	pavcol.sh up 
+# mute 
+XF86AudioMute 
+	pavcol.sh toggle 
+
+# play next
+XF86AudioMute 
+	spotify-controller next 
+# play prev
+XF86AudioMute 
+	spotify-controller prev 
+# play/pause toggle
+XF86AudioMute 
+	spotify-controller toggle 
+
