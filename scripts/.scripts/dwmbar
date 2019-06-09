@@ -1,0 +1,66 @@
+#!/bin/bash
+
+
+function VOLUME() {
+	vol=$( amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | grep -Eo "[0-9]{1,3}" )
+	
+	if ((vol > 50)); then 
+		echo " $vol%"
+	elif (( vol > 1 )); then
+		echo " $vol%"
+	else
+		echo " $vol%"
+	fi
+
+}
+
+function BATT(){
+
+	CAPASITY=$(cat /sys/class/power_supply/BAT0/capacity)
+	STATE=$(cat /sys/class/power_supply/BAT0/status)
+
+	if [[ STATE='Dischargin' ]]; then
+		if (( $CAPASITY >= 95 )); then
+			echo " $CAPASITY%"
+		elif (( CAPASITY >= 75 )); then
+			echo " $CAPASITY%"
+		elif (( CAPASITY >= 50 )); then
+			echo " $CAPASITY%"
+		elif (( CAPASITY >= 5 )); then
+			echo " $CAPASITY%"
+		else 
+			echo " $CAPASITY%"
+		fi
+	else
+			echo " $CAPASITY%"
+	fi
+
+}
+
+function WIFI()
+{
+  INTERFACE="wlp2s0"
+	NETWORK=$(iwconfig $INTERFACE | grep -oP "ESSID:\K(.*)" | sed -e 's/"//g')
+
+	if [[ $NETWORK = *"off/any"* ]]; then
+		echo " not connected " 
+  else
+		echo " " $NETWORK 
+	fi
+
+}
+
+function DATE() 
+{
+	echo "$( date +"%F %R " )" 
+}
+
+function LAYOUT()
+{
+	LANGUAGE=$(setxkbmap -query | grep layout | awk '{print $2}')
+	echo " $LANGUAGE"
+}
+while true; do
+   xsetroot -name "$(LAYOUT) $(DATE) $(WIFI) $(VOLUME) $(BATT) "
+   sleep 1m    # Update time every minute
+done &

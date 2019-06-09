@@ -1,0 +1,25 @@
+pane	0	0	:nvim	1	:*	0	:/home/daniel	1	nvim	:nvim
+pane	1	0	:zsh	0	:-	0	:/home/daniel	1	zsh	:
+pane	1	1	:zsh	0	:	0	:/home/daniel	1	zsh	:
+pane	1	2	:zsh	1	:*	0	:/home/daniel	1	zsh	:
+pane	10	0	:[tmux]	1	:*	0	:/home/daniel	1	zsh	:
+pane	11	0	:zsh	1	:*	0	:/home/daniel	1	zsh	:
+pane	5	0	:zsh	1	:*	0	:/home/daniel	1	nvim	:nvim
+pane	6	0	:nvim	0	:-	0	:/home/daniel	1	nvim	:nvim
+pane	6	1	:htop	1	:*	0	:/home/daniel	1	htop	:htop
+pane	7	0	:[tmux]	1	:*	0	:/home/daniel	1	zsh	:
+pane	8	0	:zsh	1	:*	0	:/home/daniel	1	zsh	:
+pane	9	0	:nvim	1	:*	0	:/home/daniel/Nextcloud/Articles	1	nvim	:nvim tpm
+window	0	0	1	:*	bcde,89x54,0,0,1
+window	1	0	0	:-	bcdf,89x54,0,0,2
+window	1	1	0	:	bce0,89x54,0,0,3
+window	1	2	1	:*	bce1,89x54,0,0,4
+window	10	0	1	:*	bce2,89x54,0,0,5
+window	11	0	1	:*	5ea3,89x54,0,0,14
+window	5	0	1	:*	bce5,89x54,0,0,8
+window	6	0	0	:-	bce6,89x54,0,0,9
+window	6	1	1	:*	5e9f,89x54,0,0,10
+window	7	0	1	:*	5ea0,89x54,0,0,11
+window	8	0	1	:*	5ea1,89x54,0,0,12
+window	9	0	1	:*	5ea2,89x54,0,0,13
+state	5	11

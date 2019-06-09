@@ -1,0 +1,28 @@
+pane	0	0	:nvim	1	:*	0	:/home/daniel	1	nvim	:nvim
+pane	1	0	:zsh	0	:-	0	:/home/daniel	1	zsh	:
+pane	1	1	:zsh	0	:	0	:/home/daniel	1	zsh	:
+pane	1	2	:zsh	1	:*	0	:/home/daniel	1	zsh	:
+pane	10	0	:[tmux]	1	:*	0	:/home/daniel	1	zsh	:
+pane	3	0	:vim	0	:-	0	:/home/daniel	1	zsh	:
+pane	3	1	:yarn	1	:*	0	:/home/daniel/Projects/gatsby-starter-hello-friend	1	node	:node /usr/bin/yarn dev
+pane	5	0	:zsh	1	:*	0	:/home/daniel	1	zsh	:
+pane	6	0	:nvim	0	:-	0	:/home/daniel	1	nvim	:nvim
+pane	6	1	:htop	1	:*	0	:/home/daniel	1	htop	:htop
+pane	7	0	:[tmux]	1	:*	0	:/home/daniel	1	zsh	:
+pane	8	0	:zsh	1	:*	0	:/home/daniel	1	zsh	:
+pane	9	0	:nvim	1	:*	0	:/home/daniel/Nextcloud/Articles	1	nvim	:nvim tpm
+nvim
+window	0	0	1	:*	bd7d,121x35,0,0,0
+window	1	0	0	:-	c17e,121x74,0,0,1
+window	1	1	0	:	c17f,121x74,0,0,2
+window	1	2	1	:*	c180,121x74,0,0,3
+window	10	0	1	:*	6334,149x74,0,0,15
+window	3	0	0	:-	c182,121x74,0,0,5
+window	3	1	1	:*	c183,121x74,0,0,6
+window	5	0	1	:*	c186,121x74,0,0,9
+window	6	0	0	:-	632f,149x74,0,0,10
+window	6	1	1	:*	6330,149x74,0,0,11
+window	7	0	1	:*	6331,149x74,0,0,12
+window	8	0	1	:*	6332,149x74,0,0,13
+window	9	0	1	:*	6333,149x74,0,0,14
+state	10	

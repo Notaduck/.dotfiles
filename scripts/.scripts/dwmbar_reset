@@ -1,0 +1,1 @@
+kill "$(pstree -lp | grep -e "-dwmbar" | grep -oP "sleep\K(\([0-9]*)?\)" | tr -d "()")"

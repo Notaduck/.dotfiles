@@ -1,0 +1,5 @@
+pane	0	0	:vim	0	:-	0	:/home/daniel/Projects/GuldbergLab	1	nvim	:nvim
+pane	0	1	:gatsby	1	:*	0	:/home/daniel/Projects/GuldbergLab	1	node	:node /usr/bin/yarn dev
+window	0	0	0	:-	c17d,121x74,0,0,0
+window	0	1	1	:*	c17e,121x74,0,0,1
+state	0	
