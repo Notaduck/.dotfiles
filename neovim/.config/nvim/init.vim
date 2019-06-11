@@ -97,6 +97,8 @@ Plug 'SirVer/ultisnips'
 Plug 'zchee/deoplete-jedi', {'for': ['python', 'python3','djangohtml'], 'do': 'pip install jedi;pip3 install jedi'}
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
 Plug 'scrooloose/nerdtree'
+Plug 'steelsojka/deoplete-flow'
+Plug 'mxw/vim-jsx'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -334,7 +336,7 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " }}}
 
-
+"{{{ Ctrl P
 	let g:ctrlp_by_filename = 1
 	" let g:ctrlp_match_window_bottom = 0
 	" let g:ctrlp_match_window_reversed = 0
@@ -346,7 +348,7 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 		\}
 "}}}
 
-" Deoplete {{{
+" Deoplete {{{ 
 
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#omni_patterns = {}

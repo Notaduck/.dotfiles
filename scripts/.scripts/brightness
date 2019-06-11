@@ -3,6 +3,8 @@
 # Set brightness with xbacklight, but never go below 1 (as that's "off").
 #
 #
+#
+
 function get_brightness {
   xbacklight -get | cut -d '.' -f 1
 }

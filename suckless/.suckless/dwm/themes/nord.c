@@ -1,6 +1,7 @@
 static const char *fonts[]          = { "Office Code Pro Medium:size=10",
-						                            "FontAwesome:size=8",
+						                            "FontAwesome:size=9",
 																			};
+
 static const char dmenufont[]       = "monospace:size=10";
 
 static const char col_gray1[]       = "#2e3440";
