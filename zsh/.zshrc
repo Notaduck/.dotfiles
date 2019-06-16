@@ -117,6 +117,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 alias weather="curl wttr.in"
 alias vim="nvim"
 alias def="definition"
-# Example aliases
+alias cclip='xclip -selection clipboard'
+alias tb="nc termbin.com 9999"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
