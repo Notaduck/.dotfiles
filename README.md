@@ -59,7 +59,10 @@ where the `D` stands for delete and `v` is to increase the verbosity level, whic
 ### Screenshots
 
 #### dwm
-
+![alt texxt(https://imgur.com/ixkxMAa)
+![alt texxt(https://imgur.com/lnlYrJi)
+![alt texxt(https://imgur.com/y0xOzLu)
+![alt texxt(https://imgur.com/pHEGg3i)
 
 
 #### i3
