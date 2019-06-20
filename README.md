@@ -30,7 +30,7 @@ Some applications is crossed over, since I don't use them any more but the confi
 The dotfiles are managed with stow and are thefore dead simple to install and uninstall again.  
 If you aren't sure about what you are doing then please make a backup of your current dootfiles.  
 
-##### Requirements
+#### Requirements
 - [GNU stow](https://www.gnu.org/software/stow/)
 
 First you will have to clone the repo.
@@ -55,7 +55,14 @@ and stow wil automaticly create symblinks to `~/.config/nvim/init.vim`, in order
 stow -Dv <conf-dir>
 ```
 where the `D` stands for delete and `v` is to increase the verbosity level, which you can change whitin an range from [0,1,2,3,4]
+
 ### Screenshots
+
+#### dwm
+
+
+
+#### i3
 
 ![alt text](https://i.imgur.com/CMjN0CF.jpg "Clean")
 ![alt text](https://i.imgur.com/sLYPCZQ.jpg "Zathura and ")

@@ -10,8 +10,7 @@ function countdown(){
 }
 
 function stopwatch(){
-  date1=`date +%s`; 
-   while true; do 
+  date1=`date +%s`; while true; do 
     echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
     sleep 0.1
    done
@@ -118,6 +117,10 @@ alias weather="curl wttr.in"
 alias vim="nvim"
 alias def="definition"
 alias cclip='xclip -selection clipboard'
+
+# Alias for termbin
 alias tb="nc termbin.com 9999"
+# Alias automaticly copy the URL to the cliptboard
+alias tbc="netcat termbin.com 9999 | xclip -selection c"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"

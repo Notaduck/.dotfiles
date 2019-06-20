@@ -22,7 +22,7 @@ static const Rule rules[] = {
 	/* class					instance				title       tags mask     isfloating   monitor */
 	{ "Gimp",					NULL,				    NULL,       0,            1,           -1 },
 	{ "Firefox",			NULL,						NULL,       1 << 8,       0,           -1 },
-	{ "st-256color",  "weechat",      NULL,       3 ,			      0,           -1 },
+	{ "st-256color",  "st-256color", "weechat",		1 << 5,				0,					 -1 }
 };
 
 /* layout(s) */

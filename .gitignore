@@ -1,7 +1,7 @@
 README.md.old
 vim-markdown-preview.html
 nvim.log
-
+tmux/.tmux/resurrect/*
 # DWM
 util.o
 *.*.rej
