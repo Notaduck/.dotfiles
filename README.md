@@ -65,7 +65,7 @@ where the `D` stands for delete and `v` is to increase the verbosity level, whic
 ![alt texxt](https://i.imgur.com/pHEGg3i.png)  
 
 
-#### i3
+#### ~~i3~~
 
 ![alt text](https://i.imgur.com/CMjN0CF.jpg "Clean")
 ![alt text](https://i.imgur.com/sLYPCZQ.jpg "Zathura and ")
