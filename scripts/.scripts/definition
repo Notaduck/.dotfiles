@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-sdcv ${1} | less && clear
