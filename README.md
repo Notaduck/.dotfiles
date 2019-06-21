@@ -7,21 +7,14 @@
 ██████╔╝╚██████╔╝   ██║   ██║     ██║███████╗███████╗███████║  
 ╚═════╝  ╚═════╝    ╚═╝   ╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝                                                               
 ```
-**THE SCREENSHOTS DOES NOT REFLECT THE CURRENT COLOR SCHEME (which is NORD)
-In order to get the same colorscheme as the screenshot the terminal colorscheme should be changed with the following cmd `color PaperColour.fork` and vim's colorscheme should be changed as well.**
-
 ### Description
-
-Some applications is crossed over, since I don't use them any more but the configuration files will still be in the repo.
-
-> - Browser == `vivaldi` 
-> - Compositor == `compton`
+> - Browser == `Firefox` 
 > - Network manager == `networkmanager_dmenu` 
-> - Pdf viewer == `zathura`
-> - Program launcher == `rofi` 
-> - Terminal == `termite` 
+> - PDF viewer == `Zathura`
+> - Program launcher == `dmenu` 
+> - Terminal == `st` 
 > - Text editor == `neovim`
-> - Window manager == ~~`i3wm`~~  `dwm`
+> - Window manager == `dwm`
 > - Shell == `ZSH`
 
 
@@ -66,7 +59,7 @@ where the `D` stands for delete and `v` is to increase the verbosity level, whic
 
 
 #### ~~i3~~
-
+Thus
 ![alt text](https://i.imgur.com/CMjN0CF.jpg "Clean")
 ![alt text](https://i.imgur.com/sLYPCZQ.jpg "Zathura and ")
 ![alt text](https://i.imgur.com/cA3L5dw.jpg "Stow dir and neofetch")

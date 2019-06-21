@@ -1,6 +1,8 @@
 # Variables
 export TERMINAL='st'
 export IRC_CLIENT='weechat'
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 LAPTOPKEYBOARD=$( xinput --list --id-only 'AT Translated Set 2 keyboard')
 
 # Start the gnome-keyring-daemon

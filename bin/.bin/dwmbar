@@ -49,7 +49,7 @@ function WIFI()
 	if [[ $NETWORK = *"off/any"* ]]; then
 		echo " not connected " 
   else
-		echo " $NETWORK "
+		echo "" $NETWORK 
 	fi
 
 }

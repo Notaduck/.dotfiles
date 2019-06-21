@@ -1,5 +1,4 @@
 "███╗ 	██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
-
 "████╗	██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
 "██╔██╗ ██║█████╗  ██║	 ██║██║   ██║██║██╔████╔██║
 "██║╚██╗██║██╔══╝  ██║	 ██║╚██╗ ██╔╝██║██║╚██╔╝██║
@@ -71,6 +70,7 @@ Plug 'fsharp/vim-fsharp', {
       \ 'do':  'make fsautocomplete',
       \}
 Plug 'vim-scripts/bash-support.vim'
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mhinz/vim-startify'
