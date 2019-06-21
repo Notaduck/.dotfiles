@@ -59,10 +59,13 @@ where the `D` stands for delete and `v` is to increase the verbosity level, whic
 ### Screenshots
 
 #### dwm
+![alt texxt](https://i.imgur.com/ixkxMAa.png)  
+![alt texxt](https://i.imgur.com/lnlYrJi.png)  
+![alt texxt](https://i.imgur.com/y0xOzLu.png)  
+![alt texxt](https://i.imgur.com/pHEGg3i.png)  
 
 
-
-#### i3
+#### ~~i3~~
 
 ![alt text](https://i.imgur.com/CMjN0CF.jpg "Clean")
 ![alt text](https://i.imgur.com/sLYPCZQ.jpg "Zathura and ")
