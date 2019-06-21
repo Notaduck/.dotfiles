@@ -1,0 +1,38 @@
+#!/bin/zsh
+#
+# Set brightness with xbacklight, but never go below 1 (as that's "off").
+#
+#
+#
+
+function get_brightness {
+  xbacklight -get | cut -d '.' -f 1
+}
+
+function send_notification {
+ # notify-send --expire-time=2000 "Brightness: $(printf %.0f%% $(xbacklight -get))"
+notify-send "Brightness: $(printf %.0f%% $(xbacklight -get))" -h string:x-canonical-private-synchronous:my-notification
+}
+
+# Increment to use.
+incr=5%
+
+cur=$(xbacklight -get)
+case "$1" in
+	"up")
+			xbacklight -inc $incr
+			# send_notification
+	;;
+	"down")
+		if [[ $cur -le 5 ]]; then
+			xbacklight -set 1
+		else
+			xbacklight -dec $incr
+			# send_notification
+		fi
+	;;
+	*)
+		echo "Unsupported: \"$1\""
+		exit 1
+esac
+

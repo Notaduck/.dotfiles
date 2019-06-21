@@ -1,0 +1,82 @@
+# zathurarc
+
+set font                        "Office Code Pro 10"
+# Base16 Nord
+# Author: arcticicestudio
+# set font                        "Cantarell 10"
+set default-bg                  "#dfddd5" #00
+set default-fg                  "#586e75" #01
+
+set statusbar-fg                "#dfddd5" #04
+set statusbar-bg                "#586e75"  #01
+
+set inputbar-bg                 "#dfddd5" #00 currently not used
+set inputbar-fg                 "#586e75" #02
+
+set notification-error-bg       "#2aa198" #08
+set notification-error-fg       "#586e75" #00
+
+set notification-warning-bg     "#198844" #08
+set notification-warning-fg     "#dfddd5" #00
+
+set highlight-color             "#abaeaf" #0A
+set highlight-active-color      "#586e75" #0D
+
+set completion-highlight-fg     "#ffffff" #02
+set completion-highlight-bg     "#dc322f" #0C
+
+set completion-bg               "#dfddd5" #02
+set completion-fg               "#586e75" #0C
+
+set notification-bg             "#e69014" #0B
+set notification-fg             "#dfddd5" #00
+
+set recolor-lightcolor          "#dfddd5" #00
+set recolor-darkcolor           "#586e75" #06
+
+set recolor                     "true"
+# set default-bg                  "#D8DEE9"
+# set default-fg                  "#3B4252"
+
+# set statusbar-bg                "#D8DEE9"
+# set statusbar-fg                "#434C5E"
+
+# set inputbar-bg                 "#D8DEE9"
+# set inputbar-fg                 "#bf616a"
+
+# set notification-bg             "#2E3440"
+# set notification-fg             "#bf616a"
+
+# set notification-error-bg       "#2E3440"
+# set notification-error-fg       "#bf616a"
+
+# set notification-warning-bg     "#2E3440"
+# set notification-warning-fg     "#bf616a"
+
+# set highlight-color             "#5E81AC"
+# set highlight-active-color      "#EBCB8B"
+
+# set completion-bg               "#3B4252"
+# set completion-fg               "#EBCB8B"
+
+# set completion-highlight-fg     "#bf616a"
+# set completion-highlight-bg     "#EBCB8B"
+
+# set recolor-lightcolor          "#2E3440"
+# set recolor-darkcolor           "#ECEFF4"
+
+# set recolor                     "true"
+
+# setting recolor-keep true will keep any color your pdf has.
+set recolor-keephue             "false"
+
+set guioptions "c"
+
+# add copied text to clipboard
+set selection-clipboard clipboard
+
+# enable syntex
+set synctex true
+
+
+set synctex-editor-command "nvim --remote-silent +%{line} %{input}"

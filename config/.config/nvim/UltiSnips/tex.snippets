@@ -1,0 +1,96 @@
+# Some of the snippets are inspired by https://castel.dev/post/lecture-notes-1/?fbclid=IwAR3CdvLTqq1qvSbauzTFacSbkvYsQWjWhCGVe71u1nmmpnU76p0RcPvYiWo
+
+snippet today "Date"
+`!v strftime("%d/%m-%Y")`
+endsnippet
+
+global !p
+texMathZones = ['texMathZone'+x for x in ['A', 'AS', 'B', 'BS', 'C',
+'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS',
+'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z']]
+
+texIgnoreMathZones = ['texMathText']
+
+texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+
+ignore = texIgnoreMathZoneIds[0]
+
+def math():
+	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+	try:
+		first = next(
+            i for i in reversed(synstackids)
+            if i in texIgnoreMathZoneIds or i in texMathZoneIds
+        )
+		return first != ignore
+	except StopIteration:
+		return False
+
+def isNone(str):
+	if (str == "None"):
+		return ""
+	else: return str
+endglobal
+
+# The w at the end of the first line means that this snip­pet will ex­pand at word bound­aries, so e.g. hellomk won’t ex­pand, but hello mk will.
+snippet mk "Math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+    snip.rv = ' '
+else:
+    snip.rv = ''
+`$2
+endsnippet
+
+snippet dm "Math" wA
+\[
+$1
+.\] $0
+endsnippet
+
+snippet beg "begin{} / end{}" bA
+\begin{$1}
+	$0
+\end{$1}
+endsnippet
+
+
+snippet '([A-Za-z])\_(\d+)\s' "auto subscript" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+endsnippet
+
+snippet '([A-Za-z])\^(\d+)\s' "auto superscript" wrA
+`!p snip.rv = match.group(1)`^{`!p snip.rv = match.group(2)`}
+endsnippet
+
+
+snippet '(.)(->)(.)' "auto right arrow" wrA
+`!p snip.rv = match.group(1)`\rightarrow`!p snip.rv = match.group(3)`
+endsnippet
+
+snippet '(.)(->)(.)' "auto right arrow" bA
+\rightarrow`!p snip.rv = match.group(2)`
+endsnippet
+
+snippet '(.)(<-)(.)' "auto right arrow" bA
+\leftarrow`!p snip.rv = match.group(2)`
+endsnippet
+
+snippet '(.)(<-)(.)' "auto left arrow" wrA
+`!p snip.rv = match.group(1)`\leftarrow`!p snip.rv = match.group(3)`
+endsnippet
+
+
+
+################### Math snippets ####################
+
+context "math()"
+snippet '(.)(!=)(.)' "auto not equal" wrA
+`!p snip.rv = match.group(1)`\neg`!p snip.rv = match.group(3)`
+endsnippet
+
+context "math()"
+snippet '(.\s\s)?(\w+?|\d+?)\s//\s(\w+?|\d+?)\s(.)' "auto frag" wrA
+`!p snip.rv = isNone(match.group(1))`\frac{`!p snip.rv = match.group(2)`}{`!p snip.rv = match.group(3)`} `!p snip.rv = match.group(4)`
+endsnippet

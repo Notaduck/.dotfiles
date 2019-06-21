@@ -1,0 +1,3 @@
+#!/bin/bash
+BAR_NAME="dwmbar"
+pkill -P "$(pgrep -ox $BAR_NAME)" sleep

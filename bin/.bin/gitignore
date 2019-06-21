@@ -1,0 +1,115 @@
+#!/bin/env python
+# coding: utf-8
+
+import pydoc
+import argparse
+import urllib.request
+import os
+import sys
+from bs4 import BeautifulSoup
+import requests
+
+PARSER = argparse.ArgumentParser(
+    description="This i a simple python script to download gitignorefiles")
+PARSER.add_argument('-t', '--type', type=str, metavar='', help='type')
+PARSER.add_argument(
+    '-l', '--List', help='List available gitignore files', action="store_true")
+ARGS = PARSER.parse_args()
+
+USER = 'notaduck'
+BRANCH = 'master'
+
+
+def Download():
+    url = "https://raw.githubusercontent.com/" + USER + "/gitignore/" + BRANCH + "/" + \
+        ARGS.type + ".gitignore"
+
+    is_a_repo = os.path.exists('./.git')
+
+    if not is_a_repo:
+        question = "Do you wan't to initialize a git repository in the current folder?"
+        promt = query_yes_no(question, "no")
+        if promt:
+            os.system("git init")
+            os.system("git add .gitignore")
+            os.system("git commit -m \"gitignore has been added to the repo\"")
+        else:
+            sys.exit()
+    gitignore_exists = os.path.isfile('./gitignore')
+
+    if gitignore_exists:
+        quiestion_ = "It looks like .gitignore all ready exists, are you sure you want to overwrite it?"
+        anwser = query_yes_no(quiestion_, 'yes')
+        if anwser:
+            try:
+                urllib.request.urlretrieve(url, '.gitignore')
+            except urllib.request.HTTPError:
+                print("It doesn't look like that the gitignore file for " +
+                      ARGS.type + " is in the repo")
+        else:
+            sys.exit()
+
+
+def List():
+    url = "https://github.com/notaduck/gitignore"
+    response = requests.get(url, timeout=5)
+    content = BeautifulSoup(response.content, 'html.parser')
+    table_entry = content.findAll('td', attrs={'class': 'content'})
+    files = []
+    for index in range(4, len(table_entry)):
+        lang = (table_entry[index].text.strip().split('.'))
+        if len(lang) == 2 and lang[1] == 'gitignore':
+            files.append(lang[0])
+        # files.pop(0)
+    # pydoc.pager(files_string)
+
+    return files
+
+
+def Display():
+    pydoc.pager('\n'.join(List()))
+
+
+def query_yes_no(question, default="yes"):
+    """Ask a yes/no question via raw_input() and return their answer.
+
+    "question" is a string that is presented to the user.
+    "default" is the presumed answer if the user just hits <Enter>.
+        It must be "yes" (the default), "no" or None (meaning
+        an answer is required of the user).
+
+    The "answer" return value is True for "yes" or False for "no".
+    """
+    valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False}
+    if default is None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError("invalid default answer: '%s'" % default)
+
+    while True:
+        sys.stdout.write(question + prompt)
+        choice = input().lower()
+        if default is not None and choice == '':
+            return valid[default]
+        elif choice in valid:
+            return valid[choice]
+        else:
+            sys.stdout.write("Please respond with 'yes' or 'no' "
+                             "(or 'y' or 'n').\n")
+
+
+if __name__ == '__main__':
+    if ARGS.List:
+        Display()
+    else:
+        if not ARGS.type:
+            print("See -h or --help")
+        else:
+            Download()
+
+# vim: set syntax=python:

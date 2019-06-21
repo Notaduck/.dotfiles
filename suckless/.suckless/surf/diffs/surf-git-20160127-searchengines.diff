@@ -1,0 +1,74 @@
+diff --git a/config.def.h b/config.def.h
+index 93a3d49..df96d15 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -75,6 +75,13 @@ static SiteStyle styles[] = {
+ 	{ ".*",                 "default.css" },
+ };
+ 
++/* search engines */
++static SearchEngine searchengines[] = {
++       { "g",   "http://www.google.de/search?q=%s"   },
++       { "leo", "http://dict.leo.org/ende?search=%s" },
++       { "ddg", "https://duckduckgo.com/?q=%s"       },
++};
++
+ #define MODKEY GDK_CONTROL_MASK
+ 
+ /* hotkeys */
+diff --git a/surf.c b/surf.c
+index 23c49bd..579848d 100644
+--- a/surf.c
++++ b/surf.c
+@@ -92,6 +92,11 @@ typedef struct {
+ G_DEFINE_TYPE(CookieJar, cookiejar, SOUP_TYPE_COOKIE_JAR_TEXT)
+ 
+ typedef struct {
++	char *token;
++	char *uri;
++} SearchEngine;
++
++typedef struct {
+ 	char *regex;
+ 	char *style;
+ 	regex_t re;
+@@ -179,6 +184,7 @@ static void loaduri(Client *c, const Arg *arg);
+ static void navigate(Client *c, const Arg *arg);
+ static Client *newclient(void);
+ static void newwindow(Client *c, const Arg *arg, gboolean noembed);
++static gchar *parseuri(const gchar *uri);
+ static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
+ static gboolean contextmenu(WebKitWebView *view, GtkWidget *menu,
+                             WebKitHitTestResult *target, gboolean keyboard,
+@@ -840,8 +846,7 @@ loaduri(Client *c, const Arg *arg)
+ 		u = g_strdup_printf("file://%s", rp);
+ 		free(rp);
+ 	} else {
+-		u = g_strrstr(uri, "://") || g_str_has_prefix(uri, "about:") ? g_strdup(uri)
+-		    : g_strdup_printf("http://%s", uri);
++		u = parseuri(uri);
+ 	}
+ 
+ 	setatom(c, AtomUri, uri);
+@@ -1173,6 +1178,21 @@ menuactivate(GtkMenuItem *item, Client *c)
+ 	}
+ }
+ 
++gchar *
++parseuri(const gchar *uri) {
++	guint i;
++
++	for (i = 0; i < LENGTH(searchengines); i++) {
++		if (searchengines[i].token == NULL || searchengines[i].uri == NULL
++		    || *(uri + strlen(searchengines[i].token)) != ' ')
++			continue;
++		if (g_str_has_prefix(uri, searchengines[i].token))
++			return g_strdup_printf(searchengines[i].uri, uri + strlen(searchengines[i].token) + 1);
++	}
++	return g_strrstr(uri, "://") || g_str_has_prefix(uri, "about:") ? g_strdup(uri)
++	                 : g_strdup_printf("http://%s", uri);
++}
++
+ void
+ pasteuri(GtkClipboard *clipboard, const char *text, gpointer d)
+ {

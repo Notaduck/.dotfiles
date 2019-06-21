@@ -1,0 +1,63 @@
+diff --git a/surf.c b/surf.c
+index 9b4dbb9..bf54d84 100644
+--- a/surf.c
++++ b/surf.c
+@@ -92,6 +92,12 @@ typedef struct {
+ } Button;
+ 
+ typedef struct {
++       char *token;
++       char *uri;
++} SearchEngine;
++
++
++typedef struct {
+ 	char *regex;
+ 	char *style;
+ 	regex_t re;
+@@ -124,6 +130,7 @@ static void newwindow(Client *c, const Arg *a, int noembed);
+ static void spawn(Client *c, const Arg *a);
+ static void destroyclient(Client *c);
+ static void cleanup(void);
++static gchar *parseuri(const gchar *uri);
+ 
+ /* GTK/WebKit */
+ static WebKitWebView *newview(Client *c, WebKitWebView *rv);
+@@ -350,13 +357,13 @@ loaduri(Client *c, const Arg *a)
+ 	if (g_strcmp0(uri, "") == 0)
+ 		return;
+ 
+-	if (g_strrstr(uri, "://") || g_str_has_prefix(uri, "about:")) {
++	if (g_str_has_prefix(uri, "about:")) {
+ 		url = g_strdup(uri);
+ 	} else if (!stat(uri, &st) && (path = realpath(uri, NULL))) {
+ 		url = g_strdup_printf("file://%s", path);
+ 		free(path);
+ 	} else {
+-		url = g_strdup_printf("http://%s", uri);
++		url = parseuri(uri);
+ 	}
+ 
+ 	setatom(c, AtomUri, url);
+@@ -1205,6 +1212,21 @@ destroywin(GtkWidget* w, Client *c)
+ 		gtk_main_quit();
+ }
+ 
++static gchar *
++parseuri(const gchar *uri) {
++   guint i;
++
++   for (i = 0; i < LENGTH(searchengines); i++) {
++       if (searchengines[i].token == NULL || searchengines[i].uri == NULL || \
++           *(uri + strlen(searchengines[i].token)) != ' ')
++           continue;
++       if (g_str_has_prefix(uri, searchengines[i].token))
++           return g_strdup_printf(searchengines[i].uri, uri + strlen(searchengines[i].token) + 1);
++   }
++
++   return g_strrstr(uri, "://") ? g_strdup(uri) : g_strdup_printf("http://%s", uri);
++}
++
+ void
+ pasteuri(GtkClipboard *clipboard, const char *text, gpointer d)
+ {
