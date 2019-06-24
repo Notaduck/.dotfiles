@@ -69,6 +69,7 @@ Plug 'fsharp/vim-fsharp', {
       \ 'for': 'fsharp',
       \ 'do':  'make fsautocomplete',
       \}
+Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 Plug 'vim-scripts/bash-support.vim'
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'aserebryakov/vim-todo-lists'
@@ -95,6 +96,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'SirVer/ultisnips'
 Plug 'zchee/deoplete-jedi', {'for': ['python', 'python3','djangohtml'], 'do': 'pip install jedi;pip3 install jedi'}
+Plug 'zchee/deoplete-clang'
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
 Plug 'scrooloose/nerdtree'
 Plug 'steelsojka/deoplete-flow'
@@ -303,6 +305,7 @@ let g:ale_fixers = {
 		\	'javascript': ['eslint','prettier_eslint'],
 		\	'java': ['uncrustify','google_java_format'],
 		\	'json' : ['prettier'],
+		\	'sh' : ['shfmt'],
 		\ 'python' : ['autopep8']
 		\}
 "  }} }

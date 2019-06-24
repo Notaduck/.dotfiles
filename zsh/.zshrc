@@ -15,7 +15,7 @@ function stopwatch(){
     sleep 0.1
    done
 }
-
+export PATH=/usr/lib/jvm/java-11-openjdk/bin:$PATH
 export PATH=/home/$USER/.bin:$PATH
 export PATH=~/.npm-global/bin:$PATH
 

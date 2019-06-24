@@ -59,8 +59,8 @@ where the `D` stands for delete and `v` is to increase the verbosity level, whic
 
 
 #### ~~i3~~
-Thus
 ![alt text](https://i.imgur.com/CMjN0CF.jpg "Clean")
 ![alt text](https://i.imgur.com/sLYPCZQ.jpg "Zathura and ")
 ![alt text](https://i.imgur.com/cA3L5dw.jpg "Stow dir and neofetch")
 ![alt text](https://i.imgur.com/4p3Ikoj.jpg "Dotfiles and nvim conf")
+
