@@ -24,13 +24,13 @@ function BATT() {
 
 	if [[ $STATE == 'Discharging' ]]; then
 		if (($CAPASITY >= 95)); then
-			echo "  $CAPASITY"
+			echo "  $CAPASITY%"
 		elif ((CAPASITY >= 75)); then
-			echo "  $CAPASITY"
+			echo "  $CAPASITY%"
 		elif ((CAPASITY >= 50)); then
-			echo "  $CAPASITY"
+			echo "  $CAPASITY%"
 		elif ((CAPASITY >= 5)); then
-			echo "  $CAPASITY"
+			echo "  $CAPASITY%"
 		else
 			echo "  $CAPASITY"
 		fi

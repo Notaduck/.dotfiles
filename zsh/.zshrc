@@ -1,6 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 #
+# bindkey -v # Enable VI
 function countdown(){
    date1=$((`date +%s` + $1)); 
    while [ "$date1" -ge `date +%s` ]; do 
@@ -115,6 +116,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 #
 alias weather="curl wttr.in"
 alias vim="nvim"
+alias cat="bat"
 alias def="definition"
 alias cclip='xclip -selection clipboard'
 

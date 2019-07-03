@@ -18,103 +18,74 @@ if has('vim_starting')
 	end
 endif
 
-"if !has('python') && !has('pip')
-"	call system('pip install --upgrade pip')
-"	call system('pip install neovim --upgrade')
-"	"echo system('Installing upgrade pip and install neovim')
-"endif
-
-"if !has('python3') && !has('pip3')
-"	call system('pip3 install --upgrade pip')
-"	call system('pip3 install neovim --upgrade')
-"endif
-
-"if !has('~/.vim/tmp/')
-"	call system('mkdir -p ~/.vim/tmp')
-"endif
-
-"if !has('npm')
-"	call system('sudo pacman -S nodejs npm')
-"endif
-
-""if !has('eslint')
-""	call system('sudo npm install -g eslint')
-"	"echo system('installing eslint')
-""endif
-
-"let g:python_host_skip_check = 1
-"let g:python2_host_skip_check = 1
-"let g:python3_host_skip_check = 1
-
-"if executable('python2.7')
-"	"let g:python_host_prog = system('which python')
-"	let g:python_host_prog = "/usr/bin/python2.7"
-"endif
-
-"if executable('python3')
-"	"let g:python3_host_prog = system('which python3')
-"	let g:python3_host_prog = "/usr/bin/python3"
-"endif
 
 "" }}} 
 
  " Plugin section {{{
-" Specify a directory for plugins
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
 
 "required
 call plug#begin('~/local/share/nvim/plugged')
-Plug 'fsharp/vim-fsharp', {
-      \ 'for': 'fsharp',
-      \ 'do':  'make fsautocomplete',
-      \}
-Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
-Plug 'vim-scripts/bash-support.vim'
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+
+
+" Syntax support
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'vim-scripts/bash-support.vim' 
+Plug 'mxw/vim-jsx'
+Plug 'PotatoesMaster/i3-vim-syntax'
+
+" Utilities
 Plug 'aserebryakov/vim-todo-lists'
-Plug 'jiangmiao/auto-pairs'
 Plug 'mhinz/vim-startify'
-Plug 'honza/vim-snippets'
-Plug 'junegunn/goyo.vim'
 Plug 'kien/ctrlp.vim'
+Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
+Plug 'airblade/vim-gitgutter'
+
+
+" Text formatting
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-after'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'junegunn/limelight.vim'
+Plug 'jiangmiao/auto-pairs'
+
+" Writing 
+Plug 'vim-pandoc/vim-pandoc' 
+Plug 'vim-pandoc/vim-pandoc-after' 
+Plug 'vim-pandoc/vim-pandoc-syntax' 
 Plug 'lervag/vimtex'
-Plug 'conornewton/vim-pandoc-markdown-preview'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'conornewton/vim-pandoc-markdown-preview' 
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'matze/vim-move'
 Plug 'tpope/vim-fugitive'
-Plug 'w0rp/ale' 
-Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' } 
-Plug 'airblade/vim-gitgutter'
-Plug 'PotatoesMaster/i3-vim-syntax'
-Plug 'SirVer/ultisnips'
-Plug 'zchee/deoplete-jedi', {'for': ['python', 'python3','djangohtml'], 'do': 'pip install jedi;pip3 install jedi'}
-Plug 'zchee/deoplete-clang'
-Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
-Plug 'scrooloose/nerdtree'
-Plug 'steelsojka/deoplete-flow'
-Plug 'mxw/vim-jsx'
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+" UI
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'scrooloose/nerdtree'
+
+
+" Autocompletion and Code checker
+Plug 'w0rp/ale' 
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'fsharp/vim-fsharp', {
+			\ 'for': 'fsharp',
+			\ 'do':  'make fsautocomplete',
+			\}
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+" Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'deoplete-plugins/deoplete-jedi'
 
 " Themes {{{
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'chriskempson/base16-vim'
 Plug 'arcticicestudio/nord-vim'
 Plug	'ajh17/Spacegray.vim'
+Plug 'joshdick/onedark.vim'
 " }}}
 
 " Initialize plugin system
@@ -137,7 +108,7 @@ call plug#end()
 	" \	}
 	" \ }
 " colorscheme PaperColor
-colorscheme nord
+" colorscheme nord
 
 augroup ColorOverrides
 	autocmd!
@@ -162,6 +133,7 @@ if (empty($TMUX))
   endif
 endif
 
+colorscheme onedark
 " set background=dark " for the dark version
 " set background=light " for the light version
 
@@ -192,6 +164,8 @@ set foldmethod=marker
 " Maintain undo history between sessions
 set undofile	
 set undodir=~/.vim/undodir
+
+
 
 " Filteypes{{{
 	autocmd filetype *.sql set filetype=mysql 
@@ -224,11 +198,12 @@ set softtabstop=2
 set tabstop=2
 
 " for html/js files, 2 spaces
-autocmd Filetype html setlocal ts=2 sw=2 expandtab
-autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
 
-" for java/python files, 4 spaces
-autocmd Filetype python setlocal ts=4 sw=4 sts=0 expandtab
+" for java files, 4 spaces
 autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 "}}}
 
@@ -241,12 +216,17 @@ autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 		command! -nargs=* Autocmd autocmd AutoGroup <args>
 		command! -nargs=* AutocmdFT autocmd AutoGroup FileType <args>
 
+
+		augroup myvimrchooks
+				au!
+				autocmd bufwritepost init.vim source ~/.config/nvim/init.vim
+		augroup END
 		" }}}
 
 	" }}}
-	
 
-
+" Plugin Settings {{{
+"
 let g:move_key_modifier = 'C' 
 
 " ALE {{{
@@ -314,7 +294,7 @@ let g:ale_fixers = {
 " Airline {{{ 
 
 " let g:airline_theme='papercolor'
-let g:airline_theme='nord'
+let g:airline_theme='onedark'
 let g:airline_whitespace_disabled = 1
 let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#enabled = 1
@@ -352,41 +332,23 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 "}}}
 
 " Deoplete {{{ 
+set omnifunc=syntaxcomplete#Complete
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+  " Use deoplete.
+	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#enable_at_startup = 1
+	" let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+	let g:deoplete#auto_completion_start_length = 2
+	let g:deoplete#sources = {}
+	let g:deoplete#sources._ = []
+	let g:deoplete#file#enable_buffer_path = 1
+	let g:deoplete#omni_patterns = {}
 
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#omni_patterns = {}
-let g:deoplete#auto_completion_start_length = 1
-let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-let g:deoplete#sources = {}
-let g:deoplete#sources._ = []
-let g:deoplete#file#enable_buffer_path = 1
-
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#sort = 0
-
-" remove dupulicate candidates
-call deoplete#custom#source('_',
-  \ 'converters', ['remove_overlap'])
-
-" refresh_always must be v:false
-call deoplete#custom#option({
-  \ 'auto_complete_delay': 0,
-  \ 'ignore_case': v:true,
-  \ 'refresh_always': v:false,
-\ })
-" Binary path to your flow, defaults to your $PATH flow 
-let g:deoplete#sources#flow#flow_bin = 'flow' 
-"call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
-"call deoplete#custom#set('_', 'sorters', ['sorter_word'])
-"call deoplete#custom#set('ultisnips', 'rank', 9999)
-
-call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
-call deoplete#custom#source('_', 'sorters', ['sorter_word'])
-call deoplete#custom#source('ultisnips', 'rank', 9999)
-
-" Deoplete tab-completion
-" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+	"Add extra filetypes
+	let g:deoplete#sources#ternjs#filetypes = [
+									\ 'jsx',
+									\ 'javascript.jsx',
+									\ ]
 	" }}}
 
 " Gitgutter {{{
@@ -490,6 +452,5 @@ set conceallevel=2
 " let g:tex_conceal='abdmg'
 	"}}}
 	
-	" WhichKey {{{
 
-	" }}}
+" }}}

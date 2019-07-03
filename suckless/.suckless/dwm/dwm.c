@@ -777,6 +777,8 @@ drawbar(Monitor *m)
 
 /* draw underline under the tag */
 		if (m == selmon && selmon->sel && selmon->sel->tags & 1 << i) {
+
+		drw_setscheme(drw, scheme[SchemeSel]);
 			uy = drw->fonts->h + (barheight - ulheight);
 			drw_rect(drw, x, uy, TEXTW(tags[i]), ulheight, 1, 0);
 		}

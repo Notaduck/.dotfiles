@@ -1,6 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 #include "fibonacci.c"
-#include "./themes/nord.c"
+#include "./themes/onedark.c"
 #include <X11/XF86keysym.h>
 
 /* appearance */
@@ -22,8 +22,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class					instance				title       tags mask     isfloating   monitor */
-	{ "Gimp",					NULL,				    NULL,       0,            1,           -1 },
-	{ "Firefox",			NULL,						NULL,       1 << 8,       0,           -1 },
+	{ "Firefox",			NULL,						NULL,       1 ,	          0,           -1 },
 	{ "st-256color",  NULL,				    "weechat",	1 << 3,				0,					 -1 },
 	{ "Peek",					NULL,						NULL,				0,						1,					 -1 }
 };

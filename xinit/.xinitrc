@@ -23,7 +23,7 @@ xautolock -time 5 -locker 'betterlockscreen -l' -corners & 0-00
 $TERMINAL -n $IRC_CLIENT -e $IRC_CLIENT &
 
 # set the background
-feh --bg-fill --no-xinerama ~/.wallpapers/forrest.jpg &
+feh --bg-fill --no-xinerama ~/.wallpapers/man-on-the-moon.jpg &
 
 # Start pulseadui in order to get my headset workin
 pulseaduio --start &
