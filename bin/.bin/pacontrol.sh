@@ -19,7 +19,6 @@ case $1 in
     "down")
         pactl set-sink-volume $latest_sink -$vol_interval%
 				dwmbar_reset
-				dwmbar_reset
         ;;
     "toggle-mute") 
         pactl set-sink-mute $latest_sink toggle

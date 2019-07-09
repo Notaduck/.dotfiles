@@ -1,7 +1,9 @@
 #!/bin/bash
 
 function VOLUME() {
-	vol=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | grep -Eo "[0-9]{1,3}" | trim)
+	vol=$(
+		amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | grep -Eo "[0-9]{1,3}" | trim
+	)
 	STATUS=$(pactl list sinks | grep -oP "Mute: \K\w+")
 	if [[ $STATUS == *"yes"* ]]; then
 		echo " "
@@ -61,6 +63,6 @@ function LAYOUT() {
 }
 while true; do
 	# xsetroot -name "$(LAYOUT) $(DATE) $(WIFI) $(VOLUME) $(BATT) "
-	xsetroot -name "$(DATE) $(BATT) $(WIFI) ${VOLUME} $(LAYOUT) "
+	xsetroot -name "$(DATE) $(BATT) $(WIFI) $(VOLUME) $(LAYOUT) "
 	sleep 1m # Update time every minute
 done &
