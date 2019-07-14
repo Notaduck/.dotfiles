@@ -49,4 +49,5 @@ done
 
 # Manage monitor configuration automatically
 umonitor --listen &
+compton &
 

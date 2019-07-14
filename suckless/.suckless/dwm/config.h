@@ -9,7 +9,7 @@ static const unsigned int gappx     = 6;        /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int barheight = 2;        /* height of the bar */
+static const unsigned int barheight = 3;        /* height of the bar */
 static const unsigned int ulheight  = 2;        /* height of tag underline */
 
 

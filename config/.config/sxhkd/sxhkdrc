@@ -2,6 +2,10 @@
 super + shift + Return
 	st	
 
+# Launch powermenu 
+super + BackSpace
+	powermenu_dmenu
+
 # Launch Clipmenu 
 super + shift + p 
 	clipmenu 

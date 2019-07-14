@@ -116,6 +116,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 #
 alias weather="curl wttr.in"
 alias vim="nvim"
+alias code="codium"
 alias cat="bat"
 alias def="definition"
 alias cclip='xclip -selection clipboard'
