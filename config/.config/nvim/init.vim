@@ -32,6 +32,7 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'vim-scripts/bash-support.vim' 
 Plug 'mxw/vim-jsx'
 Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'aklt/plantuml-syntax'
 
 " Utilities
 Plug 'aserebryakov/vim-todo-lists'
@@ -40,7 +41,8 @@ Plug 'kien/ctrlp.vim'
 Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
 Plug 'airblade/vim-gitgutter'
-
+Plug 'weirongxu/plantuml-previewer.vim'
+Plug 'tyru/open-browser.vim'
 
 " Text formatting
 Plug 'tpope/vim-commentary'
@@ -360,6 +362,29 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 		let g:gitgutter_sign_modified = '|'
 		let g:gitgutter_async = 1
 
+" }}}
+
+" {{{
+	function! s:goyo_enter()
+		let b:quitting = 0
+		let b:quitting_bang = 0
+		autocmd QuitPre <buffer> let b:quitting = 1
+		cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+	endfunction
+
+	function! s:goyo_leave()
+		" Quit Vim if this is the only remaining buffer
+		if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+			if b:quitting_bang
+				qa!
+			else
+				qa
+			endif
+		endif
+	endfunction
+
+	autocmd! User GoyoEnter call <SID>goyo_enter()
+	autocmd! User GoyoLeave call <SID>goyo_leave()
 " }}}
 
 " JavaComplete {{{

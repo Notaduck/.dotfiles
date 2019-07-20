@@ -4,7 +4,7 @@
 #
 #
 #
-
+set -x
 function get_brightness {
   xbacklight -get | cut -d '.' -f 1
 }
@@ -15,7 +15,7 @@ notify-send "Brightness: $(printf %.0f%% $(xbacklight -get))" -h string:x-canoni
 }
 
 # Increment to use.
-incr=5%
+incr=10
 
 cur=$(xbacklight -get)
 case "$1" in

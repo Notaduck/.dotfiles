@@ -78,5 +78,4 @@ set selection-clipboard clipboard
 # enable syntex
 set synctex true
 
-
 set synctex-editor-command "nvim --remote-silent +%{line} %{input}"

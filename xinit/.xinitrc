@@ -22,6 +22,10 @@ xautolock -time 5 -locker 'betterlockscreen -l' -corners & 0-00
 # Launch weechat
 $TERMINAL -n $IRC_CLIENT -e $IRC_CLIENT &
 
+xrandr --setproviderouteputsource modesetting NVIDIA-0 &
+xrandr --auto &
+# xrandr --setprovideroffloadsink provider sink &
+
 # set the background
 feh --bg-fill --no-xinerama ~/.wallpapers/man-on-the-moon.jpg &
 
@@ -38,7 +42,6 @@ exec nextcloud --background &
 # Touchpad settings
 xinput set-prop "DLL06E4:01 06CB:7A13 Touchpad" "libinput Tapping Enabled" 1 
 xinput set-prop "DLL06E4:01 06CB:7A13 Touchpad" "libinput Natural Scrolling Enabled" 1 
-
 # 
 dwmbar &
 

@@ -1,5 +1,0 @@
-#!/bin/bash
-bluetoothctl << EOF
-power on
-connect 00:1B:66:82:C7:BD
-EOF
