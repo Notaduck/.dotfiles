@@ -19,6 +19,17 @@ function VOLUME() {
 
 }
 
+function GIT() {
+
+	USER="notaduck"
+	TOKEN="b3081db0db981d3bf531bcf05b6ac9351313d0d8"
+	NUMBER_OF_NOTIFICATIONS=$(curl -u ${USER}:${TOKEN} https://api.github.com/notifications | grep "repository" -c)
+
+	if [ $NUMBER_OF_NOTIFICATIONS -ne 0 ]; then
+		echo " $NUMBER_OF_NOTIFICATIONS"
+	fi
+}
+
 function BATT() {
 
 	CAPASITY=$(cat /sys/class/power_supply/BAT0/capacity)
@@ -63,6 +74,6 @@ function LAYOUT() {
 }
 while true; do
 	# xsetroot -name "$(LAYOUT) $(DATE) $(WIFI) $(VOLUME) $(BATT) "
-	xsetroot -name "$(DATE) $(BATT) $(WIFI) $(VOLUME) $(LAYOUT) "
+	xsetroot -name "$(GIT) $(DATE) $(BATT) $(WIFI) $(VOLUME) $(LAYOUT) "
 	sleep 1m # Update time every minute
 done &
