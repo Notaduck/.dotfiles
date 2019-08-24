@@ -1,0 +1,22 @@
+#!/bin/sh
+function usage() {
+	echo "Usage?"
+}
+case $1 in
+"laptop")
+	ID=$(xinput --list --id-only 'AT Translated Set 2 keyboard')
+	setxkbmap -device "$ID" -model dell -layout dk -option "caps:escape, altwin:swap_lalt_lwin"
+	dwmbar_reset
+	;;
+"hhkb")
+	ID=$(xinput --list --id-only 'Topre Corporation HHKB Professional')
+	setxkbmap -device "$ID" -option grp:alt_shift_toggle us,dk
+	dwmbar_reset
+	;;
+"vibe")
+	ID=$(xinput --list --id-only 'USB-HID Keyboard System Control')
+	setxkbmap -device "$ID" -layout dk -option "fn:caps, altwin:swap_lalt_lwin,"
+	dwmbar_reset
+	;;
+*) usage ;;
+esac
