@@ -20,16 +20,16 @@
 set -o nounset # Treat unset variables as an error
 
 case "$(
-	echo -e "shutdown\nrestart\nkillX" | dmenu
+	echo -e "[shutdown]\n[restart]\n[kill x]" | dmenu
 	-nb "${COLOR_BACKGROUND:-#151515}" \
-	-nf "${COLOR_DEFAULT:-#aaaaaa}" \
-	-sf "${COLOR_HIGHLIGHT:-#589cc5}" \
-	-sb "#1a1a1a" \
-	-b -i -p \
-	"Power:" -l 5
+		-nf "${COLOR_DEFAULT:-#aaaaaa}" \
+		-sf "${COLOR_HIGHLIGHT:-#589cc5}" \
+		-sb "#1a1a1a" \
+		-b -i -p \
+		"Power:" -l 5
 )" in
-shutdown) exec systemctl poweroff ;;
-restart) exec systemctl reboot ;;
-killX) pkill x ;;
+"[shutdown]") exec systemctl poweroff ;;
+"[restart]") exec systemctl reboot ;;
+"[kill x]") pkill x ;;
 	# Lock) exec systemctl --user start lock.target ;;
 esac

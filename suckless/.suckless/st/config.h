@@ -7,7 +7,7 @@
  */
 #include "themes/one-dark.h""
 static char *font = "Office Code Pro Medium:pixelsize=14:antialias=true:autohint=true";
-static int borderpx = 20;
+static int borderpx = 25;
 
 /*
  * What program is execed by st depends of these precedence rules:

@@ -19,16 +19,16 @@ function VOLUME() {
 
 }
 
-function GIT() {
+# function GIT() {
 
-	USER="notaduck"
-	TOKEN="b3081db0db981d3bf531bcf05b6ac9351313d0d8"
-	NUMBER_OF_NOTIFICATIONS=$(curl -u ${USER}:${TOKEN} https://api.github.com/notifications | grep "repository" -c)
+# 	USER="notaduck"
+# 	TOKEN=$(cat ./personal_access_token)
+# 	NUMBER_OF_NOTIFICATIONS=$(curl -u ${USER}:${TOKEN} https://api.github.com/notifications | jq length)
 
-	if [ $NUMBER_OF_NOTIFICATIONS -ne 0 ]; then
-		echo " $NUMBER_OF_NOTIFICATIONS"
-	fi
-}
+# 	if [ $NUMBER_OF_NOTIFICATIONS -ne 0 ]; then
+# 		echo "[ $NUMBER_OF_NOTIFICATIONS]"
+# 	fi
+# }
 
 function BATT() {
 
@@ -69,11 +69,12 @@ function DATE() {
 }
 
 function LAYOUT() {
-	LANGUAGE=$(setxkbmap -query | grep layout | awk '{print $2}')
+	# LANGUAGE=$(setxkbmap -query | grep layout | awk '{print $2}')
+	LANGUAGE=$(xkb-switch)
 	echo " $LANGUAGE"
 }
 while true; do
 	# xsetroot -name "$(LAYOUT) $(DATE) $(WIFI) $(VOLUME) $(BATT) "
-	xsetroot -name "$(GIT) $(DATE) $(BATT) $(WIFI) $(VOLUME) $(LAYOUT) "
+	xsetroot -name "$(DATE) $(BATT) $(WIFI) $(VOLUME) $(LAYOUT) "
 	sleep 1m # Update time every minute
 done &

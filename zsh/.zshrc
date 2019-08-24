@@ -16,12 +16,21 @@ function stopwatch(){
     sleep 0.1
    done
 }
-export PATH=/usr/lib/jvm/java-11-openjdk/bin:$PATH
-export PATH=/home/$USER/.bin:$PATH
-export PATH=~/.npm-global/bin:$PATH
+# export PATH=/usr/lib/jvm/java-11-openjdk/bin:$PATH
+# export PATH=/home/$USER/.bin:$PATH
+# export PATH=~/.npm-global/bin:$PATH
+# export MSBuildSDKsPath=/opt/dotnet/sdk/$(dotnet --version)/Sdks
+# export PATH="$HOME/.rbenv/bin:$PATH"
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/$USER/.oh-my-zsh"
+
+# export marker_db="mongodb+srv://markerUser:2LcId2FmsQwTOwEv@cluster0-dcqrr.mongodb.net/test?retryWrites=true&w=majority"
+# export vidly_jwtPrivateKey="someSecretkey"
+# export pass="123"
+
+# # Path to your oh-my-zsh installation.
+# export ZSH="/home/$USER/.oh-my-zsh"
+
+eval "$(rbenv init -)"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,

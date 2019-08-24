@@ -24,6 +24,7 @@ $TERMINAL -n $IRC_CLIENT -e $IRC_CLIENT &
 
 xrandr --setproviderouteputsource modesetting NVIDIA-0 &
 xrandr --auto &
+
 # xrandr --setprovideroffloadsink provider sink &
 
 # set the background

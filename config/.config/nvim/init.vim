@@ -33,6 +33,7 @@ Plug 'vim-scripts/bash-support.vim'
 Plug 'mxw/vim-jsx'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'aklt/plantuml-syntax'
+Plug 'moll/vim-node'
 
 " Utilities
 Plug 'aserebryakov/vim-todo-lists'
@@ -71,10 +72,10 @@ Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale' 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'fsharp/vim-fsharp', {
-			\ 'for': 'fsharp',
-			\ 'do':  'make fsautocomplete',
-			\}
+" Plug 'fsharp/vim-fsharp', {
+" 			\ 'for': 'fsharp',
+" 			\ 'do':  'make fsautocomplete',
+" 			\}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
@@ -143,7 +144,7 @@ colorscheme onedark
 
 " General settings {{{
 set runtimepath+=/home/$USER/.vim/deoplete
-set runtimepath+=/home/$USER/.vim/deoplete-fsharp
+" set runtimepath+=/home/$USER/.vim/deoplete-fsharp
 
 set directory^=$HOME/.vim/tmp// " Place all swap files under .vim/tmp
 set clipboard=unnamedplus " Let vim use the systems clipboard
@@ -200,10 +201,10 @@ set softtabstop=2
 set tabstop=2
 
 " for html/js files, 2 spaces
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
+" au BufNewFile,BufRead *.js, *.html, *.css
+"     \ set tabstop=2
+"     \ set softtabstop=2
+"     \ set shiftwidth=2
 
 " for java files, 4 spaces
 autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
