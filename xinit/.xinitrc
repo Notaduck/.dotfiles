@@ -28,7 +28,7 @@ xrandr --auto &
 # xrandr --setprovideroffloadsink provider sink &
 
 # set the background
-feh --bg-fill --no-xinerama ~/.wallpapers/man-on-the-moon.jpg &
+feh --bg-fill --no-xinerama ~/.wallpapers/we-lost-the-sea.png &
 
 # Start pulseadui in order to get my headset workin
 pulseaduio --start &
@@ -43,6 +43,9 @@ exec nextcloud --background &
 # Touchpad settings
 xinput set-prop "DLL06E4:01 06CB:7A13 Touchpad" "libinput Tapping Enabled" 1 
 xinput set-prop "DLL06E4:01 06CB:7A13 Touchpad" "libinput Natural Scrolling Enabled" 1 
+
+libinput-gestures-setup start
+
 # 
 dwmbar &
 

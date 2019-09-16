@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-#include "themes/one-dark.h""
+#include "themes/one-dark.h"
 static char *font = "Office Code Pro Medium:pixelsize=14:antialias=true:autohint=true";
 static int borderpx = 25;
 

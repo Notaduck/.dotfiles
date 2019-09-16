@@ -2,6 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 #
 # bindkey -v # Enable VI
+export XCURSOR_SIZE=10
 function countdown(){
    date1=$((`date +%s` + $1)); 
    while [ "$date1" -ge `date +%s` ]; do 
@@ -30,7 +31,7 @@ function stopwatch(){
 # # Path to your oh-my-zsh installation.
 # export ZSH="/home/$USER/.oh-my-zsh"
 
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -99,7 +100,7 @@ ZSH_THEME="theunraveler"
 plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # User configuration
 
@@ -123,12 +124,14 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
+alias plz="sudo"
 alias weather="curl wttr.in"
 alias vim="nvim"
 alias code="codium"
 alias cat="bat"
 alias def="definition"
 alias cclip='xclip -selection clipboard'
+alias itu='cd /home/daniel/Nextcloud/Skole/ITU/5_Semester'
 
 # Alias for termbin
 alias tb="nc termbin.com 9999"

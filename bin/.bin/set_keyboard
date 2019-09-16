@@ -8,6 +8,11 @@ case $1 in
 	setxkbmap -device "$ID" -model dell -layout dk -option "caps:escape, altwin:swap_lalt_lwin"
 	dwmbar_reset
 	;;
+"pok3r")
+	ID=$(xinput --list --id-only 'USB Keyboard')
+	setxkbmap -device "$ID" -layout us -option "caps:escape, altwin:swap_lalt_lwin, grp:altl_shift_togglel us,dk"
+	dwmbar_reset
+	;;
 "hhkb")
 	ID=$(xinput --list --id-only 'Topre Corporation HHKB Professional')
 	setxkbmap -device "$ID" -option grp:alt_shift_toggle us,dk

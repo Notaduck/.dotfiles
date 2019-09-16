@@ -19,17 +19,17 @@
 
 set -o nounset # Treat unset variables as an error
 
-case "$(
-	echo -e "[shutdown]\n[restart]\n[kill x]" | dmenu
-	-nb "${COLOR_BACKGROUND:-#151515}" \
-		-nf "${COLOR_DEFAULT:-#aaaaaa}" \
-		-sf "${COLOR_HIGHLIGHT:-#589cc5}" \
+	case "$(
+		echo -e "[poweroff]\n[reboot]\n[kill x]" | dmenu
+		-nb "${COLOR_BACKGROUND:-#2e3440}" \
+		-nf "${COLOR_DEFAULT:-#E06C75}" \
+		-sf "${COLOR_HIGHLIGHT:-#2e3440}" \
 		-sb "#1a1a1a" \
 		-b -i -p \
 		"Power:" -l 5
 )" in
-"[shutdown]") exec systemctl poweroff ;;
-"[restart]") exec systemctl reboot ;;
+"[poweroff]") exec systemctl poweroff ;;
+"[reboot]") exec systemctl reboot ;;
 "[kill x]") pkill x ;;
 	# Lock) exec systemctl --user start lock.target ;;
 esac

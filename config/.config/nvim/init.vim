@@ -26,7 +26,9 @@ endif
 "required
 call plug#begin('~/local/share/nvim/plugged')
 
-
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'janko/vim-test'
+ Plug 'itchyny/lightline.vim'
 " Syntax support
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'vim-scripts/bash-support.vim' 
@@ -34,6 +36,7 @@ Plug 'mxw/vim-jsx'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'aklt/plantuml-syntax'
 Plug 'moll/vim-node'
+Plug 'lifepillar/pgsql.vim'
 
 " Utilities
 Plug 'aserebryakov/vim-todo-lists'
@@ -61,8 +64,8 @@ Plug 'matze/vim-move'
 Plug 'tpope/vim-fugitive'
 
 " UI
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'scrooloose/nerdtree'
@@ -232,6 +235,10 @@ autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 "
 let g:move_key_modifier = 'C' 
 
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ }
+
 " ALE {{{
 
 let g:ale_enable = 1 
@@ -271,6 +278,7 @@ let g:ale_linters = {
 		\	'rust': ['rustc'],
 		\	'html': ['tidy', 'htmlhint'],
 		\	'c': ['clang', 'uncrustify'],
+		\ 'cs': ['OmniSharp'],
 		\	'cpp': ['clang++'],
 		\	'css': ['csslint', 'stylelint'],
 		\	'nim': ['nim', 'nimsuggest'],
@@ -297,13 +305,13 @@ let g:ale_fixers = {
 " Airline {{{ 
 
 " let g:airline_theme='papercolor'
-let g:airline_theme='onedark'
-let g:airline_whitespace_disabled = 1
-let g:airline#extensions#tabline#formatter = 'default'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#enabled = 'ale'
-let g:airline_powerline_fonts = 1
+" let g:airline_theme='onedark'
+" let g:airline_whitespace_disabled = 1
+" let g:airline#extensions#tabline#formatter = 'default'
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#ale#enabled = 1
+" let g:airline#extensions#enabled = 'ale'
+" let g:airline_powerline_fonts = 1
 
 
 " }}}
@@ -365,7 +373,7 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " }}}
 
-" {{{
+" {{{ Goyo
 	function! s:goyo_enter()
 		let b:quitting = 0
 		let b:quitting_bang = 0
@@ -478,5 +486,11 @@ set conceallevel=2
 " let g:tex_conceal='abdmg'
 	"}}}
 	
+	"{{{ OmniSharp
+	
+		" let g:OmniSharp_server_stdio = 1
+		let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
+	
+	"}}}
 
 " }}}

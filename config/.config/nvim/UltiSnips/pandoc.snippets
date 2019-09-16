@@ -1,31 +1,58 @@
-snippet sqlblock "code block"
-```sql
-${1}
-```
+extends mkd
+
+snippet %% "Title block" b
+% ${1:`!v Filename('', 'title')`}
+% ${2:`!v g:snips_author`}
+% ${3:`!v strftime("%d %b %Y")`}
+
+$0
 endsnippet
 
-snippet rarrow "right arrow"
-```sql
-$\\rightarrow$
-```
+snippet %%v "Title block" b
+% ${VISUAL:`!v Filename('', 'title')`}
+% ${2:`!v g:snips_author`}
+% ${3:`!v strftime("%d %b %Y")`}
+
+$0
 endsnippet
 
-snippet bold "bold font"
-**${1}**
+snippet :: "Definition" b
+${1:term}
+  ~  ${2:definition}
 endsnippet
 
-snippet ita "Italic font"
-***${1}***
+snippet ===
+`!p
+snip.rv = '=' * len(vim.current.buffer[vim.current.window.cursor[0] - 2])
+`
 endsnippet
 
-snippet h1 "Heading 1"
-#${1}
+snippet ---
+`!p
+snip.rv = '-' * len(vim.current.buffer[vim.current.window.cursor[0] - 2])
+`
 endsnippet
 
-snippet h2 "Heading 2"
-##${1}
+snippet [
+[${1:link}](http://${2:url} "${3:title}")$0
 endsnippet
 
-snippet h3 "Heading 3"
-###${1}
+snippet [:
+[${1:id}]: http://${2:url} "${3:title}"
+endsnippet
+
+snippet [@
+[${1:link}](mailto:${2:email})${3}
+endsnippet
+
+snippet ![
+![${1:alt}](${2:url} "${3:tirle}")$0
+endsnippet
+
+snippet ![:
+![${1:id}]: ${2:url} "${3:title}"
+endsnippet
+
+snippet [^:
+[^${1:id}]: ${2:note}
 endsnippet
