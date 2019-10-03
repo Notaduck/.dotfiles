@@ -43,14 +43,14 @@ XF86AudioMute
 	pacontrol.sh toggle-mute
 
 # play next
-XF86AudioMute 
+XF86AudioNext 
 	spotify-controller -n 
 
 # play prev
-XF86AudioMute 
+XF86AudioPrev 
 	spotify-controller -p 
 
 # play/pause toggle
-XF86AudioMute 
+XF86AudioPlay 
 	spotify-controller -t 
 
