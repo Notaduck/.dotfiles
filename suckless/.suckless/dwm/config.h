@@ -13,6 +13,8 @@ static const unsigned int barheight = 13;        /* height of the bar */
 static const unsigned int ulheight  = 2;        /* height of tag underline */
 
 
+static int isFullscreenFake = 1;
+
 /* tagging */
 static const char *tags[] = { "WEB", "TERM", "DEV", "CHAT" ,"MEDIA", "RAND" };
 
@@ -57,10 +59,6 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray2, "-nf", col_gray3, "-sb", col_gray2, "-sf", col_gray4, NULL };
 
-/* static const char *spotify_toggle[] = { "/home/daniel/.scripts/spotify-controller", "toggle", NULL }; */
-/* static const char *spotify_next[] = { "/home/daniel/.scripts/spotify-controller", "next", NULL }; */
-/* static const char *spotify_prev[] = { "/home/daniel/.scripts/spotify-controller", "prev", NULL }; */
-
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 
@@ -68,7 +66,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_g,			 togglescratch,  {.v = scratchpadcmd } },
-	{ MODKEY|ShiftMask,             XK_t,			 togglescratch,  {.v = "/bin/zsh -c stalonetray"  } },
+	{ MODKEY|ShiftMask,             XK_f,      toggleFakeFullscreen,  {0}},
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
