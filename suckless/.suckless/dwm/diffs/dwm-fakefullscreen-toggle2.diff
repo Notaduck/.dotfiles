@@ -1,0 +1,176 @@
+From 6f1a78634b1103010f62d4bf6e0198481afe4b5e Mon Sep 17 00:00:00 2001
+From: f-person <fperson@protonmail.com>
+Date: Wed, 17 Jul 2019 19:12:01 +0400
+Subject: [PATCH] fakefullscreentoggle patch - toggle fakefullscreen mode
+
+---
+ config.h |  3 +++
+ dwm.c    | 64 ++++++++++++++++++++++++++++++++++----------------------
+ 2 files changed, 42 insertions(+), 25 deletions(-)
+
+diff --git a/config.h b/config.h
+index 48e64d5..37b12e3 100644
+--- a/config.h
++++ b/config.h
+@@ -19,6 +19,8 @@ static const char *colors[][3]      = {
+ 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+ };
+ 
++static int isFullscreenFake = 1;
++
+ /* tagging */
+ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+ 
+@@ -69,6 +71,7 @@ static Key keys[] = {
+ 	/* modifier                     key        function        argument */
+ 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+ 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
++	{ MODKEY|ShiftMask,             XK_f,      toggleFakeFullscreen,  {0}},
+ 	{ MODKEY,                       XK_b,      togglebar,      {0} },
+ 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+ 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+diff --git a/dwm.c b/dwm.c
+index 28743a2..c7e236c 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -237,6 +237,7 @@ static int xerror(Display *dpy, XErrorEvent *ee);
+ static int xerrordummy(Display *dpy, XErrorEvent *ee);
+ static int xerrorstart(Display *dpy, XErrorEvent *ee);
+ static void zoom(const Arg *arg);
++static void toggleFakeFullscreen(void);
+ 
+ /* variables */
+ static const char broken[] = "broken";
+@@ -278,6 +279,11 @@ static Window root, wmcheckwin;
+ /* compile-time check if all tags fit into an unsigned int bit array. */
+ struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
+ 
++void
++toggleFakeFullscreen(void){
++	isFullscreenFake = (isFullscreenFake == 0) ? 1 : 0;
++}
++
+ /* function implementations */
+ void
+ applyrules(Client *c)
+@@ -525,7 +531,7 @@ clientmessage(XEvent *e)
+ 		if (cme->data.l[1] == netatom[NetWMFullscreen]
+ 		|| cme->data.l[2] == netatom[NetWMFullscreen])
+ 			setfullscreen(c, (cme->data.l[0] == 1 /* _NET_WM_STATE_ADD    */
+-				|| (cme->data.l[0] == 2 /* _NET_WM_STATE_TOGGLE */ && !c->isfullscreen)));
++				|| cme->data.l[0] == 2 /* _NET_WM_STATE_TOGGLE */));
+ 	} else if (cme->message_type == netatom[NetActiveWindow]) {
+ 		if (c != selmon->sel && !c->isurgent)
+ 			seturgent(c, 1);
+@@ -555,7 +561,8 @@ void
+ configurenotify(XEvent *e)
+ {
+ 	Monitor *m;
+-	Client *c;
++	/*if (isFullscreenFake == 0) iwashere */
++		Client *c;
+ 	XConfigureEvent *ev = &e->xconfigure;
+ 	int dirty;
+ 
+@@ -568,10 +575,13 @@ configurenotify(XEvent *e)
+ 			drw_resize(drw, sw, bh);
+ 			updatebars();
+ 			for (m = mons; m; m = m->next) {
+-				for (c = m->clients; c; c = c->next)
+-					if (c->isfullscreen)
+-						resizeclient(c, m->mx, m->my, m->mw, m->mh);
+-				XMoveResizeWindow(dpy, m->barwin, m->wx, m->by, m->ww, bh);
++				if (isFullscreenFake == 0) {
++					for (c = m->clients; c; c = c->next)
++						if (c->isfullscreen)
++							resizeclient(c, m->mx, m->my, m->mw, m->mh);
++				} else {
++					XMoveResizeWindow(dpy, m->barwin, m->wx, m->by, m->ww, bh);
++				}
+ 			}
+ 			focus(NULL);
+ 			arrange(NULL);
+@@ -1273,7 +1283,7 @@ movemouse(const Arg *arg)
+ 
+ 	if (!(c = selmon->sel))
+ 		return;
+-	if (c->isfullscreen) /* no support moving fullscreen windows by mouse */
++	if (c->isfullscreen && isFullscreenFake == 0) /* no support resizing fullscreen windows by mouse */
+ 		return;
+ 	restack(selmon);
+ 	ocx = c->x;
+@@ -1428,8 +1438,6 @@ resizemouse(const Arg *arg)
+ 
+ 	if (!(c = selmon->sel))
+ 		return;
+-	if (c->isfullscreen) /* no support resizing fullscreen windows by mouse */
+-		return;
+ 	restack(selmon);
+ 	ocx = c->x;
+ 	ocy = c->y;
+@@ -1612,24 +1620,28 @@ setfullscreen(Client *c, int fullscreen)
+ 		XChangeProperty(dpy, c->win, netatom[NetWMState], XA_ATOM, 32,
+ 			PropModeReplace, (unsigned char*)&netatom[NetWMFullscreen], 1);
+ 		c->isfullscreen = 1;
+-		c->oldstate = c->isfloating;
+-		c->oldbw = c->bw;
+-		c->bw = 0;
+-		c->isfloating = 1;
+-		resizeclient(c, c->mon->mx, c->mon->my, c->mon->mw, c->mon->mh);
+-		XRaiseWindow(dpy, c->win);
++		if (isFullscreenFake == 0) {
++			c->oldstate = c->isfloating;
++			c->oldbw = c->bw;
++			c->bw = 0;
++			c->isfloating = 1;
++			resizeclient(c, c->mon->mx, c->mon->my, c->mon->mw, c->mon->mh);
++			XRaiseWindow(dpy, c->win);
++		}
+ 	} else if (!fullscreen && c->isfullscreen){
+ 		XChangeProperty(dpy, c->win, netatom[NetWMState], XA_ATOM, 32,
+ 			PropModeReplace, (unsigned char*)0, 0);
+ 		c->isfullscreen = 0;
+-		c->isfloating = c->oldstate;
+-		c->bw = c->oldbw;
+-		c->x = c->oldx;
+-		c->y = c->oldy;
+-		c->w = c->oldw;
+-		c->h = c->oldh;
+-		resizeclient(c, c->x, c->y, c->w, c->h);
+-		arrange(c->mon);
++		if (isFullscreenFake == 0) {
++			c->isfloating = c->oldstate;
++			c->bw = c->oldbw;
++			c->x = c->oldx;
++			c->y = c->oldy;
++			c->w = c->oldw;
++			c->h = c->oldh;
++			resizeclient(c, c->x, c->y, c->w, c->h);
++			arrange(c->mon);
++		}
+ 	}
+ }
+ 
+@@ -1767,7 +1779,9 @@ showhide(Client *c)
+ 	if (ISVISIBLE(c)) {
+ 		/* show clients top down */
+ 		XMoveWindow(dpy, c->win, c->x, c->y);
+-		if ((!c->mon->lt[c->mon->sellt]->arrange || c->isfloating) && !c->isfullscreen)
++		if ((!c->mon->lt[c->mon->sellt]->arrange || c->isfloating) && !c->isfullscreen && isFullscreenFake == 0)
++			resize(c, c->x, c->y, c->w, c->h, 0);
++		else if (!c->mon->lt[c->mon->sellt]->arrange || c->isfloating)
+ 			resize(c, c->x, c->y, c->w, c->h, 0);
+ 		showhide(c->snext);
+ 	} else {
+@@ -1859,7 +1873,7 @@ togglefloating(const Arg *arg)
+ {
+ 	if (!selmon->sel)
+ 		return;
+-	if (selmon->sel->isfullscreen) /* no support for fullscreen windows */
++	if (selmon->sel->isfullscreen && isFullscreenFake == 0) /* no support for fullscreen windows */
+ 		return;
+ 	selmon->sel->isfloating = !selmon->sel->isfloating || selmon->sel->isfixed;
+ 	if (selmon->sel->isfloating)
+-- 
+2.20.1
+
