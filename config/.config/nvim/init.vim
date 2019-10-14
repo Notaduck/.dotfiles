@@ -28,7 +28,8 @@ call plug#begin('~/local/share/nvim/plugged')
 
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'janko/vim-test'
- Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
+
 " Syntax support
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'vim-scripts/bash-support.vim' 
@@ -37,6 +38,7 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'aklt/plantuml-syntax'
 Plug 'moll/vim-node'
 Plug 'lifepillar/pgsql.vim'
+Plug 'pearofducks/ansible-vim'
 
 " Utilities
 Plug 'aserebryakov/vim-todo-lists'
@@ -47,6 +49,7 @@ Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
 Plug 'airblade/vim-gitgutter'
 Plug 'weirongxu/plantuml-previewer.vim'
 Plug 'tyru/open-browser.vim'
+Plug 'ludovicchabant/vim-gutentags'
 
 " Text formatting
 Plug 'tpope/vim-commentary'
@@ -452,7 +455,7 @@ augroup pandoc_syntax
  " UtilSnips {{{
 
 " let g:UltiSnipsSnippetDirectories = ['/home/daniel/.vim/UltiSnips', 'UltiSnips']
-let g:UltiSnipsSnippetDirectories = ['~.dotfiles/neovim/.config/nvim/UltiSnips', 'UltiSnips']
+let g:UltiSnipsSnippetDirectories = ['~/.dotfiles/config/.config/nvim/UltiSnips', 'UltiSnips']
 
  " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 
