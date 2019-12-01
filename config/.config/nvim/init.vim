@@ -5,6 +5,7 @@
 "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
 "╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝ 		╚═╝
 
+
  " Plugin dependencies {{{
 
 " Installs Plug if it isn't allready installed
@@ -26,9 +27,10 @@ endif
 "required
 call plug#begin('~/local/share/nvim/plugged')
 
-Plug 'OmniSharp/omnisharp-vim'
+Plug 'alvan/vim-closetag'
 Plug 'janko/vim-test'
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-eunuch'
 
 " Syntax support
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
@@ -49,7 +51,7 @@ Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
 Plug 'airblade/vim-gitgutter'
 Plug 'weirongxu/plantuml-previewer.vim'
 Plug 'tyru/open-browser.vim'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 
 " Text formatting
 Plug 'tpope/vim-commentary'
@@ -67,8 +69,8 @@ Plug 'matze/vim-move'
 Plug 'tpope/vim-fugitive'
 
 " UI
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'scrooloose/nerdtree'
@@ -78,15 +80,17 @@ Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale' 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-" Plug 'fsharp/vim-fsharp', {
-" 			\ 'for': 'fsharp',
-" 			\ 'do':  'make fsautocomplete',
-" 			\}
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'artur-shaik/vim-javacomplete2'
+" Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'artur-shaik/vim-javacomplete2'
 Plug 'deoplete-plugins/deoplete-jedi'
 
 " Themes {{{
@@ -143,8 +147,6 @@ if (empty($TMUX))
 endif
 
 colorscheme onedark
-" set background=dark " for the dark version
-" set background=light " for the light version
 
 " }}}
 
@@ -174,7 +176,10 @@ set foldmethod=marker
 set undofile	
 set undodir=~/.vim/undodir
 
+cmap w!! call SudoWrite()
 
+let g:python_host_prog = "/usr/bin/python"
+let g:python3_host_prog = "/usr/bin/python3"
 
 " Filteypes{{{
 	autocmd filetype *.sql set filetype=mysql 
@@ -238,10 +243,6 @@ autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 "
 let g:move_key_modifier = 'C' 
 
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ }
-
 " ALE {{{
 
 let g:ale_enable = 1 
@@ -268,11 +269,6 @@ AutocmdFT python call deoplete#custom#source('jedi', 'disabled_syntaxes', ['Comm
 AutocmdFT python call deoplete#custom#source('jedi', 'matchers', ['matcher_fuzzy'])
 
 
-
-"let g:ale_java_javac_classpath = [String], to load aditional classes
-" let g:ale_java_javac_classpath = "~/java/algs4.jar"
-let g:ale_java_javac_classpath = "/usr/local/algs4/algs4.jar"
-
 let g:ale_linters = {
 		\	'javascript': ['eslint'],
 		\	'java': ['javac','javac-algs4'],
@@ -289,7 +285,6 @@ let g:ale_linters = {
 		\	'python': ['flake8','pylint'],
 		\	'shell': ['sh', 'shellcheck'],
 		\	'zsh': ['zsh'],
-		\	'swift': ['swiftc'],
 		\	'json' : ['prettier'],
 		\	'yml' : ['prettier'],
 		\	'yaml' : ['prettier'],
@@ -307,8 +302,38 @@ let g:ale_fixers = {
 
 " Airline {{{ 
 
-" let g:airline_theme='papercolor'
-" let g:airline_theme='onedark'
+let g:airline_theme='papercolor'
+let g:airline_theme='onedark'
+
+" air-line
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" " unicode symbols
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = '◀'
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = ''
+" let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+" let g:airline_symbols.whitespace = 'Ξ'
+
+" " airline symbols
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
+" let g:airline_symbols.branch = ''
+" let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 " let g:airline_whitespace_disabled = 1
 " let g:airline#extensions#tabline#formatter = 'default'
 " let g:airline#extensions#tabline#enabled = 1
@@ -323,8 +348,8 @@ let g:ale_fixers = {
 
 	let g:AutoPairsUseInsertedCount = 1
 
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutBackInsert = '<M-b>'
+	let g:AutoPairsFlyMode = 0
+	let g:AutoPairsShortcutBackInsert = '<M-b>'
 	 "}}}
 
 " Autoclose-tag {{{
@@ -346,23 +371,10 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 "}}}
 
 " Deoplete {{{ 
-set omnifunc=syntaxcomplete#Complete
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-  " Use deoplete.
-	let g:deoplete#enable_at_startup = 1
-	let g:deoplete#enable_at_startup = 1
-	" let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-	let g:deoplete#auto_completion_start_length = 2
-	let g:deoplete#sources = {}
-	let g:deoplete#sources._ = []
-	let g:deoplete#file#enable_buffer_path = 1
-	let g:deoplete#omni_patterns = {}
 
-	"Add extra filetypes
-	let g:deoplete#sources#ternjs#filetypes = [
-									\ 'jsx',
-									\ 'javascript.jsx',
-									\ ]
+	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#auto_completion_start_length = 2
+	let g:deoplete#sources#jedi#enable_typeinfo	= 0
 	" }}}
 
 " Gitgutter {{{
@@ -496,4 +508,8 @@ set conceallevel=2
 	
 	"}}}
 
+" {{{ Commentray
+	autocmd FileType pgsql setlocal commentstring=--\ %s
+	autocmd FileType sql setlocal commentstring=-- %s
+" }}}
 " }}}
