@@ -5,7 +5,6 @@
 "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
 "╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝ 		╚═╝
 
-
  " Plugin dependencies {{{
 
 " Installs Plug if it isn't allready installed
@@ -28,30 +27,22 @@ endif
 call plug#begin('~/local/share/nvim/plugged')
 
 Plug 'alvan/vim-closetag'
-Plug 'janko/vim-test'
-" Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-eunuch'
 
 " Syntax support
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'vim-scripts/bash-support.vim' 
 Plug 'mxw/vim-jsx'
-Plug 'PotatoesMaster/i3-vim-syntax'
-Plug 'aklt/plantuml-syntax'
 Plug 'moll/vim-node'
-Plug 'lifepillar/pgsql.vim'
 Plug 'pearofducks/ansible-vim'
+" Plug 'vim-illuminate'
 
 " Utilities
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'mhinz/vim-startify'
 Plug 'kien/ctrlp.vim'
-Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
 Plug 'airblade/vim-gitgutter'
-Plug 'weirongxu/plantuml-previewer.vim'
-Plug 'tyru/open-browser.vim'
-" Plug 'ludovicchabant/vim-gutentags'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Text formatting
 Plug 'tpope/vim-commentary'
@@ -78,50 +69,17 @@ Plug 'scrooloose/nerdtree'
 
 " Autocompletion and Code checker
 Plug 'w0rp/ale' 
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-" Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'artur-shaik/vim-javacomplete2'
-Plug 'deoplete-plugins/deoplete-jedi'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 
 " Themes {{{
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'chriskempson/base16-vim'
-Plug 'arcticicestudio/nord-vim'
-Plug	'ajh17/Spacegray.vim'
-Plug 'joshdick/onedark.vim'
+	Plug 'joshdick/onedark.vim'
+	Plug 'rakr/vim-one'
 " }}}
 
 " Initialize plugin system
 call plug#end()
 
- "}}}
-
-" Colours and UI {{{
-
- " PaperColor
- " let g:PaperColor_Theme_Options = {
-	" \	'theme': {
-	" \		'default.light': {
-	" \		  'override' : {
-	" \			'color00' : ['#dfddd5',''],
-	" \			'linenumber_bg' : ['#dfddd5', '232'],
-	" \			'vertsplit_bg' : ['#dfddd5', '255'],
-	" \		  }
-	" \		}
-	" \	}
-	" \ }
-" colorscheme PaperColor
-" colorscheme nord
 
 augroup ColorOverrides
 	autocmd!
@@ -129,10 +87,6 @@ augroup ColorOverrides
 augroup end
 
 set laststatus=2
-"Credit joshdick
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
 
 if (empty($TMUX))
   if (has("nvim"))
@@ -140,7 +94,6 @@ if (empty($TMUX))
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   endif
   "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-
   if (has("termguicolors"))
 	set termguicolors
   endif
@@ -151,8 +104,7 @@ colorscheme onedark
 " }}}
 
 " General settings {{{
-set runtimepath+=/home/$USER/.vim/deoplete
-" set runtimepath+=/home/$USER/.vim/deoplete-fsharp
+" set runtimepath+=/home/$USER/.vim/deoplete
 
 set directory^=$HOME/.vim/tmp// " Place all swap files under .vim/tmp
 set clipboard=unnamedplus " Let vim use the systems clipboard
@@ -166,9 +118,6 @@ set autowriteall ""automatically save any changes made to the buffer before it i
 " setlocal spell
 " set spelllang=da,en_us
 
-" " use 4 spaces for tabs
-set tabstop=2 softtabstop=2 shiftwidth=2
-
 "" Code Folding
 set foldmethod=marker
 
@@ -178,125 +127,93 @@ set undodir=~/.vim/undodir
 
 cmap w!! call SudoWrite()
 
-let g:python_host_prog = "/usr/bin/python"
-let g:python3_host_prog = "/usr/bin/python3"
+" let g:python_host_prog = "/usr/bin/python"
+" let g:python3_host_prog = "/usr/bin/python3"
 
 " Filteypes{{{
-	autocmd filetype *.sql set filetype=mysql 
+	" autocmd filetype *.sql set filetype=mysql 
 "}}}
 
 "Shortcuts {{{
-" space open/closes folds
-nnoremap <space> za
 
-"Run makefile
-noremap <Leader>m :make <CR>
+	" space open/closes folds
+	nnoremap <space> za
 
-" open main.pdf with zathura
-noremap <Leader>p :! nohup zathura ./main.pdf &<CR><CR>
+	"Run makefile
+	noremap <Leader>m :make <CR>
 
-" Set spell checking
-map <F5> :setlocal spell! spelllang=da,en_us<CR>
-" correct the error from left to right
-inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+	" open main.pdf with zathura
+	noremap <Leader>p :! nohup zathura ./main.pdf &<CR><CR>
 
-inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
-nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
+	" Set spell checking
+	map <F5> :setlocal spell! spelllang=da,en_us<CR>
+	" correct the error from left to right
+	inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+	inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
+	nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 
 "}}}
 
 " Indentation {{{
-" by default, the indent is 2 spaces. 
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
 
-" for html/js files, 2 spaces
-" au BufNewFile,BufRead *.js, *.html, *.css
-"     \ set tabstop=2
-"     \ set softtabstop=2
-"     \ set shiftwidth=2
+	set shiftwidth=2
+	set softtabstop=2
+	set tabstop=2
 
-" for java files, 4 spaces
-autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 "}}}
 
 " AutoGroup settings{{{
 
-		augroup AutoGroup
-		autocmd!
-		augroup END
+		" augroup AutoGroup
+		" autocmd!
+		" augroup END
 
-		command! -nargs=* Autocmd autocmd AutoGroup <args>
-		command! -nargs=* AutocmdFT autocmd AutoGroup FileType <args>
+		" command! -nargs=* Autocmd autocmd AutoGroup <args>
+		" command! -nargs=* AutocmdFT autocmd AutoGroup FileType <args>
 
 
 		augroup myvimrchooks
 				au!
 				autocmd bufwritepost init.vim source ~/.config/nvim/init.vim
 		augroup END
-		" }}}
+		"}}}
 
 	" }}}
 
 " Plugin Settings {{{
-"
+
 let g:move_key_modifier = 'C' 
 
 " ALE {{{
 
-let g:ale_enable = 1 
-let g:ale_completion_enabled = 1
-let g:ale_sign_column_always = 1 " Keeps the error column open
+	let g:ale_enable = 1 
+	let g:ale_completion_enabled = 1
+	let g:ale_sign_column_always = 1 " Keeps the error column open
 
-" let g:ale_sign_error = '=>'
-let g:ale_sign_error = ''
-let g:ale_sign_warning = '>?'
+	" let g:ale_sign_error = '=>'
+	let g:ale_sign_error = ''
+	let g:ale_sign_warning = '>?'
 
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+	let g:ale_echo_msg_error_str = 'E'
+	let g:ale_echo_msg_warning_str = 'W'
+	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-let g:ale_fix_on_save = 1
+	let g:ale_fix_on_save = 1
 
-" Deoplete Python
-AutocmdFT python let g:deoplete#sources#jedi#enable_cache = 1
-AutocmdFT python let g:deoplete#sources#jedi#statement_length = 0
-AutocmdFT python let g:deoplete#sources#jedi#short_types = 0
-AutocmdFT python let g:deoplete#sources#jedi#show_docstring = 1
-AutocmdFT python let g:deoplete#sources#jedi#worker_threads = 4
-AutocmdFT python call deoplete#custom#source('jedi', 'disabled_syntaxes', ['Comment'])
-AutocmdFT python call deoplete#custom#source('jedi', 'matchers', ['matcher_fuzzy'])
+	let g:ale_linters = {
+			\	'javascript': ['eslint'],
+			\	'vim': ['vint'],
+			\	'shell': ['sh', 'shellcheck'],
+			\	'zsh': ['zsh'],
+			\	'json' : ['prettier'],
+			\}
 
-
-let g:ale_linters = {
-		\	'javascript': ['eslint'],
-		\	'java': ['javac','javac-algs4'],
-		\	'php': ['php', 'phpcs', 'phpmd'],
-		\	'go': ['go build', 'gometalinter'],
-		\	'rust': ['rustc'],
-		\	'html': ['tidy', 'htmlhint'],
-		\	'c': ['clang', 'uncrustify'],
-		\ 'cs': ['OmniSharp'],
-		\	'cpp': ['clang++'],
-		\	'css': ['csslint', 'stylelint'],
-		\	'nim': ['nim', 'nimsuggest'],
-		\	'vim': ['vint'],
-		\	'python': ['flake8','pylint'],
-		\	'shell': ['sh', 'shellcheck'],
-		\	'zsh': ['zsh'],
-		\	'json' : ['prettier'],
-		\	'yml' : ['prettier'],
-		\	'yaml' : ['prettier'],
-		\}
-
-let g:ale_fixers = {
-		\	'javascript': ['eslint','prettier_eslint'],
-		\	'java': ['uncrustify','google_java_format'],
-		\	'json' : ['prettier'],
-		\	'sh' : ['shfmt'],
-		\ 'python' : ['autopep8']
-		\}
+	let g:ale_fixers = {
+			\	'javascript': ['eslint','prettier_eslint'],
+			\	'json' : ['prettier'],
+			\	'sh' : ['shfmt'],
+			\}
 "  }} }
 "}}}
 
@@ -353,9 +270,142 @@ let g:airline_symbols.linenr = ''
 	 "}}}
 
 " Autoclose-tag {{{
-
 	let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
 
+" }}}
+
+" coc {{{
+
+  " Setup formatexpr specified filetype(s).
+	" if hidden is not set, TextEdit might fail.
+	set hidden
+
+	" Some servers have issues with backup files, see #649
+	set nobackup
+	set nowritebackup
+ 
+	" Better display for messages
+	set cmdheight=2
+
+	" You will have bad experience for diagnostic messages when it's default 4000.
+	set updatetime=300
+
+	" don't give |ins-completion-menu| messages.
+	set shortmess+=c
+
+	" always show signcolumns
+	set signcolumn=yes
+
+	command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+	" Use tab for trigger completion with characters ahead and navigate.
+	" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+	inoremap <silent><expr> <TAB>
+				\ pumvisible() ? "\<C-n>" :
+				\ <SID>check_back_space() ? "\<TAB>" :
+				\ coc#refresh()
+	inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+	function! s:check_back_space() abort
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1]  =~# '\s'
+	endfunction
+
+	" Use <c-space> to trigger completion.
+	inoremap <silent><expr> <c-space> coc#refresh()
+
+	" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+	" Coc only does snippet and additional edit on confirm.
+	inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+	" Or use `complete_info` if your vim support it, like:
+	" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+	"
+
+	" Use `[g` and `]g` to navigate diagnostics
+	nmap <silent> [g <Plug>(coc-diagnostic-prev)
+	nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+	" Remap keys for gotos
+	nmap <silent> gd <Plug>(coc-definition)
+	nmap <silent> gy <Plug>(coc-type-definition)
+	nmap <silent> gi <Plug>(coc-implementation)
+	nmap <silent> gr <Plug>(coc-references)
+
+	" Use K to show documentation in preview window
+	nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+	function! s:show_documentation()
+		if (index(['vim','help'], &filetype) >= 0)
+			execute 'h '.expand('<cword>')
+		else
+			call CocAction('doHover')
+		endif
+	endfunction
+
+	" Highlight symbol under cursor on CursorHold
+	autocmd CursorHold * silent call CocActionAsync('highlight')
+
+	" Remap for rename current word
+	nmap <leader>rn <Plug>(coc-rename)
+	" Remap for format selected region
+	xmap <leader>f  <Plug>(coc-format-selected)
+	nmap <leader>f  <Plug>(coc-format-selected)
+
+	augroup mygroup
+		autocmd!
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+" nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+" nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Create mappings for function text object, requires document symbols feature of languageserver.
+" xmap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap if <Plug>(coc-funcobj-i)
+" omap af <Plug>(coc-funcobj-a)
+
+
+" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+" nmap <silent> <C-d> <Plug>(coc-range-select)
+" xmap <silent> <C-d> <Plug>(coc-range-select)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+" command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+" command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Using CocList
+" Show all diagnostics
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" " Manage extensions
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" " Show commands
+" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" " Find symbol of current document
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" " Search workspace symbols
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" " Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" Make coc work togheter with ALE
 " }}}
 
 "{{{ Ctrl P
@@ -369,13 +419,6 @@ let g:airline_symbols.linenr = ''
 		\ 'file': '.class',
 		\}
 "}}}
-
-" Deoplete {{{ 
-
-	let g:deoplete#enable_at_startup = 1
-	let g:deoplete#auto_completion_start_length = 2
-	let g:deoplete#sources#jedi#enable_typeinfo	= 0
-	" }}}
 
 " Gitgutter {{{
 	
@@ -410,16 +453,6 @@ let g:airline_symbols.linenr = ''
 	autocmd! User GoyoEnter call <SID>goyo_enter()
 	autocmd! User GoyoLeave call <SID>goyo_leave()
 " }}}
-
-" JavaComplete {{{
-
-set omnifunc=syntaxcomplete#Complete
-let g:JavaComplete_LibsPath = "~/java/algs4.jar"
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-
-	" }}} 
 
 " NerdTree {{{
 
@@ -459,37 +492,32 @@ augroup pandoc_syntax
 		" }}}
 " }}}
 
-" Mysql pipe {{{
-" MySQL
-" let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:dbname=sports'
-" }}}
-
  " UtilSnips {{{
 
 " let g:UltiSnipsSnippetDirectories = ['/home/daniel/.vim/UltiSnips', 'UltiSnips']
-let g:UltiSnipsSnippetDirectories = ['~/.dotfiles/config/.config/nvim/UltiSnips', 'UltiSnips']
+" let g:UltiSnipsSnippetDirectories = ['~/.dotfiles/config/.config/nvim/UltiSnips', 'UltiSnips']
 
- " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+"  " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 
-" let g:UltiSnipsExpandTrigger="<a-tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"  let g:UltiSnipsExpandTrigger="<a-tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+" " If you want :UltiSnipsEdit to split your window.
+" let g:UltiSnipsEditSplit="vertical"
 
 	" }}}
 
 "  Illuminate {{{
 	" Time in millis (default 250)
-	let g:Illuminate_delay = 250
+	" let g:Illuminate_delay = 250
 
-	let g:Illuminate_ftHighlightGroups = {
-      \ 'vim': ['vimVar', 'vimString', 'vimLineComment',
-      \         'vimFuncName', 'vimFunction', 'vimUserFunc', 'vimFunc']
-      \ }
+	" let g:Illuminate_ftHighlightGroups = {
+      " \ 'vim': ['vimVar', 'vimString', 'vimLineComment',
+      " \         'vimFuncName', 'vimFunction', 'vimUserFunc', 'vimFunc']
+      " \ }
 
-	let g:Illuminate_ftblacklist = ['nerdtree']
+	" let g:Illuminate_ftblacklist = ['nerdtree']
 
 " }}}
 
@@ -504,12 +532,12 @@ set conceallevel=2
 	"{{{ OmniSharp
 	
 		" let g:OmniSharp_server_stdio = 1
-		let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
+		" let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
 	
 	"}}}
 
 " {{{ Commentray
 	autocmd FileType pgsql setlocal commentstring=--\ %s
-	autocmd FileType sql setlocal commentstring=-- %s
+	autocmd FileType sql setlocal commentstring=--\ %s
 " }}}
 " }}}
