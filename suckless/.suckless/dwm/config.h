@@ -74,6 +74,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_j,      setcfact,       {.f = +0.25} },
+	{ MODKEY|ShiftMask,             XK_k,      setcfact,       {.f = -0.25} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,					              XK_Right,  view_adjacent,  { .i = +1 } },
