@@ -1,56 +1,81 @@
-export XCURSOR_SIZE=10
-export WORKON_HOME=~/.virtualenvs
+#  ______ _____ _   _ ______  _____ 
+# |___  //  ___| | | || ___ \/  __ \
+#    / / \ `--.| |_| || |_/ /| /  \/
+#   / /   `--. \  _  ||    / | |    
+# ./ /___/\__/ / | | || |\ \ | \__/\
+# \_____/\____/\_| |_/\_| \_| \____/
 # source /usr/bin/virtualenvwrapper.sh
-export ANDROID_SDK_PATH=$HOME/Android/Sdk
-export ANDROID_NDK_PATH=$HOME/Android/Sdk/ndk-bundle
-export REACT_EDITOR=vscodium
-set JAVA_OPTS=-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee
-
-function countdown(){
-   date1=$((`date +%s` + $1)); 
-   while [ "$date1" -ge `date +%s` ]; do 
-     echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
-     sleep 0.1
-   done
-}
-
-function stopwatch(){
-  date1=`date +%s`; while true; do 
-    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
-    sleep 0.1
-   done
-}
-
-######## OH MY ZHS ###############
-
-ZSH_THEME="theunraveler"
-
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
+# set JAVA_OPTS=-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee
 #
-plugins=(
-				 git 
-				 zsh-autosuggestions
-				 colored-man-pages
-			  )
+#  General settings {{{
+	setopt inc_append_history
+	setopt share_history
+	setopt promptsubst
+# }}}
 
-source $ZSH/oh-my-zsh.sh
+# Functions {{{
+	function countdown(){
+		 date1=$((`date +%s` + $1)); 
+		 while [ "$date1" -ge `date +%s` ]; do 
+			 echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
+			 sleep 0.1
+		 done
+	}
 
+	function stopwatch(){
+		date1=`date +%s`; while true; do 
+			echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
+			sleep 0.1
+		 done
+	}
+# }}}
 
-##################################
+# zplugin {{{
+	source ~/.zplugin/bin/zplugin.zsh
 
-alias weather="curl wttr.in"
-alias vim="nvim"
-alias code="codium"
-alias cat="bat"
-alias def="definition"
-alias cclip='xclip -selection clipboard'
-alias tb="nc termbin.com 9999"
-# Alias automaticly copy the URL to the cliptboard
-alias tbc="netcat termbin.com 9999 | xclip -selection c"
-alias itu='cd /home/daniel/Nextcloud/Skole/ITU/5_Semester'
-alias IDB='cd /home/daniel/Nextcloud/Skole/ITU/5_Semester/IDB'
-alias BDSA='cd /home/daniel/Nextcloud/Skole/ITU/5_Semester/BDSA'
+zplugin snippet OMZ::plugins/git/git.plugin.zsh
+zplugin cdclear -q # <- forget completions provided by Git plugin
+	# | completions | #
+	# zplugin ice wait'!1'
+	# zplugin light zsh-users/zsh-completions
+	# zplugin light zsh-users/zsh-autosuggestions
+	#
+	source ~/.zplugin/plugins/zsh-users---zsh-autosuggestions/zsh-autosuggestions.zsh
+
+	# /zsh-autosuggestions.plugin.zsh
+
+	autoload -U colors && colors # Enable colors
+	HISTFILE=~/.histfile
+	HISTSIZE=1000
+	SAVEHIST=1000
+	# setopt appendhistory
+	# Two regular plugins loaded without tracking.
+	# zplugin light zsh-users/zsh-autosuggestions
+	zplugin snippet OMZ::plugins/git/git.plugin.zsh
+	zplugin snippet http://github.com/robbyrussell/oh-my-zsh/raw/master/lib/git.zsh
+
+	zplugin snippet OMZ::themes/theunraveler.zsh-theme
+	zplugin ice wait lucid
+	zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
+
+# }}}
+
+# OH MY ZHS {{{
+  # ZSH_THEME="theunraveler"
+
+ # plugins=(
+ # 				 git 
+ # 				 zsh-autosuggestions
+ # 				 colored-man-pages
+ # 			  )
+
+ # source $ZSH/oh-my-zsh.sh
+# }}}
+
+# Include {{{
+	[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
+# }}}
+#
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+autoload -Uz compinit
+compinit
