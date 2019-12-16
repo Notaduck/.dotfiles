@@ -1,0 +1,14 @@
+alias weather="curl wttr.in"
+alias vim="nvim"
+alias code="codium"
+alias cat="bat"
+alias def="definition"
+alias cclip='xclip -selection clipboard'
+alias tb="nc termbin.com 9999"
+# Alias automaticly copy the URL to the cliptboard
+alias tbc="netcat termbin.com 9999 | xclip -selection c"
+alias itu='cd /home/daniel/Nextcloud/Skole/ITU/5_Semester'
+alias IDB='cd /home/daniel/Nextcloud/Skole/ITU/5_Semester/IDB'
+alias BDSA='cd /home/daniel/Nextcloud/Skole/ITU/5_Semester/BDSA'
+alias ls="ls --color=auto"
+alias ll="ls -l --color=auto"
