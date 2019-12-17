@@ -21,10 +21,8 @@ source /usr/bin/virtualenvwrapper.sh
 	HISTFILE=~/.histfile
 	HISTSIZE=5000
 	SAVEHIST=5000
-	
-	autoload -U colors && colors # Enable colors
-	autoload -U compinit
 
+	autoload -U compinit
 	zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 	zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 	zstyle ':completion:*' menu select
@@ -37,15 +35,18 @@ source /usr/bin/virtualenvwrapper.sh
 # zplugin {{{
 	source ~/.zplugin/bin/zplugin.zsh
 
+	# zplugin snippet OMZ::plugins/git/git.plugin.zsh
 	# zplugin cdclear -q # <- forget completions provided by Git plugin
 	#
 	# | completions | #
-	# zplugin ice wait'!1'
+	zplugin ice wait'!1'
 	zplugin light zsh-users/zsh-completions
 	zplugin light zsh-users/zsh-autosuggestions
-	zplugin snippet OMZ::plugins/git/git.plugin.zsh
 
-
+	autoload -U colors && colors # Enable colors
+	# setopt appendhistory
+	# Two regular plugins loaded without tracking.
+	# zplugin light zsh-users/zsh-autosuggestions
 	zplugin snippet OMZ::plugins/git/git.plugin.zsh
 	zplugin snippet http://github.com/robbyrussell/oh-my-zsh/raw/master/lib/git.zsh
 
@@ -72,18 +73,6 @@ source /usr/bin/virtualenvwrapper.sh
 	}
 # }}}
  
-# OH MY ZHS {{{
-  # ZSH_THEME="theunraveler"
-
- # plugins=(
- # 				 git 
- # 				 zsh-autosuggestions
- # 				 colored-man-pages
- # 			  )
-
- # source $ZSH/oh-my-zsh.sh
-# }}}
-
 # Include {{{
 	[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 # }}}
