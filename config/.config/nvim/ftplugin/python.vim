@@ -2,15 +2,15 @@
 " set foldmethod=indent
 " set foldlevel=99 Run current Python file
 "let python_highlight_all=1
-"" PEP8 indent
-" au BufNewFile,BufRead *.py
-"     \ set tabstop=4
-"     \ set softtabstop=4
-"     \ set shiftwidth=4
-"     \ set textwidth=79
-"     \ set expandtab
-"     \ set autoindent
-"     \ set fileformat=unix
+" PEP8 indent
+ au BufNewFile,BufRead *.py
+     \ set tabstop=4
+     \ set softtabstop=4
+     \ set shiftwidth=4
+     \ set textwidth=79
+     \ set expandtab
+     \ set autoindent
+     \ set fileformat=unix
 
 "" Flagging Unnecessary Whitespace
 " au BufRead,BufNewFile *.py match BadWhitespace /\s\+$/

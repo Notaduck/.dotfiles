@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Variables
 export TERMINAL='st'
 export IRC_CLIENT='weechat'
@@ -14,10 +16,11 @@ source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh
 
 # Hide the cursor after 10 sec
 sxhkd &
+nm-applet &
 unclutter --timeout 10 --jitter 3 &
 
 # lock after 5 min, corners is tp,tr.bl.br
-xautolock -time 5 -locker 'betterlockscreen -l' -corners & 0-00
+xautolock -time 10 -locker 'betterlockscreen -l' &
 
 # Launch weechat
 $TERMINAL -n $IRC_CLIENT -e $IRC_CLIENT &
@@ -28,7 +31,7 @@ xrandr --auto &
 # xrandr --setprovideroffloadsink provider sink &
 
 # set the background
-feh --bg-fill --no-xinerama ~/.wallpapers/we-lost-the-sea.png &
+feh --bg-fill --no-xinerama ~/.wallpapers/wallhaven-lm7edq.png &
 
 # Start pulseadui in order to get my headset workin
 pulseaduio --start &

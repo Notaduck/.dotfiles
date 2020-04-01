@@ -16,18 +16,20 @@ static const unsigned int ulheight  = 2;        /* height of tag underline */
 static int isFullscreenFake = 1;
 
 /* tagging */
-static const char *tags[] = { "WEB", "TERM", "DEV", "CHAT" ,"MEDIA", "RAND" };
+static const char *tags[] = { "WEB", "DEV", "VIRT", "CHAT" ,"MEDIA", "RAND" };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class													instance				title       tags mask     isfloating   monitor */
-	{ "Firefox",											NULL,						NULL,       1 ,	          0,           -1 },
-	{ "st-256color",									NULL,				    "weechat",	1 << 3,				0,					 -1 },
-	{ "Peek",													NULL,						NULL,				0,						1,					 -1 },
-	{ "Genymotion Player",  					NULL,						NULL,				0,						1,					 -1 }
+	/* class													instance				title						tags mask     isfloating   monitor */
+	{ "Firefox",											NULL,						NULL,						1 ,	          0,           -1 },
+	{ "st-256color",									NULL,				    "weechat",			1 << 3,				0,					 -1 },
+	{ "Peek",													NULL,						NULL,						0,						1,					 -1 },
+	{ "st-256color",									NULL,						"studytime",		1 << 4,				1,					 -1 },
+
+	{ "Genymotion Player",  					NULL,						NULL,						0,						1,					 -1 }
 };
 
 /* layout(s) */

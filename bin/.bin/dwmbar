@@ -19,16 +19,20 @@ function VOLUME() {
 
 }
 
-# function GIT() {
+function GIT() {
 
-# 	USER="notaduck"
-# 	TOKEN=$(cat ./personal_access_token)
-# 	NUMBER_OF_NOTIFICATIONS=$(curl -u ${USER}:${TOKEN} https://api.github.com/notifications | jq length)
+	USER=`jq -r '.user' ~/.config/github_notifications/init.json`
+	PASSWORD=`jq -r '.password' ~/.config/github_notifications/init.json` 
+	TOKEN=`jq -r '.token' ~/.config/github_notifications/init.json` 
+	RESPONSE=`curl -s -u ${USER}:${TOKEN} https://api.github.com/notifications`
+	NUMBER_OF_NOTIFICATIONS=`echo ${RESPONSE} | jq length`
 
-# 	if [ $NUMBER_OF_NOTIFICATIONS -ne 0 ]; then
-# 		echo "[ $NUMBER_OF_NOTIFICATIONS]"
-# 	fi
-# }
+	if [ "$NUMBER_OF_NOTIFICATIONS" -eq "0" ]; then
+		echo
+	else
+		echo " $NUMBER_OF_NOTIFICATIONS"
+	fi
+}
 
 function BATT() {
 
@@ -37,18 +41,18 @@ function BATT() {
 
 	if [[ $STATE == 'Discharging' ]]; then
 		if (($CAPASITY >= 95)); then
-			echo "  $CAPASITY%"
+			echo " $CAPASITY%"
 		elif ((CAPASITY >= 75)); then
-			echo "  $CAPASITY%"
+			echo " $CAPASITY%"
 		elif ((CAPASITY >= 50)); then
-			echo "  $CAPASITY%"
+			echo " $CAPASITY%"
 		elif ((CAPASITY >= 5)); then
-			echo "  $CAPASITY%"
+			echo " $CAPASITY%"
 		else
-			echo "  $CAPASITY"
+			echo " $CAPASITY"
 		fi
 	else
-		echo "  $CAPASITY%"
+		echo " $CAPASITY%"
 	fi
 }
 
@@ -57,15 +61,15 @@ function WIFI() {
 	NETWORK=$(iwconfig $INTERFACE | grep -oP "ESSID:\K(.*)" | sed -e 's/"//g' | trim)
 
 	if [[ $NETWORK == *"off/any"* ]]; then
-		echo " not connected "
+		echo "not connected "
 	else
-		echo "" $NETWORK
+		echo " $NETWORK"
 	fi
 
 }
 
 function DATE() {
-	echo "$(date +"%F  %R ")"
+	echo "$(date +" %F  %R ")"
 }
 
 function LAYOUT() {
@@ -75,6 +79,6 @@ function LAYOUT() {
 }
 while true; do
 	# xsetroot -name "$(LAYOUT) $(DATE) $(WIFI) $(VOLUME) $(BATT) "
-	xsetroot -name "$(DATE) $(BATT) $(WIFI) $(VOLUME) $(LAYOUT) "
+	xsetroot -name "[ Remember to check Ninas grade for MT ]                                       $(GIT) $(DATE) $(BATT) $(WIFI)  $(VOLUME)  $(LAYOUT) "
 	sleep 1m # Update time every minute
 done &

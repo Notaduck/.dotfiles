@@ -7,8 +7,18 @@ alias cclip='xclip -selection clipboard'
 alias tb="nc termbin.com 9999"
 # Alias automaticly copy the URL to the cliptboard
 alias tbc="netcat termbin.com 9999 | xclip -selection c"
-alias itu='cd /home/daniel/Nextcloud/Skole/ITU/5_Semester'
-alias IDB='cd /home/daniel/Nextcloud/Skole/ITU/5_Semester/IDB'
-alias BDSA='cd /home/daniel/Nextcloud/Skole/ITU/5_Semester/BDSA'
-alias ls="ls --color=auto"
-alias ll="ls -l --color=auto"
+alias ls="ls -Fh --group-directories-first --color=auto"
+alias ll="ls -Fhl --group-directories-first --color=auto"
+alias sz="source ~/.zshrc && echo Updated && sleep 0.5s && clear"
+alias nt="{pushd path ; st; popd} &"
+alias rm=trash
+
+#Locations
+alias ITU='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester'
+alias FP='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester/FP'
+alias FPA='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester/FP/Assignments'
+alias BSC='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester/Security'
+
+# Yarn
+alias yt="yarn test"
+alias yi="yarn install"

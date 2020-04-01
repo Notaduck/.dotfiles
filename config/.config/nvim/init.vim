@@ -24,9 +24,18 @@ endif
  " Plugin section {{{
 
 "required
-call plug#begin('~/local/share/nvim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'alvan/vim-closetag'
+" Plug 'alvan/vim-closetag'
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+Plug 'ionide/Ionide-vim', {
+      \ 'do':  'make fsautocomplete',
+      \}
 
 " Syntax support
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
@@ -34,6 +43,7 @@ Plug 'vim-scripts/bash-support.vim'
 Plug 'mxw/vim-jsx'
 Plug 'moll/vim-node'
 Plug 'pearofducks/ansible-vim'
+Plug 'moll/vim-node'
 " Plug 'vim-illuminate'
 
 " Utilities
@@ -270,7 +280,7 @@ let g:airline_symbols.linenr = ''
 	 "}}}
 
 " Autoclose-tag {{{
-	let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
+	" let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
 
 " }}}
 
@@ -405,7 +415,9 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " " Resume latest coc list
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-" Make coc work togheter with ALE
+let g:LanguageClient_serverCommands = {
+    \ 'fsharp': ['dotnet', '/home/daniel/.config/coc/extensions/coc-fsharp-data/server/FSharpLanguageServer.dll']
+    \ }
 " }}}
 
 "{{{ Ctrl P
