@@ -37,6 +37,8 @@ Plug 'ionide/Ionide-vim', {
       \ 'do':  'make fsautocomplete',
       \}
 
+ Plug 'honza/vim-snippets'
+
 " Syntax support
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'vim-scripts/bash-support.vim' 
@@ -68,6 +70,7 @@ Plug 'conornewton/vim-pandoc-markdown-preview'
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'matze/vim-move'
 Plug 'tpope/vim-fugitive'
+Plug 'vim-voom/voom'
 
 " UI
 Plug 'vim-airline/vim-airline'

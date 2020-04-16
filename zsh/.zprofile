@@ -14,10 +14,11 @@ export WORKON_HOME=~/.virtualenvs
 export ANDROID_SDK_PATH=$HOME/Android/Sdk
 export ANDROID_NDK_PATH=$HOME/Android/Sdk/ndk-bundle
 export REACT_EDITOR=vscodium
+export LESS='-R'
+export LESSOPEN='|~/.bin/lessfilt.bin/lessfilter %s'
 
 
-
-# auto start startx.
+auto start startx.
 if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
   exec startx
 fi
