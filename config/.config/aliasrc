@@ -13,6 +13,8 @@ alias sz="source ~/.zshrc && echo Updated && sleep 0.5s && clear"
 alias nt="{pushd path ; st; popd} &"
 alias rm=trash
 
+alias sudo="sudo "
+
 #Locations
 alias ITU='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester'
 alias FP='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester/FP'

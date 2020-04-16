@@ -79,6 +79,6 @@ function LAYOUT() {
 }
 while true; do
 	# xsetroot -name "$(LAYOUT) $(DATE) $(WIFI) $(VOLUME) $(BATT) "
-	xsetroot -name "[ Remember to check Ninas grade for MT ]                                       $(GIT) $(DATE) $(BATT) $(WIFI)  $(VOLUME)  $(LAYOUT) "
+	xsetroot -name " $(GIT) $(DATE) $(BATT) $(WIFI)  $(VOLUME)  $(LAYOUT) "
 	sleep 1m # Update time every minute
 done &
