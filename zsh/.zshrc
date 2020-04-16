@@ -7,13 +7,13 @@
 #
 
 # zmodload zsh/zprof
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
-export PYENV_ROOT="$HOME/.pyenv"
+# export PYENV_ROOT="$HOME/.pyenv"
 
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="$PATH:/home/daniel/.dotnet/tools"
+# export PATH="$PYENV_ROOT/bin:$PATH"
+# export PATH="$PATH:/home/daniel/.dotnet/tools"
 
 # General settings {{{
 
@@ -84,7 +84,7 @@ export PATH="$PATH:/home/daniel/.dotnet/tools"
 # }}}
  
 # Include {{{
-	[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
+	[ -f "$HOME/.config/aliasrc.sh" ] && source "$HOME/.config/aliasrc.sh"
 # }}}
 
 # zprof
