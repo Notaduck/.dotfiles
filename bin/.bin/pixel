@@ -1,0 +1,4 @@
+#!/bin/sh
+
+nohup ~/Android/Sdk/emulator/emulator -avd  Pixel_3_XL_API_28 >/dev/null 2>&1 & 
+
