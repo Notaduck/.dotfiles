@@ -28,16 +28,17 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " Plug 'alvan/vim-closetag'
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
 
-Plug 'ionide/Ionide-vim', {
-      \ 'do':  'make fsautocomplete',
-      \}
+" Plug 'ionide/Ionide-vim', {
+"       \ 'do':  'make fsautocomplete',
+"       \}
 
- Plug 'honza/vim-snippets'
+Plug 'honza/vim-snippets'
+"
 
 " Syntax support
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
@@ -54,7 +55,8 @@ Plug 'mhinz/vim-startify'
 Plug 'kien/ctrlp.vim'
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
 Plug 'airblade/vim-gitgutter'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 
 " Text formatting
 Plug 'tpope/vim-commentary'
@@ -160,6 +162,7 @@ cmap w!! call SudoWrite()
 
 	" Set spell checking
 	map <F5> :setlocal spell! spelllang=da,en_us<CR>
+
 	" correct the error from left to right
 	inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
@@ -178,18 +181,11 @@ cmap w!! call SudoWrite()
 
 " AutoGroup settings{{{
 
-		" augroup AutoGroup
-		" autocmd!
-		" augroup END
-
-		" command! -nargs=* Autocmd autocmd AutoGroup <args>
-		" command! -nargs=* AutocmdFT autocmd AutoGroup FileType <args>
-
-
 		augroup myvimrchooks
 				au!
 				autocmd bufwritepost init.vim source ~/.config/nvim/init.vim
 		augroup END
+
 		"}}}
 
 	" }}}

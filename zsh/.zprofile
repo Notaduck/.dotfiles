@@ -1,5 +1,6 @@
 export PATH=/home/$USER/.bin:$PATH
 export PATH="/home/daniel/.yarn-global/bin/bin/firebase:$PATH"
+export PATH="$(yarn global bin):$PATH"
 # export PATH=/home/$USER/.yarn:$PATH
 # export PATH=/usr/lib/jvm/java-11-openjdk/bin:$PATH
 export EDITOR="nvim"
@@ -17,8 +18,7 @@ export REACT_EDITOR=vscodium
 export LESS='-R'
 export LESSOPEN='|~/.bin/lessfilt.bin/lessfilter %s'
 
-
-auto start startx.
+##auto start startx.
 if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
   exec startx
 fi

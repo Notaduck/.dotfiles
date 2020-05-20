@@ -12,7 +12,11 @@ alias ll="ls -Fhl --group-directories-first --color=auto"
 alias sz="source ~/.zshrc && echo Updated && sleep 0.5s && clear"
 alias nt="{pushd path ; st; popd} &"
 alias rm=trash
-
+alias grep="grep --color=auto"
+alias zathura="smart_zathura.sh"
+alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias free='free -m'                      # show sizes in MB
 alias sudo="sudo "
 
 #Locations

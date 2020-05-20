@@ -28,9 +28,8 @@ static const Rule rules[] = {
 	{ "st-256color",									NULL,				    "weechat",			1 << 3,				0,					 -1 },
 	{ "Peek",													NULL,						NULL,						0,						1,					 -1 },
 	{ "st-256color",									NULL,						"studytime",		1 << 4,				1,					 -1 },
-
 	{ "Genymotion Player",  					NULL,						NULL,						0,						1,					 -1 },
-	{ "Vmplayer",                      NULL,           NULL,           1 << 4,       0,          -1 }
+	{ "Vmplayer",                      NULL,           NULL,          1 << 2,       0,          -1 }
 };
 
 /* layout(s) */

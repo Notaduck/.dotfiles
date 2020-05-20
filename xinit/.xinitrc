@@ -31,7 +31,7 @@ xrandr --auto &
 # xrandr --setprovideroffloadsink provider sink &
 
 # set the background
-feh --bg-fill --no-xinerama ~/.wallpapers/wallhaven-lm7edq.png &
+feh --bg-fill --no-xinerama ~/.wallpapers/wallhaven-7377vy.png
 
 # Start pulseadui in order to get my headset workin
 pulseaduio --start &
@@ -53,9 +53,9 @@ libinput-gestures-setup start
 dwmbar &
 
 # exec dwm
-while :; do
-		ssh-agent dwm
-done
+ while :; do
+ 		ssh-agent dwm
+ done
 
 # Manage monitor configuration automatically
 umonitor --listen &

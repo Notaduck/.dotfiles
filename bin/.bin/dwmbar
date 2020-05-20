@@ -21,11 +21,11 @@ function VOLUME() {
 
 function GIT() {
 
-	USER=`jq -r '.user' ~/.config/github_notifications/init.json`
-	PASSWORD=`jq -r '.password' ~/.config/github_notifications/init.json` 
-	TOKEN=`jq -r '.token' ~/.config/github_notifications/init.json` 
-	RESPONSE=`curl -s -u ${USER}:${TOKEN} https://api.github.com/notifications`
-	NUMBER_OF_NOTIFICATIONS=`echo ${RESPONSE} | jq length`
+	USER=$(jq -r '.user' ~/.config/github_notifications/init.json)
+	PASSWORD=$(jq -r '.password' ~/.config/github_notifications/init.json)
+	TOKEN=$(jq -r '.token' ~/.config/github_notifications/init.json)
+	RESPONSE=$("curl -s -u ${USER}:${TOKEN} https://api.github.com/notifications")
+	NUMBER_OF_NOTIFICATIONS=$(echo "${RESPONSE}" | jq length)
 
 	if [ "$NUMBER_OF_NOTIFICATIONS" -eq "0" ]; then
 		echo
@@ -40,7 +40,7 @@ function BATT() {
 	STATE=$(cat /sys/class/power_supply/BAT0/status)
 
 	if [[ $STATE == 'Discharging' ]]; then
-		if (($CAPASITY >= 95)); then
+		if ((CAPASITY >= 95)); then
 			echo " $CAPASITY%"
 		elif ((CAPASITY >= 75)); then
 			echo " $CAPASITY%"
@@ -69,7 +69,7 @@ function WIFI() {
 }
 
 function DATE() {
-	echo "$(date +" %F  %R ")"
+	date +" %F  %R"
 }
 
 function LAYOUT() {
