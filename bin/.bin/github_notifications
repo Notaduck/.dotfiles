@@ -1,0 +1,12 @@
+#!/bin/env sh
+# set -x
+	USER=`jq -r '.user' ~/.config/github_notifications/init.json`
+	PASSWORD=`jq -r '.password' ~/.config/github_notifications/init.json` 
+	RESPONSE=`curl -s -u ${USER}:${PASSWORD} https://api.github.com/notifications`
+	NUMBER_OF_NOTIFICATIONS=`echo ${RESPONSE} | jq length`
+
+	if [ "$NUMBER_OF_NOTIFICATIONS" -eq "0" ]; then
+		echo ""
+	else
+		echo " $NUMBER_OF_NOTIFICATIONS"
+	fi
