@@ -4,6 +4,8 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
+
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int borderpx  = 4;        /* border pixel of windows */
 static const unsigned int gappx     = 6;        /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -23,13 +25,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class													instance				title						tags mask     isfloating   monitor */
-	{ "Firefox",											NULL,						NULL,						1 ,	          0,           -1 },
-	{ "st-256color",									NULL,				    "weechat",			1 << 3,				0,					 -1 },
-	{ "Peek",													NULL,						NULL,						0,						1,					 -1 },
-	{ "st-256color",									NULL,						"studytime",		1 << 4,				1,					 -1 },
-	{ "Genymotion Player",  					NULL,						NULL,						0,						1,					 -1 },
-	{ "Vmplayer",                      NULL,           NULL,          1 << 2,       0,          -1 }
+	/* class													instance				title						tags mask     isfloating    isTerminal   monitor */
+	{ "Firefox",											NULL,						NULL,						1 ,	          0,            0,           -1 },
+	{ "st-256color",									NULL,				    "weechat",			1 << 3,				0,            0,  				 -1 },
+	{ "st-256color", 									NULL,				    NULL,			      0,				    0,            1,  				 -1 },
+	{ "Peek",													NULL,						NULL,						0,						1,            0,  				 -1 },
+	{ "st-256color",									NULL,						"studytime",		1 << 4,				1,            0,    			 -1 },
+	{ "Genymotion Player",  					NULL,						NULL,						0,						1,            0,	         -1 },
+	{ "Vmplayer",                      NULL,           NULL,          1 << 2,       0,            0,           -1 }
 };
 
 /* layout(s) */

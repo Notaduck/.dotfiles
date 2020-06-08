@@ -321,7 +321,9 @@ let g:airline_symbols.linenr = ''
 	endfunction
 
 	" Use <c-space> to trigger completion.
-	inoremap <silent><expr> <c-space> coc#refresh()
+	" inoremap <silent><expr> <c-space> coc#refresh()
+	" Use <c-space> to trigger completion.
+	inoremap <silent><expr> <space> coc#refresh()
 
 	" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 	" Coc only does snippet and additional edit on confirm.
