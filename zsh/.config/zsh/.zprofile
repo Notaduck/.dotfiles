@@ -14,7 +14,7 @@ export WORKON_HOME=~/.virtualenvs
 export ANDROID_SDK_PATH=$HOME/Android/Sdk
 export ANDROID_NDK_PATH=$HOME/Android/Sdk/ndk-bundle
 export REACT_EDITOR=vscodium
-
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk/"
 
 
 # auto start startx.

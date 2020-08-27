@@ -129,7 +129,7 @@ set number "Set line number
 set cursorline "Highligt currentline 
 filetype plugin indent on  
 set autowriteall ""automatically save any changes made to the buffer before it is hidden.
-
+set noexpandtab
 " setlocal spell
 " set spelllang=da,en_us
 

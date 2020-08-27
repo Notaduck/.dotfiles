@@ -6,7 +6,7 @@
 # \_____/\____/\_| |_/\_| \_| \____/
 #
 
- zmodload zsh/zprof
+ # zmodload zsh/zprof
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export LESS="-XRFS"
@@ -98,4 +98,4 @@ export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 	[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 # }}}
 
- zprof
+ # zprof
