@@ -47,7 +47,13 @@ export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 	bindkey '^R' history-incremental-search-backward
 
 	autoload -U colors && colors # Enable colors
-	autoload -U compinit
+	autoload -Uz compinit
+
+	if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+		compinit;
+	else
+		compinit -C;
+	fi;
 
 	zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 	zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
