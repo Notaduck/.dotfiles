@@ -3,7 +3,7 @@
 "██╔██╗ ██║█████╗  ██║	 ██║██║   ██║██║██╔████╔██║
 "██║╚██╗██║██╔══╝  ██║	 ██║╚██╗ ██╔╝██║██║╚██╔╝██║
 "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-"╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝ 		╚═╝
+"╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝		╚═╝
 
  " Plugin dependencies {{{
 
@@ -37,7 +37,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 "       \ 'do':  'make fsautocomplete',
 "       \}
 
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 "
 
 " Syntax support
@@ -46,30 +46,31 @@ Plug 'vim-scripts/bash-support.vim'
 Plug 'mxw/vim-jsx'
 Plug 'moll/vim-node'
 Plug 'pearofducks/ansible-vim'
-Plug 'moll/vim-node'
+" Plug 'moll/vim-node'
 " Plug 'vim-illuminate'
 
 " Utilities
-Plug 'aserebryakov/vim-todo-lists'
-Plug 'mhinz/vim-startify'
+" Plug 'aserebryakov/vim-todo-lists'
+" Plug 'mhinz/vim-startify'
 Plug 'kien/ctrlp.vim'
 Plug 'lilydjwg/colorizer', {'do': 'make'} " colorize rgb rgba texts
 Plug 'airblade/vim-gitgutter'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 
 " Text formatting
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
+Plug 'rhysd/vim-clang-format'
 
-" Writing 
+"Writing 
 Plug 'vim-pandoc/vim-pandoc' 
 Plug 'vim-pandoc/vim-pandoc-after' 
 Plug 'vim-pandoc/vim-pandoc-syntax' 
 Plug 'lervag/vimtex'
 Plug 'conornewton/vim-pandoc-markdown-preview' 
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+" Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'matze/vim-move'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-voom/voom'
@@ -77,13 +78,13 @@ Plug 'vim-voom/voom'
 " UI
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'junegunn/limelight.vim'
+" Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'scrooloose/nerdtree'
 
 
 " Autocompletion and Code checker
-Plug 'w0rp/ale' 
+" Plug 'w0rp/ale' 
 " Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
 
@@ -120,6 +121,9 @@ colorscheme onedark
 
 " General settings {{{
 " set runtimepath+=/home/$USER/.vim/deoplete
+"
+au BufNewFile,BufRead *.fs set filetype=fsharp
+au BufNewFile,BufRead *.fsi set filetype=fsharp
 
 set directory^=$HOME/.vim/tmp// " Place all swap files under .vim/tmp
 set clipboard=unnamedplus " Let vim use the systems clipboard
@@ -129,7 +133,7 @@ set number "Set line number
 set cursorline "Highligt currentline 
 filetype plugin indent on  
 set autowriteall ""automatically save any changes made to the buffer before it is hidden.
-
+set noexpandtab
 " setlocal spell
 " set spelllang=da,en_us
 
@@ -155,7 +159,7 @@ cmap w!! call SudoWrite()
 	nnoremap <space> za
 
 	"Run makefile
-	noremap <Leader>m :make <CR>
+	" noremap <Leader>m :make %:r | !%:p <CR>
 
 	" open main.pdf with zathura
 	noremap <Leader>p :! nohup zathura ./main.pdf &<CR><CR>
@@ -173,9 +177,9 @@ cmap w!! call SudoWrite()
 
 " Indentation {{{
 
-	set shiftwidth=2
-	set softtabstop=2
-	set tabstop=2
+	set shiftwidth=4
+	set softtabstop=4
+	set tabstop=4
 
 "}}}
 
@@ -193,38 +197,6 @@ cmap w!! call SudoWrite()
 " Plugin Settings {{{
 
 let g:move_key_modifier = 'C' 
-
-" ALE {{{
-
-	let g:ale_enable = 1 
-	let g:ale_completion_enabled = 1
-	let g:ale_sign_column_always = 1 " Keeps the error column open
-
-	" let g:ale_sign_error = '=>'
-	let g:ale_sign_error = ''
-	let g:ale_sign_warning = '>?'
-
-	let g:ale_echo_msg_error_str = 'E'
-	let g:ale_echo_msg_warning_str = 'W'
-	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
-	let g:ale_fix_on_save = 1
-
-	let g:ale_linters = {
-			\	'javascript': ['eslint'],
-			\	'vim': ['vint'],
-			\	'shell': ['sh', 'shellcheck'],
-			\	'zsh': ['zsh'],
-			\	'json' : ['prettier'],
-			\}
-
-	let g:ale_fixers = {
-			\	'javascript': ['eslint','prettier_eslint'],
-			\	'json' : ['prettier'],
-			\	'sh' : ['shfmt'],
-			\}
-"  }} }
-"}}}
 
 " Airline {{{ 
 
@@ -436,11 +408,11 @@ let g:LanguageClient_serverCommands = {
 " Gitgutter {{{
 	
 		" Keeps nvim snappy (disable gitgutter if a file has more than n changes)
-		let g:gitgutter_max_signs = 500  " default value
-		let g:gitgutter_sign_added = '|'
-		let g:gitgutter_sign_removed = '|'
-		let g:gitgutter_sign_modified = '|'
-		let g:gitgutter_async = 1
+		" let g:gitgutter_max_signs = 500  " default value
+		" let g:gitgutter_sign_added = '|'
+		" let g:gitgutter_sign_removed = '|'
+		" let g:gitgutter_sign_modified = '|'
+		" let g:gitgutter_async = 1
 
 " }}}
 
@@ -481,15 +453,6 @@ let g:LanguageClient_serverCommands = {
 
 "}}}
 
-" Startify {{{
-
-    let g:startify_bookmarks = [
-            \ { 'c': '~/.config/nvim/init.vim' },
-            \ { 'p': '~/.config/polybar/config'},
-						\ { 'i': '~/.i3/config'}
-            \ ]
-" }}}
-
 " Pandoc {{{
 
 let b:pandoc_command_latex_engine = 'pdflatex'
@@ -505,35 +468,6 @@ augroup pandoc_syntax
 		" }}}
 " }}}
 
- " UtilSnips {{{
-
-" let g:UltiSnipsSnippetDirectories = ['/home/daniel/.vim/UltiSnips', 'UltiSnips']
-" let g:UltiSnipsSnippetDirectories = ['~/.dotfiles/config/.config/nvim/UltiSnips', 'UltiSnips']
-
-"  " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-
-"  let g:UltiSnipsExpandTrigger="<a-tab>"
-" let g:UltiSnipsJumpForwardTrigger="<c-b>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" " If you want :UltiSnipsEdit to split your window.
-" let g:UltiSnipsEditSplit="vertical"
-
-	" }}}
-
-"  Illuminate {{{
-	" Time in millis (default 250)
-	" let g:Illuminate_delay = 250
-
-	" let g:Illuminate_ftHighlightGroups = {
-      " \ 'vim': ['vimVar', 'vimString', 'vimLineComment',
-      " \         'vimFuncName', 'vimFunction', 'vimUserFunc', 'vimFunc']
-      " \ }
-
-	" let g:Illuminate_ftblacklist = ['nerdtree']
-
-" }}}
-
 " Vimtex {{{
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_progname = 'nvr'
@@ -542,13 +476,6 @@ set conceallevel=2
 " let g:tex_conceal='abdmg'
 	"}}}
 	
-	"{{{ OmniSharp
-	
-		" let g:OmniSharp_server_stdio = 1
-		" let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
-	
-	"}}}
-
 " {{{ Commentray
 	autocmd FileType pgsql setlocal commentstring=--\ %s
 	autocmd FileType sql setlocal commentstring=--\ %s

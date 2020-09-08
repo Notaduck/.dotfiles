@@ -1,6 +1,10 @@
+# ITU
+alias fallon="sshfs -o Compression=no,auto_cache group34@fallon.itu.dk:/home/group34/ /home/daniel/Nextcloud/Skole/ITU/7_Semester/OSC/fallon && st -e ssh group34@fallon.itu.dk &"
+
 alias weather="curl wttr.in"
 alias vim="nvim"
 alias code="codium"
+alias t="task"
 alias cat="bat"
 alias def="definition"
 alias cclip='xclip -selection clipboard'
@@ -19,8 +23,9 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias sudo="sudo "
 
+
 #Locations
-alias ITU='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester'
+alias ITU='cd /home/daniel/Nextcloud/Skole/ITU/7_Semester'
 alias FP='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester/FP'
 alias FPA='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester/FP/Assignments'
 alias BSC='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester/Security'

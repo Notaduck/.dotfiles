@@ -34,7 +34,7 @@ xrandr --auto &
 feh --bg-fill --no-xinerama ~/.wallpapers/wallhaven-7377vy.png
 
 # Start pulseadui in order to get my headset workin
-pulseaduio --start &
+pulseaudio --start &
 
 # set the layout to be danish and map capslock to escape, and swap super <--> alt
 setxkbmap -device $LAPTOPKEYBOARD -model dell -layout dk -option "caps:escape, altwin:swap_lalt_lwin" &
