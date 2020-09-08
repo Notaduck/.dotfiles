@@ -29,6 +29,9 @@ export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # General settings {{{
+#
+	bindkey "^[[1;5C" forward-word
+	bindkey "^[[1;5D" backward-word
 
 	setopt autocd
 	setopt automenu
@@ -83,17 +86,12 @@ export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 # zplugin {{{
 	 source ~/.zplugin/bin/zplugin.zsh
 
-	# zplugin snippet OMZ::plugins/git/git.plugin.zsh
-	# zplugin cdclear -q # <- forget completions provided by Git plugin
-	# | completions | #
-	# zplugin ice wait'!1'
 	 zplugin light zsh-users/zsh-completions
 	 zplugin light zsh-users/zsh-autosuggestions
 
 	 zplugin snippet OMZ::plugins/git/git.plugin.zsh
 	 zplugin snippet OMZ::lib/git.zsh
 	 zplugin snippet OMZ::themes/theunraveler.zsh-theme
-	 zplugin ice "https://github.com/larkery/zsh-histdb"
 
 	 zplugin ice wait lucid
 	 zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh

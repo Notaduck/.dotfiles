@@ -1,5 +1,5 @@
 # ITU
-alias fallon="sshfs group34@fallon.itu.dk:/home/group34/ /home/daniel/Nextcloud/Skole/ITU/7_Semester/OSC/Fallon"
+alias fallon="sshfs -o Compression=no,auto_cache group34@fallon.itu.dk:/home/group34/ /home/daniel/Nextcloud/Skole/ITU/7_Semester/OSC/fallon && st -e ssh group34@fallon.itu.dk &"
 
 alias weather="curl wttr.in"
 alias vim="nvim"

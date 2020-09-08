@@ -14,6 +14,7 @@
 				 }
 			}
 		},
-		"java.home": "/usr/lib/jvm/java-11-openjdk/"
+    "java.home": "/usr/lib/jvm/java-11-openjdk/",
+    "java.format.settings.url": "/home/daniel/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
 
 }

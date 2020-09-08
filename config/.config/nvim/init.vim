@@ -3,7 +3,7 @@
 "██╔██╗ ██║█████╗  ██║	 ██║██║   ██║██║██╔████╔██║
 "██║╚██╗██║██╔══╝  ██║	 ██║╚██╗ ██╔╝██║██║╚██╔╝██║
 "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-"╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝ 		╚═╝
+"╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝ 	╚═╝
 
  " Plugin dependencies {{{
 
@@ -62,8 +62,9 @@ Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
+Plug 'rhysd/vim-clang-format'
 
-" Writing 
+"Writing 
 Plug 'vim-pandoc/vim-pandoc' 
 Plug 'vim-pandoc/vim-pandoc-after' 
 Plug 'vim-pandoc/vim-pandoc-syntax' 
@@ -120,6 +121,9 @@ colorscheme onedark
 
 " General settings {{{
 " set runtimepath+=/home/$USER/.vim/deoplete
+"
+au BufNewFile,BufRead *.fs set filetype=fsharp
+au BufNewFile,BufRead *.fsi set filetype=fsharp
 
 set directory^=$HOME/.vim/tmp// " Place all swap files under .vim/tmp
 set clipboard=unnamedplus " Let vim use the systems clipboard
@@ -155,7 +159,7 @@ cmap w!! call SudoWrite()
 	nnoremap <space> za
 
 	"Run makefile
-	noremap <Leader>m :make <CR>
+	" noremap <Leader>m :make %:r | !%:p <CR>
 
 	" open main.pdf with zathura
 	noremap <Leader>p :! nohup zathura ./main.pdf &<CR><CR>
