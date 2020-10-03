@@ -1,5 +1,5 @@
-#!/bin/sh
-
+#!/bin/zsh
+#
 # Variables
 export TERMINAL='st'
 export IRC_CLIENT='weechat'
@@ -12,9 +12,6 @@ eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh 
 
-# Universal key bindings
-
-# Hide the cursor after 10 sec
 sxhkd &
 nm-applet &
 unclutter --timeout 10 --jitter 3 &
@@ -28,17 +25,11 @@ $TERMINAL -n $IRC_CLIENT -e $IRC_CLIENT &
 xrandr --setproviderouteputsource modesetting NVIDIA-0 &
 xrandr --auto &
 
-# xrandr --setprovideroffloadsink provider sink &
-
 # set the background
-feh --bg-fill --no-xinerama ~/.wallpapers/wallhaven-7377vy.png
-
-# Start pulseadui in order to get my headset workin
-pulseaudio --start &
+feh --bg-fill --no-xinerama ~/.wallpapers/wallhaven-ymym6gxx.jpg
 
 # set the layout to be danish and map capslock to escape, and swap super <--> alt
 setxkbmap -device $LAPTOPKEYBOARD -model dell -layout dk -option "caps:escape, altwin:swap_lalt_lwin" &
-# setxkbmap -option 'grp:alt_shift_toggle' &
 
 # Launxh nextcloud in the background
 exec nextcloud --background &
@@ -49,16 +40,9 @@ xinput set-prop "DLL06E4:01 06CB:7A13 Touchpad" "libinput Natural Scrolling Enab
 
 libinput-gestures-setup start
 
-# 
-dwmbar &
+dwmblocks > ~/dwmblocks.log 2>&1 &
 
 # exec dwm
  while :; do
  		ssh-agent dwm
  done
-
-# Manage monitor configuration automatically
-umonitor --listen &
-compton &
-
-
