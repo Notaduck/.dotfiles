@@ -16,7 +16,6 @@ static const unsigned int ulheight  = 2;        /* height of tag underline */
 
 
 static int isFullscreenFake = 1;
-
 static const char font[] = "-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1" ","  /* For Iconic Glyphs */
                            "-*-tamsyn-medium-r-normal-*-12-*-*-*-*-*-*-1";                   /* For Normal Text */
 /* tagging */
@@ -30,7 +29,7 @@ static const Rule rules[] = {
 	/* class													instance				title						tags mask     isfloating    isTerminal   monitor */
 	{ "Firefox",											NULL,						NULL,						1 ,	          0,            0,           -1 },
 	{ "st-256color",									NULL,				    "weechat",			1 << 3,				0,            0,  				 -1 },
-	{ "st-256color", 									NULL,				    NULL,			      0,				    0,            1,  				 -1 },
+	{ "st-256color", 									NULL,				    NULL,			      0,				    0,            0,  				 -1 },
 	{ "Peek",													NULL,						NULL,						0,						1,            0,  				 -1 },
 	{ "st-256color",									NULL,						"studytime",		1 << 4,				1,            0,    			 -1 },
 	{ "Genymotion Player",  					NULL,						NULL,						0,						1,            0,	         -1 },

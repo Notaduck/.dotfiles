@@ -7,15 +7,14 @@
 #
 
  # zmodload zsh/zprof
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 export LESS="-XRFS"
-export PYENV_ROOT="$HOME/.pyenv"
-# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-# export PATH="$PYENV_ROOT/bin:$PATH"
-# export PATH="$PATH:/home/daniel/.dotnet/tools"
-
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PYTHON="$HOME/.pyenv"
+# export PATH="/home/$USER/.pyenv/bin:$PATH"
+#  eval "$(pyenv init -)"
+#  eval "$(pyenv virtualenv-init -)"
 export NPM_PACKAGES="${HOME}/.npm-packages"
 export PATH="$PATH:$NPM_PACKAGES/bin"
 export PATH=/home/$USER/.bin/blocks/:$PATH

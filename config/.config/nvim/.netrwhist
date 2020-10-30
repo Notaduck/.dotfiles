@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =8
+let g:netrw_dirhist_8='/home/daniel/Nextcloud/Playground/nest-test/src'
+let g:netrw_dirhist_7='/home/daniel/Nextcloud/Playground/nest-test'
+let g:netrw_dirhist_6='/home/daniel/Nextcloud/Playground/F#_Tester'
+let g:netrw_dirhist_5='/home/daniel/Nextcloud/Playground/F#_Tester/src'
+let g:netrw_dirhist_4='/home/daniel/Nextcloud/Playground/F#_Tester/src/Utils'
+let g:netrw_dirhist_3='/home/daniel/Nextcloud/Playground/F#_Tester/src'
+let g:netrw_dirhist_2='/home/daniel/Nextcloud/Playground/F#_Tester'
+let g:netrw_dirhist_1='/home/daniel/.config/zsh'

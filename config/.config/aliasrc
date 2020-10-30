@@ -1,5 +1,7 @@
 # ITU
-alias fallon="sshfs -o Compression=no,auto_cache group34@fallon.itu.dk:/home/group34/ /home/daniel/Nextcloud/Skole/ITU/7_Semester/OSC/fallon && st -e ssh group34@fallon.itu.dk &"
+alias fallon="sshfs -o reconnect,Compression=no,auto_cache group34@fallon.itu.dk:/home/group34/ /home/daniel/Nextcloud/Skole/ITU/7_Semester/OSC/fallon && st -e ssh group34@fallon.itu.dk &"
+
+# alias python="/usr/bin/python3.8"
 
 alias weather="curl wttr.in"
 alias vim="nvim"

@@ -1,3 +1,7 @@
+# Switch keyboard layout between us and dk
+super + shift + l
+	set_keyboard_layout.sh	
+
 # Launch terminal
 super + shift + Return
 	st	

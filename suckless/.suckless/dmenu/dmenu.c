@@ -32,7 +32,6 @@ struct item {
 	char *text;
 	struct item *left, *right;
 	int out;
-	int distance;
 };
 
 static char text[BUFSIZ] = "";
@@ -53,10 +52,6 @@ static XIC xic;
 
 static Drw *drw;
 static Clr *scheme[SchemeLast];
-
-static char *histfile;
-static char *histbuf, *histptr;
-static size_t histsz;
 
 #include "config.h"
 
@@ -269,84 +264,6 @@ match(void)
 	calcoffsets();
 }
 
-static int
-compare_distance(const void *a, const void *b)
-{
-	struct item const *da = *(struct item **) a;
-	struct item const *db = *(struct item **) b;
-
-	if (!db)
-		return 1;
-	if (!da)
-		return -1;
-	return da->distance - db->distance;
-}
-
-static void
-fuzzymatch(void)
-{
-	struct item *item;
-	struct item **fuzzymatches = NULL;
-	char c;
-	int number_of_matches = 0, i, pidx, sidx, eidx;
-	int text_len = strlen(text), itext_len;
-
-	matches = matchend = NULL;
-
-	/* walk through all items */
-	for (item = items; item && item->text; item++) {
-		if (text_len) {
-			itext_len = strlen(item->text);
-			pidx = 0;
-			sidx = eidx = -1;
-			/* walk through item text */
-			for (i = 0; i < itext_len && (c = item->text[i]); i++) {
-				/* fuzzy match pattern */
-				if (text[pidx] == c) {
-					if (sidx == -1)
-						sidx = i;
-					pidx++;
-					if (pidx == text_len) {
-						eidx = i;
-						break;
-					}
-				}
-			}
-			/* build list of matches */
-			if (eidx != -1) {
-				/* compute distance */
-				/* factor in 30% of sidx and distance between eidx and total
-				 * text length .. let's see how it works */
-				item->distance = eidx - sidx + (itext_len - eidx + sidx) / 3;
-				appenditem(item, &matches, &matchend);
-				number_of_matches++;
-			}
-		}
-		else
-			appenditem(item, &matches, &matchend);
-	}
-
-	if (number_of_matches) {
-		/* initialize array with matches */
-		if (!(fuzzymatches = realloc(fuzzymatches, number_of_matches * sizeof(struct item*))))
-			die("cannot realloc %u bytes:", number_of_matches * sizeof(struct item *));
-		for (i = 0, item = matches; item && i < number_of_matches; i++, item = item->right)
-			fuzzymatches[i] = item;
-
-		/* sort matches according to distance */
-		qsort(fuzzymatches, number_of_matches, sizeof(struct item *), compare_distance);
-		/* rebuild list of matches */
-		matches = matchend = NULL;
-		for (i = 0, item = fuzzymatches[0]; i < number_of_matches && item && \
-				item->text; item = fuzzymatches[i], i++)
-			appenditem(item, &matches, &matchend);
-
-		free(fuzzymatches);
-	}
-	curr = sel = matches;
-	calcoffsets();
-}
-
 static void
 insert(const char *str, ssize_t n)
 {
@@ -357,7 +274,7 @@ insert(const char *str, ssize_t n)
 	if (n > 0)
 		memcpy(&text[cursor], str, n);
 	cursor += n;
-	fuzzymatch();
+	match();
 }
 
 static size_t
@@ -385,105 +302,6 @@ movewordedge(int dir)
 		while (text[cursor] && !strchr(worddelimiters, text[cursor]))
 			cursor = nextrune(+1);
 	}
-}
-
-static void
-loadhistory(void)
-{
-	FILE *fp = NULL;
-	size_t sz;
-
-	if (!histfile)
-		return;
-	if (!(fp = fopen(histfile, "r")))
-		return;
-	fseek(fp, 0, SEEK_END);
-	sz = ftell(fp);
-	fseek(fp, 0, SEEK_SET);
-	if (sz) {
-		histsz = sz + 1 + BUFSIZ;
-		if (!(histbuf = malloc(histsz))) {
-			fprintf(stderr, "warning: cannot malloc %lu "\
-				"bytes", histsz);
-		} else {
-			histptr = histbuf + fread(histbuf, 1, sz, fp);
-			if (histptr <= histbuf) { /* fread error */
-				free(histbuf);
-				histbuf = NULL;
-				return;
-			}
-			if (histptr[-1] != '\n')
-				*histptr++ = '\n';
-			histptr[BUFSIZ - 1] = '\0';
-			*histptr = '\0';
-			histsz = histptr - histbuf + BUFSIZ;
-		}
-	}
-	fclose(fp);
-}
-
-static void
-navhistory(int dir)
-{
-	char *p;
-	size_t len = 0, textlen;
-
-	if (!histbuf)
-		return;
-	if (dir > 0) {
-		if (histptr == histbuf + histsz - BUFSIZ)
-			return;
-		while (*histptr && *histptr++ != '\n');
-		for (p = histptr; *p && *p++ != '\n'; len++);
-	} else {
-		if (histptr == histbuf)
-			return;
-		if (histptr == histbuf + histsz - BUFSIZ) {
-			textlen = strlen(text);
-			textlen = MIN(textlen, BUFSIZ - 1);
-			strncpy(histptr, text, textlen);
-			histptr[textlen] = '\0';
-		}
-		for (histptr--; histptr != histbuf && histptr[-1] != '\n';
-		     histptr--, len++);
-	}
-	len = MIN(len, BUFSIZ - 1);
-	strncpy(text, histptr, len);
-	text[len] = '\0';
-	cursor = len;
-	match();
-} 
-static void
-savehistory(char *str)
-{
-	unsigned int n, len = 0;
-	size_t slen;
-	char *p;
-	FILE *fp;
-
-	if (!histfile || !maxhist)
-		return;
-	if (!(slen = strlen(str)))
-		return;
-	if (histbuf && maxhist > 1) {
-		p = histbuf + histsz - BUFSIZ - 1; /* skip the last newline */
-		if (histnodup) {
-			for (; p != histbuf && p[-1] != '\n'; p--, len++);
-			n++;
-			if (slen == len && !strncmp(p, str, len)) {
-				return;
-			}
-		}
-		for (; p != histbuf; p--, len++)
-			if (p[-1] == '\n' && ++n + 1 > maxhist)
-				break;
-		fp = fopen(histfile, "w");
-		fwrite(p, 1, len + 1, fp);	/* plus the last newline */
-	} else {
-		fp = fopen(histfile, "w");
-	}
-	fwrite(str, 1, strlen(str), fp);
-	fclose(fp);
 }
 
 static void
@@ -525,7 +343,7 @@ keypress(XKeyEvent *ev)
 
 		case XK_k: /* delete right */
 			text[cursor] = '\0';
-			fuzzymatch();
+			match();
 			break;
 		case XK_u: /* delete left */
 			insert(NULL, 0 - cursor);
@@ -570,8 +388,6 @@ keypress(XKeyEvent *ev)
 		case XK_j: ksym = XK_Next;  break;
 		case XK_k: ksym = XK_Prior; break;
 		case XK_l: ksym = XK_Down;  break;
-		case XK_p: navhistory(-1); buf[0]=0; break;
-		case XK_n: navhistory(1); buf[0]=0; break;
 		default:
 			return;
 		}
@@ -650,8 +466,6 @@ insert:
 	case XK_KP_Enter:
 		puts((sel && !(ev->state & ShiftMask)) ? sel->text : text);
 		if (!(ev->state & ControlMask)) {
-			savehistory((sel && !(ev->state & ShiftMask))
-				    ? sel->text : text);
 			cleanup();
 			exit(0);
 		}
@@ -678,7 +492,7 @@ insert:
 		strncpy(text, sel->text, sizeof text - 1);
 		text[sizeof text - 1] = '\0';
 		cursor = strlen(text);
-		fuzzymatch();
+		match();
 		break;
 	}
 
@@ -839,7 +653,7 @@ setup(void)
 	}
 	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
 	inputw = MIN(inputw, mw/3);
-	fuzzymatch();
+	match();
 
 	/* create menu window */
 	swa.override_redirect = True;
@@ -901,8 +715,6 @@ main(int argc, char *argv[])
 		} else if (i + 1 == argc)
 			usage();
 		/* these options take one argument */
-		else if (!strcmp(argv[i], "-H"))
-			histfile = argv[++i];
 		else if (!strcmp(argv[i], "-l"))   /* number of lines in vertical list */
 			lines = atoi(argv[++i]);
 		else if (!strcmp(argv[i], "-m"))

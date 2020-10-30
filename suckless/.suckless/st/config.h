@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-#include "themes/one-dark.h"
+#include "themes/ayu.h"
 static char *font = "Office Code Pro Medium:pixelsize=14:antialias=true:autohint=true";
 static int borderpx = 25;
 
@@ -43,7 +43,7 @@ static unsigned int tripleclicktimeout = 600;
 int allowaltscreen = 1;
 
 /* frames per second st should at maximum draw to the screen */
-static unsigned int xfps = 120;
+static unsigned int xfps = 60;
 static unsigned int actionfps = 30;
 
 /*
@@ -120,8 +120,8 @@ static MouseShortcut mshortcuts[] = {
 	/* button               mask            string */
 	{ Button4,              XK_NO_MOD,      "\031" },
 	{ Button5,              XK_NO_MOD,      "\005" },
-};
 
+};
 MouseKey mkeys[] = {
 	/* button               mask            function        argument */
 	{ Button4,              XK_NO_MOD,      kscrollup,      {.i =  1} },
