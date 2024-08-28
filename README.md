@@ -19,6 +19,10 @@
 
 ### Installation
 
+##
+
+##
+
 The dotfiles are managed with stow and are thefore dead simple to install and uninstall again.  
 If you aren't sure about what you are doing then please make a backup of your current dootfiles.  
 #### Requirements

@@ -246,7 +246,8 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
-static void toggleFakeFullscreen(void);
+// static void toggleFakeFullscreen(void);
+static void toggleFakeFullscreen(const Arg *arg);
 
 static pid_t getparentprocess(pid_t p);
 static int isdescprocess(pid_t p, pid_t c);
@@ -308,8 +309,8 @@ static unsigned int scratchtag = 1 << LENGTH(tags);
 /* compile-time check if all tags fit into an unsigned int bit array. */
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
 
-void
-toggleFakeFullscreen(void){
+
+void toggleFakeFullscreen(const Arg *arg) {
 	isFullscreenFake = (isFullscreenFake == 0) ? 1 : 0;
 }
 
