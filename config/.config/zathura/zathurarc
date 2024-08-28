@@ -1,0 +1,90 @@
+# zathurarc
+
+set font                        "Office Code Pro 10"
+# Base16 Nord
+# Author: arcticicestudio
+# set font                        "Cantarell 10"
+# set default-bg                  "#dfddd5" #00
+# set default-fg                  "#586e75" #01
+
+# set statusbar-fg                "#dfddd5" #04
+# set statusbar-bg                "#586e75"  #01
+
+# set inputbar-bg                 "#dfddd5" #00 currently not used
+# set inputbar-fg                 "#586e75" #02
+
+# set notification-error-bg       "#2aa198" #08
+# set notification-error-fg       "#586e75" #00
+
+# set notification-warning-bg     "#198844" #08
+# set notification-warning-fg     "#dfddd5" #00
+
+# set highlight-color             "#abaeaf" #0A
+# set highlight-active-color      "#586e75" #0D
+
+# set completion-highlight-fg     "#ffffff" #02
+# set completion-highlight-bg     "#dc322f" #0C
+
+# set completion-bg               "#dfddd5" #02
+# set completion-fg               "#586e75" #0C
+
+# set notification-bg             "#e69014" #0B
+# set notification-fg             "#dfddd5" #00
+
+# set recolor-lightcolor          "#dfddd5" #00
+# set recolor-darkcolor           "#586e75" #06
+
+# et index-bg "#dfddd5"
+# set index-fg "#586e75"
+
+set index-active-bg "#586e75"
+set index-active-fg "#e06c75"
+#
+# Base16 OneDark
+# Author: Lalit Magant (http://github.com/tilal6991)
+
+set default-bg                  "#282c34"
+set default-fg                  "#353b45"
+
+set statusbar-fg                "#565c64"
+set statusbar-bg                "#3e4451"
+
+set inputbar-bg                 "#282c34"
+set inputbar-fg                 "#c8ccd4"
+
+set notification-bg             "#282c34"
+set notification-fg             "#c8ccd4"
+
+set notification-error-bg       "#282c34"
+set notification-error-fg       "#e06c75"
+
+set notification-warning-bg     "#282c34"
+set notification-warning-fg     "#e06c75"
+
+set highlight-color             "#e5c07b"
+set highlight-active-color      "#61afef"
+
+set completion-bg               "#353b45"
+set completion-fg               "#61afef"
+
+set completion-highlight-fg     "#c8ccd4"
+set completion-highlight-bg     "#61afef"
+
+set recolor-lightcolor          "#282c34"
+set recolor-darkcolor           "#b6bdca"
+
+set recolor                     "false"
+set recolor-keephue             "false"
+
+# setting recolor-keep true will keep any color your pdf has.
+set recolor-keephue             "false"
+
+set guioptions "c"
+
+# add copied text to clipboard
+set selection-clipboard clipboard
+
+# enable syntex
+set synctex true
+
+set synctex-editor-command "nvim --remote-silent +%{line} %{input}"

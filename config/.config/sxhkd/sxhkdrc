@@ -1,0 +1,72 @@
+# Switch keyboard layout between us and dk
+super + shift + l
+	set_keyboard_layout.sh	
+
+# Launch terminal
+super + shift + Return
+	st	
+
+super + XF86Search
+	book_search.sh
+
+# Search for books 
+super + shift + b 
+	book_search.sh	
+
+# Launch terminal
+super + shift + t 
+	toggle_service.sh stalonetray	
+
+# Launch powermenu 
+super + BackSpace
+	powermenu_dmenu
+
+# Launch Clipmenu 
+super + shift + p 
+	rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
+	# clipmenu 
+
+# launch flameshot screenshot tool
+Print
+	flameshot gui	
+
+# Launc networkmanager_dmenu
+super + shift + i
+	networkmanager_dmenu
+
+# lock
+super + ctrl + l
+	betterlockscreen -l
+
+#Brightness up
+XF86MonBrightnessUp
+	brightness up
+
+#Brightness down
+XF86MonBrightnessDown
+	brightness down 
+
+# Volume down
+XF86AudioLowerVolume 
+	pacontrol.sh down
+	
+# Volume up 
+XF86AudioRaiseVolume 
+	pacontrol.sh up 
+
+# mute 
+XF86AudioMute 
+	pacontrol.sh toggle-mute
+
+# play next
+XF86AudioNext 
+	spotify-controller -n 
+
+# play prev
+XF86AudioPrev 
+	spotify-controller -p 
+
+# play/pause toggle
+XF86AudioPlay 
+	spotify-controller -t 
+

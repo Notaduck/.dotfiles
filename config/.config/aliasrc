@@ -1,0 +1,37 @@
+# ITU
+alias fallon="sshfs -o reconnect,Compression=no,auto_cache group34@fallon.itu.dk:/home/group34/ /home/daniel/Nextcloud/Skole/ITU/7_Semester/OSC/fallon && st -e ssh group34@fallon.itu.dk &"
+
+# alias python="/usr/bin/python3.8"
+
+alias weather="curl wttr.in"
+alias vim="nvim"
+alias code="codium"
+alias t="task"
+alias cat="bat"
+alias def="definition"
+alias cclip='xclip -selection clipboard'
+alias tb="nc termbin.com 9999"
+# Alias automaticly copy the URL to the cliptboard
+alias tbc="netcat termbin.com 9999 | xclip -selection c"
+alias ls="ls -Fh --group-directories-first --color=auto"
+alias ll="ls -Fhl --group-directories-first --color=auto"
+alias sz="source ~/.zshrc && echo Updated && sleep 0.5s && clear"
+alias nt="{pushd path ; st; popd} &"
+alias rm=trash
+alias grep="grep --color=auto"
+alias zathura="smart_zathura.sh"
+alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias free='free -m'                      # show sizes in MB
+alias sudo="sudo "
+
+
+#Locations
+alias ITU='cd /home/daniel/Nextcloud/Skole/ITU/7_Semester'
+alias FP='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester/FP'
+alias FPA='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester/FP/Assignments'
+alias BSC='cd /home/daniel/Nextcloud/Skole/ITU/6_Semester/Security'
+
+# Yarn
+alias yt="yarn test"
+alias yi="yarn install"
