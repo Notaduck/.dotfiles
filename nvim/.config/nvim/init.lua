@@ -1,5 +1,12 @@
 vim.opt.termguicolors = true
 
+vim.cmd([[
+  hi Normal ctermbg=none guibg=none
+]])
+
+vim.opt.spelllang = "en_us"
+vim.opt.spell = true
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -63,7 +70,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "│ ", trail = "·", nbsp = "␣" }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"

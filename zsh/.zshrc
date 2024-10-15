@@ -3,10 +3,15 @@ alias gl=glab
 alias ghpr='gh pr create --head "$(git branch 2>/dev/null | sed -n "s/* //p")" --base'
 alias whats_my_ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias vim=nvim
+alias rm=trash
+alias discord='vesktop --enable-features=UseOzonePlatform --ozone-platform=wayland'
+alias gh='/bin/gh'
+alias task="go-task"
 
 # Path Exports
 export PATH="$HOME/go/bin:/usr/local/opt/mysql-client/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
 
 # Load Environment Variables Securely
 if [[ -f "$HOME/.env" ]]; then

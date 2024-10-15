@@ -73,12 +73,23 @@ function DATE() {
 }
 
 function LAYOUT() {
-	# LANGUAGE=$(setxkbmap -query | grep layout | awk '{print $2}')
-	LANGUAGE=$(xkb-switch)
-	echo " $LANGUAGE"
+    LANGUAGE=$(xkb-switch)
+    echo " $LANGUAGE"
 }
+
+# Function to update the status bar
+update_statusbar() {
+    xsetroot -name "   $(DATE) $(BATT) $(WIFI)  $(VOLUME)  $(LAYOUT) "
+}
+
+# Initial status bar update
+update_statusbar
+
+# Listen for signals to update the status bar
 while true; do
-	# xsetroot -name "$(LAYOUT) $(DATE) $(WIFI) $(VOLUME) $(BATT) "
-	xsetroot -name " $(GIT) $(DATE) $(BATT) $(WIFI)  $(VOLUME)  $(LAYOUT) "
-	sleep 1m # Update time every minute
+    update_statusbar
+    sleep 1m # Update time every minute
 done &
+
+# Trap custom signals and refresh only the layout part
+trap 'xsetroot -name "$(LAYOUT)"' RTMIN+1

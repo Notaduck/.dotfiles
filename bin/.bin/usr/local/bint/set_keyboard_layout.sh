@@ -19,5 +19,5 @@
 
 set -o nounset                              # Treat unset variables as an error
 
-setxkbmap -query | grep -q 'us' && setxkbmap dk || setxkbmap us; pkill -RTMIN+1 dwmblocks
+setxkbmap -query | grep -q 'us' && setxkbmap dk || setxkbmap us; pkill -RTMIN+1 dwmbar
 
