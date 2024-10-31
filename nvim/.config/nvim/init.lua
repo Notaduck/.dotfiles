@@ -1,3 +1,10 @@
+vim.filetype.add({
+	extension = {
+		tsx = "typescriptreact",
+		jsx = "javascriptreact",
+	},
+})
+
 vim.opt.termguicolors = true
 
 -- Set <space> as the leader key
@@ -288,6 +295,14 @@ require("lazy").setup({
 
 			-- Useful for getting pretty icons, but requires a Nerd Font.
 			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+
+			{
+				"piersolenski/telescope-import.nvim",
+				dependencies = "nvim-telescope/telescope.nvim",
+				config = function()
+					require("telescope").load_extension("import")
+				end,
+			},
 		},
 		config = function()
 			-- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -326,13 +341,17 @@ require("lazy").setup({
 				},
 				defaults = {
 					file_ignore_patterns = {
-						"node_modules/.*",
-						".git/.*",
-						"dist/.*",
-						"public/.*",
-						"cache/.*",
-						".cache/.*",
-						"go/pkg/.*",
+						"node_modules/.*", -- Exclude node_modules directory
+						".git/.*", -- Exclude .git directory
+						"dist/.*", -- Exclude dist directory
+						"public/.*", -- Exclude public directory
+						"cache/.*", -- Exclude cache directory
+						".cache/.*", -- Exclude .cache directory
+						"go/pkg/.*", -- Exclude Go package directory
+						"%.lock$", -- Exclude all *.lock files
+						"*.lock$", -- Exclude all *.lock files
+						"*.svg$", -- Exclude all *.lock files
+						"%.svg$", -- Exclude all *.lock files
 					},
 				},
 				-- pickers = {}
@@ -850,6 +869,8 @@ require("lazy").setup({
 		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 		opts = {
 			ensure_installed = {
+				"tsx",
+				"graphql",
 				"bash",
 				"c",
 				"diff",
@@ -872,6 +893,10 @@ require("lazy").setup({
 				additional_vim_regex_highlighting = { "ruby" },
 			},
 			indent = { enable = true, disable = { "ruby" } },
+			context_commentstring = {
+				enable = true,
+				enable_autocmd = false,
+			},
 		},
 		config = function()
 			-- Register XML parser for specific filetypes
@@ -930,7 +955,8 @@ require("lazy").setup({
 })
 
 -- vim.cmd("colorscheme monokai-pro")
-vim.cmd("colorscheme rose-pine-moon")
+-- vim.cmd("colorscheme rose-pine-moon")
+vim.cmd("colorscheme monokai-pro")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
