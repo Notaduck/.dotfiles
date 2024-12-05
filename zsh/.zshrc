@@ -1,3 +1,12 @@
+# History configuration (add this at the top)
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+
 # Aliases
 alias gl=glab
 alias ghpr='gh pr create --head "$(git branch 2>/dev/null | sed -n "s/* //p")" --base'
@@ -12,11 +21,12 @@ alias task="go-task"
 export PATH="$HOME/go/bin:/usr/local/opt/mysql-client/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
+# export PATH="$(yarn global bin):$PATH"
 
 # Load Environment Variables Securely
-if [[ -f "$HOME/.env" ]]; then
-    export $(grep -v '^#' "$HOME/.env" | xargs)
-fi
+# if [[ -f "$HOME/.env" ]]; then
+#     export $(grep -v '^#' "$HOME/.env" | xargs)
+# fi
 
 # Initialize Zsh Completion System
 autoload -Uz compinit && compinit
@@ -33,8 +43,10 @@ source "$ZINIT_HOME/zinit.zsh"
 zinit light zdharma-continuum/history-search-multi-word
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
-zinit snippet https://gist.githubusercontent.com/hightemp/5071909/raw/
-zinit ice pick"async.zsh" src"pure.zsh"
+# zinit snippet https://gist.githubusercontent.com/hightemp/5071909/raw/
+#
+# zinit ice pick"async.zsh" src"pure.zsh"
+#
 zinit light sindresorhus/pure
 zinit ice atload"zpcdreplay" atclone "./zplug.zsh"
 zinit light g-plane/zsh-yarn-autocompletions

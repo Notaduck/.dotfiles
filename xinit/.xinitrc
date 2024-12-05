@@ -43,7 +43,7 @@ else
 fi
 
 # Set the background
-feh --bg-fill --no-xinerama ~/.wallpapers/wallhaven-ymym6gxx.jpg > ~/.logs/feh.log 2>&1
+feh --bg-scale --no-xinerama ~/.wallpapers/man-on-the-moon.jpg> ~/.logs/feh.log 2>&1
 
 # Set the layout to be Danish and map Caps Lock to Escape, and swap Super <--> Alt
 setxkbmap -device $LAPTOPKEYBOARD -model dell -layout dk -option "caps:escape, altwin:swap_lalt_lwin" > ~/.logs/setxkbmap.log 2>&1 &
