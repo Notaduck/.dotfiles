@@ -1,0 +1,16 @@
+return {
+	"jose-elias-alvarez/typescript.nvim",
+	ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+	dependencies = { "nvim-lspconfig", "plenary.nvim" },
+	config = function()
+		require("typescript").setup({
+			server = {
+				on_attach = function(client, bufnr)
+					-- Example keybindings specific to TypeScript
+					local ts_utils = require("typescript.utils")
+					-- Add your custom keybindings here
+				end,
+			},
+		})
+	end,
+}
