@@ -1,0 +1,34 @@
+live_config_reload = true
+
+import = ["~/.config/alacritty/rose-pine.toml"]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+decorations = "buttonless"
+dynamic_padding = false
+opacity = 1 
+
+[window.padding]
+x = 25
+y = 20
+
+[font]
+size = 8.0
+
+# [font.bold]
+# family = "JetBrainsMono Nerd Font"
+# # style = "Heavy"
+#
+# [font.bold_italic]
+# family = "JetBrainsMono Nerd Font"
+# style = "Heavy Italic"
+
+# [font.italic]
+# family = "JetBrainsMono Nerd Font"
+# style = "Medium Italic"
+
+# [font.normal]
+# family = "JetBrainsMono Nerd Font"
+# style = "Medium"

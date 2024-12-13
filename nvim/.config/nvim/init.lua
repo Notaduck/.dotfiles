@@ -11,6 +11,13 @@ vim.opt.relativenumber = true
 -- Enable true color support
 vim.opt.termguicolors = true
 
+vim.cmd([[
+  hi Normal ctermbg=none guibg=none
+]])
+
+vim.opt.spelllang = "en_us"
+vim.opt.spell = true
+
 -- Set <space> as the leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -521,140 +528,12 @@ require("lazy").setup({
 	},
 })
 
-local function show_import_fix_menu()
-	-- Get current buffer and cursor position
-	local bufnr = vim.api.nvim_get_current_buf()
-	local params = vim.lsp.util.make_range_params()
-	params.context = {} -- Remove 'only' filter to get all code actions
-
-	-- Request code actions synchronously
-	local resp = vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", params, 1000)
-	if not resp then
-		vim.notify("No code actions available (no response)", vim.log.levels.INFO)
-		return
-	end
-
-	local actions = {}
-	for client_id, client_resp in pairs(resp) do
-		if client_resp.result then
-			for _, action in ipairs(client_resp.result) do
-				-- Print action title and kind for debugging
-				print(string.format("Action: %s, Kind: %s", action.title or "N/A", action.kind or "N/A"))
-
-				if action.kind then
-					if action.kind:match("source%.addMissingImports") then
-						table.insert(actions, "Quick Import")
-					elseif action.kind:match("quickfix") then
-						table.insert(actions, "Quick Fix")
-					elseif action.kind:match("source%.fixAll") then
-						table.insert(actions, "Fill Missing Properties")
-					elseif action.kind:match("refactor%.rewrite") then
-						table.insert(actions, "Refactor Rewrite")
-					else
-						-- For debugging, print unmatched kinds
-						print("Unmatched action kind:", action.kind)
-					end
-				else
-					-- Handle actions without a kind
-					if action.title and action.title:match("Import") then
-						table.insert(actions, "Quick Import")
-					end
-					print(string.format("Action '%s' has no kind", action.title or "N/A"))
-				end
-			end
-		end
-	end
-
-	-- Log the detected actions for debugging
-	if #actions > 0 then
-		print("Detected code actions:", table.concat(actions, ", "))
-	else
-		print("No code actions detected.")
-	end
-
-	-- Remove duplicates
-	local unique_actions = {}
-	local seen = {}
-	for _, action in ipairs(actions) do
-		if not seen[action] then
-			table.insert(unique_actions, action)
-			seen[action] = true
-		end
-	end
-
-	if #unique_actions == 0 then
-		vim.notify("No applicable actions available", vim.log.levels.INFO)
-		return
-	end
-
-	-- Use Telescope to present the menu
-	local status_ok, telescope = pcall(require, "telescope")
-	if not status_ok then
-		vim.notify("Telescope not found!", vim.log.levels.ERROR)
-		return
-	end
-
-	telescope.pickers
-		.new({}, {
-			prompt_title = "Import and Fix",
-			finder = telescope.finders.new_table({
-				results = unique_actions,
-			}),
-			sorter = telescope.sorters.get_generic_fuzzy_sorter(),
-			attach_mappings = function(prompt_bufnr, map)
-				local actions_telescope = require("telescope.actions")
-				local action_state = require("telescope.actions.state")
-				map("i", "<CR>", function()
-					local selection = action_state.get_selected_entry().value
-					actions_telescope.close(prompt_bufnr)
-					if selection == "Quick Import" then
-						telescope.extensions.import.import()
-					elseif selection == "Quick Fix" then
-						vim.diagnostic.setloclist()
-					elseif selection == "Fill Missing Properties" then
-						vim.lsp.buf.code_action({
-							context = { only = { "source.fixAll" } },
-							apply = true,
-						})
-					elseif selection == "Refactor Rewrite" then
-						vim.lsp.buf.code_action({
-							context = { only = { "refactor.rewrite" } },
-							apply = true,
-						})
-					end
-				end)
-				map("n", "<CR>", function()
-					local selection = action_state.get_selected_entry().value
-					actions_telescope.close(prompt_bufnr)
-					if selection == "Quick Import" then
-						telescope.extensions.import.import()
-					elseif selection == "Quick Fix" then
-						vim.diagnostic.setloclist()
-					elseif selection == "Fill Missing Properties" then
-						vim.lsp.buf.code_action({
-							context = { only = { "source.fixAll" } },
-							apply = true,
-						})
-					elseif selection == "Refactor Rewrite" then
-						vim.lsp.buf.code_action({
-							context = { only = { "refactor.rewrite" } },
-							apply = true,
-						})
-					end
-				end)
-				return true
-			end,
-		})
-		:find()
-end
 -- [[ Keybinding for <leader>. ]]
-vim.keymap.set("n", "<leader>.", show_import_fix_menu, { desc = "Import and Fix Options" })
+vim.keymap.set("n", "<leader>.", vim.lsp.buf.code_action, { desc = "Show Code Action / Quick Fix" })
 
 -- [[ Set Colorscheme ]]
 -- Uncomment one of the following lines to set your preferred colorscheme
 -- vim.cmd("colorscheme monokai-pro")
--- vim.cmd("colorscheme rose-pine-moon")
-vim.cmd("colorscheme monokai-pro")
+vim.cmd("colorscheme rose-pine")
 
--- The line beneath this is called modeline. See :help modeline
--- vim: ts=2 sts=2 sw=2 et
+-- The line beneath this is
