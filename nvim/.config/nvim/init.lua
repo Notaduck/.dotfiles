@@ -1,3 +1,5 @@
+vim.o.termguicolors = true
+
 vim.filetype.add({
 	extension = {
 		tsx = "typescriptreact",
@@ -530,6 +532,28 @@ require("lazy").setup({
 
 -- [[ Keybinding for <leader>. ]]
 vim.keymap.set("n", "<leader>.", vim.lsp.buf.code_action, { desc = "Show Code Action / Quick Fix" })
+
+-- [[ Diagnostic Popup on Cursor Hold ]]
+vim.o.updatetime = 250
+
+vim.api.nvim_create_augroup("LspDiagnostics", { clear = true })
+
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+	group = "LspDiagnostics",
+	callback = function()
+		local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+		if #diagnostics > 0 then
+			vim.diagnostic.open_float(nil, {
+				focusable = false,
+				close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+				border = "rounded",
+				source = "always",
+				prefix = "■ ",
+				scope = "cursor",
+			})
+		end
+	end,
+})
 
 -- [[ Set Colorscheme ]]
 -- Uncomment one of the following lines to set your preferred colorscheme

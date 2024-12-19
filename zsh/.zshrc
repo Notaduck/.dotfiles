@@ -21,7 +21,10 @@ alias task="go-task"
 export PATH="$HOME/go/bin:/usr/local/opt/mysql-client/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
-# export PATH="$(yarn global bin):$PATH"
+
+[ -n "$(go env GOBIN)" ] && export PATH="$(go env GOBIN):${PATH}"
+[ -n "$(go env GOPATH)" ] && export PATH="$(go env GOPATH)/bin:${PATH}"
+export PATH="/home/daniel/.yarn/bin:$PATH"
 
 # Load Environment Variables Securely
 # if [[ -f "$HOME/.env" ]]; then
