@@ -22,6 +22,7 @@
   "neo-tree.nvim": { "branch": "main", "commit": "2d89ca96e08eb6e9c8e50e1bb4738bc5125c9f12" },
   "no-neck-pain.nvim": { "branch": "main", "commit": "2a786bf7130cce20449885fb799f3c7f4ce93595" },
   "nui.nvim": { "branch": "main", "commit": "b1b9b75a2d8041e1c2234f7448c61f8468a4258d" },
+  "nvim-auto-create-dirs": { "branch": "main", "commit": "9550acdce25e2d3ab37d82efb634ad569f1718c1" },
   "nvim-autopairs": { "branch": "master", "commit": "b464658e9b880f463b9f7e6ccddd93fb0013f559" },
   "nvim-cmp": { "branch": "main", "commit": "3403e2e9391ed0a28c3afddd8612701b647c8e26" },
   "nvim-colorizer.lua": { "branch": "master", "commit": "a065833f35a3a7cc3ef137ac88b5381da2ba302e" },
