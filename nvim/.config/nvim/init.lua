@@ -1,4 +1,3 @@
-vim.o.termguicolors = true
 
 vim.filetype.add({
 	extension = {
@@ -335,15 +334,31 @@ require("lazy").setup({
 			}
 
 			require("mason").setup()
+
 			local ensure_installed = vim.tbl_keys(servers or {})
 
-			table.insert(ensure_installed, "typescript-language-server") -- Ensure 'typescript-language-server' is installed via Mason
-			table.insert(ensure_installed, "stylua")
+			table.insert(ensure_installed, "bashls")
+			table.insert(ensure_installed, "clangd")
+			table.insert(ensure_installed, "cmake")
+			table.insert(ensure_installed, "graphql")
+			table.insert(ensure_installed, "helm_ls")
+			table.insert(ensure_installed, "html")
+			table.insert(ensure_installed, "eslint")
+			table.insert(ensure_installed, "ts_ls")
+			table.insert(ensure_installed, "jsonls")
+			table.insert(ensure_installed, "buf_ls")
+			table.insert(ensure_installed, "snyk_ls")
+			table.insert(ensure_installed, "docker_compose_language_service")
+			table.insert(ensure_installed, "dockerls")
+			table.insert(ensure_installed, "ast_grep")
+			table.insert(ensure_installed, "gopls")
+			table.insert(ensure_installed, "templ")
 			table.insert(ensure_installed, "tailwindcss")
-			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+
+			-- require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
-				ensure_installed = ensure_installed, -- Ensure these servers are installed
+				ensure_installed = ensure_installed,
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
