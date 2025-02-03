@@ -1,4 +1,3 @@
-
 vim.filetype.add({
 	extension = {
 		tsx = "typescriptreact",
@@ -546,7 +545,7 @@ require("lazy").setup({
 })
 
 -- [[ Keybinding for <leader>. ]]
-vim.keymap.set("n", "<leader>.", vim.lsp.buf.code_action, { desc = "Show Code Action / Quick Fix" })
+-- vim.keymap.set("n", "<leader>.", vim.lsp.buf.code_action, { desc = "Show Code Action / Quick Fix" })
 
 -- [[ Diagnostic Popup on Cursor Hold ]]
 vim.o.updatetime = 250
