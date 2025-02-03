@@ -24,6 +24,7 @@ install_homebrew() {
 
 define_app_lists() {
     BREW_PACKAGES=(
+        direnv
         lazygit
         yarn
         git

@@ -1,3 +1,21 @@
+-- Disable all animations by default
+vim.g.snacks_animate = false
+
+-- Re-enable the dimming animation specifically
+vim.api.nvim_create_autocmd("User", {
+	pattern = "VeryLazy",
+	callback = function()
+		-- Set the animation variable for the dimming effect
+		local dimming_key = "snacks_animate_dimming_effect" -- Replace with actual key if needed
+		vim.b[dimming_key] = true
+
+		-- Optional: Add a toggle mapping if desired
+		vim.keymap.set("n", "<leader>uD", function()
+			Snacks.toggle.dim()
+		end, { desc = "Toggle Dimming Animation" })
+	end,
+})
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,

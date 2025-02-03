@@ -15,6 +15,7 @@ fi
 # Initialize Zsh completion system
 autoload -Uz compinit && compinit
 
+
 ### Zinit Plugin Manager Setup
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [[ ! -d $ZINIT_HOME ]]; then
@@ -22,6 +23,22 @@ if [[ ! -d $ZINIT_HOME ]]; then
     git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 source "${ZINIT_HOME}/zinit.zsh"
+
+
+aws_profile_prompt() {
+    # Get the current AWS profile
+    local profile=${AWS_PROFILE:-default}
+
+    # Style the output with colors
+    # You can customize the colors here
+    echo "%F{black}%K{yellow} AWS: $profile %k%f"
+}
+
+zinit snippet OMZ::plugins/aws/aws.plugin.zsh
+
+# zinit ice svn; zinit light ohmyzsh/ohmyzsh
+#
+# zinit light ohmyzsh/ohmyzsh plugins/aws
 
 # Load plugins
 zinit light zdharma-continuum/history-search-multi-word
