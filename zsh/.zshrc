@@ -83,3 +83,5 @@ case "${unameOut}" in
         machine="UNKNOWN:${unameOut}"
         ;;
 esac
+
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
