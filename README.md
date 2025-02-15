@@ -28,10 +28,15 @@ If you aren't sure about what you are doing then please make a backup of your cu
 #### Requirements
 - [GNU stow](https://www.gnu.org/software/stow/)
 
-First you will have to clone the repo.
+To clone this repository along with its submodules, run:
 ```
-git clone https://github.com/notaduck/.dotfiles.git ~/.dotfiles
+git clone --recursive https://github.com/notaduck/.dotfiles.git ~/.dotfiles
 ```
+If you’ve already cloned the repository without the submodules, you can initialize and update them by running:
+```sh
+git submodule update --init --recursive
+```
+
 Navigate to the newly cloned repo.
 ```
 cd ~/.dotfiles
@@ -42,7 +47,7 @@ stow <conf-dir>
 ```
 Example:
 ```
-stow neovim
+stow nvim
 ```
 you can now see that `init.vim` points to `.config/nvim/init.vim -> ../../.dotfiles/neovim/.config/nvim/init.vim`
 and stow wil automaticly create symblinks to `~/.config/nvim/init.vim`, in order to uninstall the dotfiles again you can simply have to run:
