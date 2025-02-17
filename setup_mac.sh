@@ -24,6 +24,11 @@ install_homebrew() {
 
 define_app_lists() {
     BREW_PACKAGES=(
+<<<<<<< HEAD
+=======
+        direnv
+        lazygit
+>>>>>>> 40c217cc936ef4f175b58ce250dfae5a0fa0c03a
         yarn
         git
         wget
@@ -44,6 +49,13 @@ define_app_lists() {
         raycast
         alacritty
         obsidian
+<<<<<<< HEAD
+=======
+        1password
+        1password-cli
+        spotify
+        arc
+>>>>>>> 40c217cc936ef4f175b58ce250dfae5a0fa0c03a
     )
 }
 
@@ -150,4 +162,7 @@ main() {
 }
 
 main
+<<<<<<< HEAD
 
+=======
+>>>>>>> 40c217cc936ef4f175b58ce250dfae5a0fa0c03a

@@ -81,7 +81,8 @@ return {
 								highlight = config.highlight,
 							}
 						end
-						return require("neo-tree.sources.common.components").icon(config, node, state)
+						return require("neo-tree.sources.common.components").icon(config, node,
+							state)
 					end,
 				}, -- components
 			}, -- filesystem

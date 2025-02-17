@@ -1,4 +1,3 @@
-
 vim.filetype.add({
 	extension = {
 		tsx = "typescriptreact",
@@ -148,7 +147,7 @@ require("lazy").setup({
 				},
 			},
 			spec = {
-				{ "<leader>c", group = "[C]ode", mode = { "n", "x" } },
+				{ "<leader>c", group = "[C]ode",     mode = { "n", "x" } },
 				{ "<leader>d", group = "[D]ocument" },
 				{ "<leader>r", group = "[R]ename" },
 				{ "<leader>s", group = "[S]earch" },
@@ -173,7 +172,7 @@ require("lazy").setup({
 				end,
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
-			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+			{ "nvim-tree/nvim-web-devicons",            enabled = vim.g.have_nerd_font },
 			{
 				"piersolenski/telescope-import.nvim",
 				dependencies = "nvim-telescope/telescope.nvim",
@@ -222,7 +221,8 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
 			vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
-			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+			vim.keymap.set("n", "<leader>s.", builtin.oldfiles,
+				{ desc = '[S]earch Recent Files ("." for repeat)' })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 
 			vim.keymap.set("n", "<leader>/", function()
@@ -254,14 +254,14 @@ require("lazy").setup({
 			},
 		},
 	},
-	{ "Bilal2453/luvit-meta", lazy = true },
+	{ "Bilal2453/luvit-meta",   lazy = true },
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			{ "williamboman/mason.nvim", config = true },
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			{ "j-hui/fidget.nvim", opts = {} },
+			{ "j-hui/fidget.nvim",       opts = {} },
 			"hrsh7th/cmp-nvim-lsp",
 		},
 		config = function()
@@ -270,14 +270,18 @@ require("lazy").setup({
 				callback = function(event)
 					local map = function(keys, func, desc, mode)
 						mode = mode or "n"
-						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+						vim.keymap.set(mode, keys, func,
+							{ buffer = event.buf, desc = "LSP: " .. desc })
 					end
 
 					map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 					map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-					map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-					map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-					map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+					map("gI", require("telescope.builtin").lsp_implementations,
+						"[G]oto [I]mplementation")
+					map("<leader>D", require("telescope.builtin").lsp_type_definitions,
+						"Type [D]efinition")
+					map("<leader>ds", require("telescope.builtin").lsp_document_symbols,
+						"[D]ocument [S]ymbols")
 					map(
 						"<leader>ws",
 						require("telescope.builtin").lsp_dynamic_workspace_symbols,
@@ -290,7 +294,8 @@ require("lazy").setup({
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
 						local highlight_augroup =
-							vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
+						    vim.api.nvim_create_augroup("kickstart-lsp-highlight",
+							    { clear = false })
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 							buffer = event.buf,
 							group = highlight_augroup,
@@ -302,24 +307,33 @@ require("lazy").setup({
 							callback = vim.lsp.buf.clear_references,
 						})
 						vim.api.nvim_create_autocmd("LspDetach", {
-							group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
+							group = vim.api.nvim_create_augroup("kickstart-lsp-detach",
+								{ clear = true }),
 							callback = function(event2)
 								vim.lsp.buf.clear_references()
-								vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
+								vim.api.nvim_clear_autocmds({
+									group =
+									"kickstart-lsp-highlight",
+									buffer = event2.buf
+								})
 							end,
 						})
 					end
 
 					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
 						map("<leader>th", function()
-							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({
+								bufnr =
+								    event.buf
+							}))
 						end, "[T]oggle Inlay [H]ints")
 					end
 				end,
 			})
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+			capabilities = vim.tbl_deep_extend("force", capabilities,
+				require("cmp_nvim_lsp").default_capabilities())
 
 			local servers = {
 				lua_ls = {
@@ -347,12 +361,9 @@ require("lazy").setup({
 			table.insert(ensure_installed, "ts_ls")
 			table.insert(ensure_installed, "jsonls")
 			table.insert(ensure_installed, "buf_ls")
-			table.insert(ensure_installed, "snyk_ls")
 			table.insert(ensure_installed, "docker_compose_language_service")
 			table.insert(ensure_installed, "dockerls")
 			table.insert(ensure_installed, "ast_grep")
-			table.insert(ensure_installed, "gopls")
-			table.insert(ensure_installed, "templ")
 			table.insert(ensure_installed, "tailwindcss")
 
 			-- require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
@@ -362,7 +373,8 @@ require("lazy").setup({
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities,
+							server.capabilities or {})
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
@@ -546,7 +558,7 @@ require("lazy").setup({
 })
 
 -- [[ Keybinding for <leader>. ]]
-vim.keymap.set("n", "<leader>.", vim.lsp.buf.code_action, { desc = "Show Code Action / Quick Fix" })
+-- vim.keymap.set("n", "<leader>.", vim.lsp.buf.code_action, { desc = "Show Code Action / Quick Fix" })
 
 -- [[ Diagnostic Popup on Cursor Hold ]]
 vim.o.updatetime = 250
