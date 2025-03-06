@@ -2,6 +2,9 @@ alias gl=glab
 alias ghpr='gh pr create --head $(git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/\1/") --base'
 alias whats_my_ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias vim=nvim
+alias rm=trash
+
+export EDITOR="nvim"
 
 # Path Exports
 export PATH="$HOME/go/bin:/usr/local/opt/mysql-client/bin:$PATH"
@@ -74,3 +77,5 @@ export PATH=/Users/dagu/.asdf/shims:/opt/homebrew/opt/asdf/libexec/bin:/usr/loca
 
 
 eval "$(direnv hook zsh)"
+
+export PATH="$(npm config get prefix)/bin:$PATH"
