@@ -7,8 +7,14 @@ alias rm=trash
 export EDITOR="nvim"
 
 # Path Exports
-export PATH="$HOME/go/bin:/usr/local/opt/mysql-client/bin:$PATH"
-# export PATH="$PATH:$(yarn global bin)"
+# Add each component separately for better maintainability
+export PATH="$HOME/go/bin:$PATH"                        # Go binaries
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"     # MySQL client
+export PATH="/usr/local/opt/mysql-client@8.4/bin:$PATH" # MySQL client 8.4
+export PATH="$HOME/.local/bin:$PATH"                    # Local binaries
+export PATH="$HOME/bin:$PATH"                           # Home bin directory
+export PATH="$HOME/.bin:$PATH"                           # Home bin directory
+# export PATH="$PATH:$(yarn global bin)"                # Yarn global binaries (commented)
 
 # GitHub Personal Access Token (Load Securely)
 if [ -f "$HOME/.env" ]; then
@@ -17,7 +23,6 @@ fi
 
 # Initialize Zsh completion system
 autoload -Uz compinit && compinit
-
 
 ### Zinit Plugin Manager Setup
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -55,27 +60,34 @@ zinit light sindresorhus/pure
 
 # Yarn autocomplete
 zinit ice atload"zpcdreplay" atclone'./zplug.zsh'
-zinit light g-plane/zsh-yarn-autocompletions
+# ASDF version manager
+. "$(brew --prefix asdf)/libexec/asdf.sh"
 
-# Completion style
-zstyle ':completion:*' menu select
+# Add Homebrew to PATH
+export PATH="/opt/homebrew/bin:$PATH"
 
-# Created by `pipx` on 2024-08-23 08:14:57
-export PATH="$PATH:/Users/Daniel_1/.local/bin"
+# Add ASDF shims to PATH
+export PATH="$HOME/.asdf/shims:$PATH"
 
+# Add Zinit extras to PATH
+export PATH="$HOME/.local/share/zinit/polaris/bin:$PATH"
 
-# . /usr/local/opt/agccsdf/libexec/asdf.sh
-# export PATH="/opt/homebrew/opt/mysql/bin:$PATH"
+# Ensure system paths are included
+export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH="/usr/local/opt/mysql-client@8.4/bin:$PATH"
 
+# Add the correct line:
+# Add npm global binaries to PATH
+export PATH="$(npm config get prefix)/bin:$PATH"
 
+# Print PATH components for debugging (uncomment to use)
+# echo "PATH components:"
+# echo $PATH | tr ':' '\n'
 
-# if [ "$TMUX" = "" ]; then tmux; fi
-
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
-export PATH=/Users/dagu/.asdf/shims:/opt/homebrew/opt/asdf/libexec/bin:/usr/local/opt/mysql-client@8.4/bin:/Users/dagu/go/bin:/usr/local/opt/mysql-client/bin:/usr/local/opt/mysql-client@8.4/bin:/Users/dagu/.local/share/zinit/polaris/bin:/Users/dagu/go/bin:/usr/local/opt/mysql-client/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin::/Users/Daniel_1/.local/bin::/Users/Daniel_1/.local/bin:/opt/homebrew/bin
 
 
 eval "$(direnv hook zsh)"
 
 export PATH="$(npm config get prefix)/bin:$PATH"
+
+

@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # Exit immediately if a command exits with a non-zero status,
 # if an unset variable is used, or if any command in a pipeline fails.
@@ -24,38 +24,70 @@ install_homebrew() {
 
 define_app_lists() {
     BREW_PACKAGES=(
-<<<<<<< HEAD
-=======
-        direnv
-        lazygit
->>>>>>> 40c217cc936ef4f175b58ce250dfae5a0fa0c03a
-        yarn
+        # Core utilities
         git
         wget
-        httpie
+        coreutils
+        stow
+        bash
+        bat
+        fd
+        ripgrep
+        
+        # Development tools
         neovim
-        docker
         tmux
         fzf
         asdf
-        coreutils
-        stow
+        direnv
+        lazygit
+        httpie
+        jq
+        gh
+        
+        # Additional utilities
+        zoxide
+        btop
+        tree
+        ncdu
+        zellij
+        
+        # Formatters and linters
+        prettierd
+        
+        # Language runtimes (managed by asdf, but good to have)
+        node
     )
 
     CASK_APPS=(
+        # Terminal and utilities
+        alacritty
+        docker
+        
+        # Productivity
         monitorcontrol
         visual-studio-code
         postman
         raycast
-        alacritty
         obsidian
-<<<<<<< HEAD
-=======
-        1password
-        1password-cli
+        
+        # Media and entertainment
         spotify
-        arc
->>>>>>> 40c217cc936ef4f175b58ce250dfae5a0fa0c03a
+        
+        # Nerd Fonts
+        font-hack-nerd-font
+        font-jetbrains-mono-nerd-font
+        
+        # Git tools
+        gitkraken
+        gitify
+        
+        # Wellness
+        stretchly
+        
+        # Cleanup
+        slowquitapps
+        trash
     )
 }
 
@@ -162,7 +194,3 @@ main() {
 }
 
 main
-<<<<<<< HEAD
-
-=======
->>>>>>> 40c217cc936ef4f175b58ce250dfae5a0fa0c03a
