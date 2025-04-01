@@ -24,7 +24,7 @@ size = 14.0
 live_config_reload = true
 
 # import = ["~/.config/alacritty/rose-pine-moon.toml"]
-import = ["~/.config/alacritty/themes/themes/catppuccin.toml"]
+import = ["~/.config/alacritty/alacritty-theme/themes/catppuccin.toml"]
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
