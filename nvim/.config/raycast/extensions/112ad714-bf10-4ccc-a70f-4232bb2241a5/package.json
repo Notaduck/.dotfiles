@@ -1,0 +1,1329 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "apple-reminders",
+  "title": "Apple Reminders",
+  "description": "Manage Apple Reminders.",
+  "icon": "icon.png",
+  "author": "thomaslombart",
+  "contributors": [
+    "tm.wrnr",
+    "ir4n",
+    "jondelgado",
+    "phil_s",
+    "michalzuch",
+    "ridemountainpig",
+    "maxnyby"
+  ],
+  "owner": "raycast",
+  "access": "public",
+  "categories": [
+    "Productivity",
+    "Applications"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "my-reminders",
+      "title": "My Reminders",
+      "subtitle": "Apple Reminders",
+      "description": "View and complete your reminders.",
+      "mode": "view",
+      "preferences": [
+        {
+          "name": "displayCompletionDate",
+          "type": "checkbox",
+          "required": false,
+          "label": "Display Completion Date",
+          "description": "When enabled, the completion date will be displayed as a list item accessory.",
+          "default": false
+        },
+        {
+          "name": "useTimeOfDayGrouping",
+          "type": "checkbox",
+          "required": false,
+          "label": "Use Time of Day Grouping",
+          "description": "When enabled, today's reminders will be grouped by the time of day they are due.",
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "create-reminder",
+      "title": "Create Reminder",
+      "subtitle": "Apple Reminders",
+      "description": "Create and prioritize new reminders.",
+      "mode": "view",
+      "preferences": [
+        {
+          "name": "selectDefaultList",
+          "type": "checkbox",
+          "label": "Initially select the default list",
+          "description": "When enabled, the Reminders's default list will be initially selected instead of the last used list.",
+          "default": false,
+          "required": false
+        },
+        {
+          "name": "selectTodayAsDefault",
+          "type": "checkbox",
+          "label": "Initially select \"Today\" for new reminders",
+          "description": "When enabled, \"Today\" will be initially selected for new reminders instead of no due date.",
+          "default": false,
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "menu-bar",
+      "title": "Menu Bar Reminders",
+      "icon": "icon.png",
+      "subtitle": "Apple Reminders",
+      "description": "Manage your reminders in the menu bar.",
+      "mode": "menu-bar",
+      "preferences": [
+        {
+          "name": "titleType",
+          "type": "dropdown",
+          "data": [
+            {
+              "title": "Nothing",
+              "value": "nothing"
+            },
+            {
+              "title": "Count",
+              "value": "count"
+            },
+            {
+              "title": "First Reminder",
+              "value": "firstReminder"
+            }
+          ],
+          "default": "count",
+          "required": false,
+          "title": "Title",
+          "description": "Choose what you want to see next to the menu bar icon."
+        },
+        {
+          "name": "view",
+          "type": "dropdown",
+          "data": [
+            {
+              "title": "Today",
+              "value": "today"
+            },
+            {
+              "title": "Upcoming",
+              "value": "upcoming"
+            },
+            {
+              "title": "All",
+              "value": "all"
+            }
+          ],
+          "default": "today",
+          "required": false,
+          "title": "View",
+          "description": "Choose which view you want to see in your menu bar."
+        },
+        {
+          "name": "countType",
+          "type": "dropdown",
+          "data": [
+            {
+              "title": "Today",
+              "value": "today"
+            },
+            {
+              "title": "Upcoming",
+              "value": "upcoming"
+            },
+            {
+              "title": "All",
+              "value": "all"
+            }
+          ],
+          "default": "today",
+          "required": false,
+          "title": "Count",
+          "description": "Choose which count you want to see in your menu bar."
+        },
+        {
+          "name": "hideMenuBarCountWhenEmpty",
+          "type": "checkbox",
+          "label": "Hide menu bar count when empty",
+          "description": "When enabled, the number of reminders will be hidden if there are no reminders left (\"Display menu bar count\" needs to be enabled)",
+          "default": false,
+          "required": false
+        },
+        {
+          "name": "sortMenuBarRemindersByDueDate",
+          "type": "checkbox",
+          "label": "Sort menu bar reminders by time",
+          "description": "When enabled, the reminders in the menu bar will be sorted by time.",
+          "default": false,
+          "required": false,
+          "title": "Sort"
+        }
+      ],
+      "interval": "10m"
+    },
+    {
+      "name": "quick-add-reminder",
+      "title": "Quick Add Reminder",
+      "subtitle": "Apple Reminders",
+      "description": "Quickly add a reminder in Reminders.",
+      "mode": "no-view",
+      "preferences": [
+        {
+          "name": "dontUseAI",
+          "type": "checkbox",
+          "label": "Don't use the AI",
+          "description": "When enabled, the reminder is simply added to your default list with the input as the title.",
+          "default": false,
+          "required": false
+        },
+        {
+          "name": "shouldCloseMainWindow",
+          "type": "checkbox",
+          "title": "Advanced",
+          "label": "Close window immediately",
+          "description": "When enabled, the Raycast window is closed immediately, allowing you to carry on with other work.",
+          "default": true,
+          "required": false
+        }
+      ],
+      "arguments": [
+        {
+          "name": "text",
+          "placeholder": "Reminder",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "notes",
+          "placeholder": "Notes",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "manage-locations",
+      "title": "Manage Locations",
+      "subtitle": "Apple Reminders",
+      "description": "Manage your saved locations.",
+      "mode": "view"
+    }
+  ],
+  "tools": [
+    {
+      "name": "create-reminder",
+      "title": "Create Reminder",
+      "description": "Create a new reminder in Apple Reminders.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The title of the reminder."
+          },
+          "notes": {
+            "type": "string",
+            "description": "The notes for the reminder."
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The due date. Can either be a full day date (YYYY-MM-DD) or an ISO date if the time is specified (YYYY-MM-DDTHH:mm:ss.sssZ). Use sensible defaults for common timeframes (e.g \"8am\" for \"morning\", \"1pm\" for \"afternoon\", \"6pm\" for \"evening\"). A number with \"a\" or \"p\" appended (e.g. \"1p\" or \"8a\") should be treated as AM or PM. If the user didn't include a specific time, assume it's a full day reminder."
+          },
+          "priority": {
+            "type": "string",
+            "description": "The priority level. Only pick the value from this list: \"low\", \"medium\", \"high\". Use the \"high\" priority if the task text specifies a word such as \"urgent\", \"important\", or an exclamation mark."
+          },
+          "listId": {
+            "type": "string",
+            "description": "The list ID to add the reminder to. Note that the user can prepend the \"#\" or \"@\" symbols to list names, for example, \"#work\" or \"@work\"."
+          },
+          "address": {
+            "type": "string",
+            "description": "The address for location-based reminders."
+          },
+          "proximity": {
+            "type": "string",
+            "description": "The proximity trigger type. Only pick the value from this list: \"enter\", \"leave\".",
+            "enum": [
+              "enter",
+              "leave"
+            ]
+          },
+          "radius": {
+            "type": "number",
+            "description": "The radius around the location in meters."
+          },
+          "recurrence": {
+            "type": "object",
+            "properties": {
+              "frequency": {
+                "type": "string",
+                "description": "Recurrence frequency. Only pick the value from this list: \"daily\", \"weekly\", \"monthly\", \"yearly\".",
+                "enum": [
+                  "daily",
+                  "weekdays",
+                  "weekends",
+                  "weekly",
+                  "monthly",
+                  "yearly"
+                ]
+              },
+              "interval": {
+                "type": "number",
+                "description": "Recurrence interval. An integer greater than 0 that specifies how often a pattern repeats. If a recurrence frequency is \"weekly\" rule and the interval is 1, then the pattern repeats every week. If a recurrence frequency is \"monthly\" rule and the interval is 3, then the pattern repeats every 3 months."
+              },
+              "endDate": {
+                "type": "string",
+                "description": "Recurrence end date. A full day date (YYYY-MM-DD). If no end date is specified, the recurrence will repeat forever."
+              }
+            },
+            "required": [
+              "frequency",
+              "interval"
+            ],
+            "description": "The recurrence settings."
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "get-lists",
+      "title": "Get Lists",
+      "description": "Get all Apple Reminders lists.",
+      "confirmation": false
+    },
+    {
+      "name": "get-reminders",
+      "title": "Get Reminders",
+      "description": "Get all reminders from Apple Reminders.",
+      "confirmation": false
+    },
+    {
+      "name": "update-reminder",
+      "title": "Update Reminder",
+      "description": "Update an existing reminder in Apple Reminders.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "reminderId": {
+            "type": "string",
+            "description": "The ID of the reminder to update."
+          },
+          "title": {
+            "type": "string",
+            "description": "The new title of the reminder."
+          },
+          "notes": {
+            "type": "string",
+            "description": "The new notes for the reminder."
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The new due date. Can either be a full day date (YYYY-MM-DD) or an ISO date if the time is specified (YYYY-MM-DDTHH:mm:ss.sssZ)."
+          },
+          "priority": {
+            "type": "string",
+            "description": "The new priority of the reminder.",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "isCompleted": {
+            "type": "boolean",
+            "description": "Whether the reminder is completed."
+          },
+          "recurrence": {
+            "type": "object",
+            "properties": {
+              "frequency": {
+                "type": "string",
+                "description": "Recurrence frequency. Only pick the value from this list: \"daily\", \"weekly\", \"monthly\", \"yearly\".",
+                "enum": [
+                  "daily",
+                  "weekdays",
+                  "weekends",
+                  "weekly",
+                  "monthly",
+                  "yearly"
+                ]
+              },
+              "interval": {
+                "type": "number",
+                "description": "Recurrence interval. An integer greater than 0 that specifies how often a pattern repeats. If a recurrence frequency is \"weekly\" rule and the interval is 1, then the pattern repeats every week. If a recurrence frequency is \"monthly\" rule and the interval is 3, then the pattern repeats every 3 months."
+              },
+              "endDate": {
+                "type": "string",
+                "description": "Recurrence end date. A full day date (YYYY-MM-DD). If no end date is specified, the recurrence will repeat forever."
+              }
+            },
+            "required": [
+              "frequency",
+              "interval"
+            ],
+            "description": "The recurrence settings."
+          }
+        },
+        "required": [
+          "reminderId"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "delete-reminder",
+      "title": "Delete Reminder",
+      "description": "Delete a reminder from Apple Reminders.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the reminder to delete"
+          },
+          "confirmation": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "list": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "color": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "color"
+                ]
+              },
+              "dueDate": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "isRecurring": {
+                "type": "string"
+              },
+              "recurrenceRule": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "description": "The reminder properties to display to the user"
+          }
+        },
+        "required": [
+          "id",
+          "confirmation"
+        ]
+      },
+      "confirmation": true
+    },
+    {
+      "name": "get-locations",
+      "title": "Get Locations",
+      "description": "Get all saved locations.",
+      "confirmation": false
+    },
+    {
+      "name": "create-location",
+      "title": "Create Location",
+      "description": "Save a new location for location-based reminders.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the location."
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name for the saved location."
+          },
+          "icon": {
+            "type": "string",
+            "description": "Icon to represent the location.",
+            "enum": [
+              "add-person-16",
+              "airplane-16",
+              "airplane-filled-16",
+              "airplane-landing-16",
+              "airplane-takeoff-16",
+              "airpods-16",
+              "alarm-16",
+              "alarm-ringing-16",
+              "align-centre-16",
+              "align-left-16",
+              "align-right-16",
+              "american-football-16",
+              "anchor-16",
+              "app-window-16",
+              "app-window-grid-2x2-16",
+              "app-window-grid-3x3-16",
+              "app-window-list-16",
+              "app-window-sidebar-left-16",
+              "app-window-sidebar-right-16",
+              "arrow-clockwise-16",
+              "arrow-counter-clockwise-16",
+              "arrow-down-16",
+              "arrow-down-circle-16",
+              "arrow-down-circle-filled-16",
+              "arrow-left-16",
+              "arrow-left-circle-16",
+              "arrow-left-circle-filled-16",
+              "arrow-ne-16",
+              "arrow-right-16",
+              "arrow-right-circle-16",
+              "arrow-right-circle-filled-16",
+              "arrow-up-16",
+              "arrow-up-circle-16",
+              "arrow-up-circle-filled-16",
+              "arrows-contract-16",
+              "arrows-expand-16",
+              "at-symbol-16",
+              "band-aid-16",
+              "bank-note-16",
+              "bar-chart-16",
+              "bar-code-16",
+              "bath-tub-16",
+              "battery-16",
+              "battery-charging-16",
+              "battery-disabled-16",
+              "bell-16",
+              "bell-disabled-16",
+              "bike-16",
+              "binoculars-16",
+              "bird-16",
+              "blank-document-16",
+              "bluetooth-16",
+              "boat-16",
+              "bold-16",
+              "bolt-16",
+              "bolt-disabled-16",
+              "book-16",
+              "bookmark-16",
+              "box-16",
+              "brush-16",
+              "speech-bubble-16",
+              "bug-16",
+              "building-16",
+              "bullet-points-16",
+              "bulls-eye-16",
+              "bulls-eye-missed-16",
+              "buoy-16",
+              "calculator-16",
+              "calendar-16",
+              "camera-16",
+              "car-16",
+              "cart-16",
+              "cd-16",
+              "center-16",
+              "check-16",
+              "check-circle-16",
+              "check-list-16",
+              "check-rosette-16",
+              "checkmark-16",
+              "chess-piece-16",
+              "chevron-down-16",
+              "chevron-down-small-16",
+              "chevron-left-16",
+              "chevron-left-small-16",
+              "chevron-right-16",
+              "chevron-right-small-16",
+              "chevron-up-16",
+              "chevron-up-down-16",
+              "chevron-up-small-16",
+              "circle-16",
+              "circle-disabled-16",
+              "circle-ellipsis-16",
+              "circle-filled-16",
+              "circle-progress-16",
+              "circle-progress-100-16",
+              "circle-progress-25-16",
+              "circle-progress-50-16",
+              "circle-progress-75-16",
+              "clear-formatting-16",
+              "copy-clipboard-16",
+              "clock-16",
+              "cloud-16",
+              "cloud-lightning-16",
+              "cloud-rain-16",
+              "cloud-snow-16",
+              "cloud-sun-16",
+              "code-16",
+              "code-block-16",
+              "cog-16",
+              "coin-16",
+              "coins-16",
+              "command-symbol-16",
+              "compass-16",
+              "computer-chip-16",
+              "contrast-16",
+              "copy-clipboard-16",
+              "credit-card-16",
+              "cricket-ball-16",
+              "crop-16",
+              "crown-16",
+              "crypto-16",
+              "delete-document-16",
+              "desktop-16",
+              "devices-16",
+              "dna-16",
+              "blank-document-16",
+              "dot-16",
+              "download-16",
+              "droplets-16",
+              "duplicate-16",
+              "edit-shape-16",
+              "eject-16",
+              "ellipsis-16",
+              "ellipsis-vertical-16",
+              "emoji-16",
+              "emoji-sad-16",
+              "envelope-16",
+              "eraser-16",
+              "important-01-16",
+              "exclamationmark-16",
+              "exclamationmark-2-16",
+              "exclamationmark-3-16",
+              "eye-16",
+              "eye-disabled-16",
+              "eye-dropper-16",
+              "female-16",
+              "film-strip-16",
+              "filter-16",
+              "finder-16",
+              "fingerprint-16",
+              "flag-16",
+              "folder-16",
+              "footprints-16",
+              "forward-16",
+              "forward-filled-16",
+              "fountain-tip-16",
+              "full-signal-16",
+              "game-controller-16",
+              "gauge-16",
+              "cog-16",
+              "geopin-16",
+              "germ-16",
+              "gift-16",
+              "glasses-16",
+              "globe-01-16",
+              "goal-16",
+              "hammer-16",
+              "hard-drive-16",
+              "hashtag-16",
+              "heading-16",
+              "headphones-16",
+              "heart-16",
+              "heart-disabled-16",
+              "heartbeat-16",
+              "highlight-16",
+              "hourglass-16",
+              "house-16",
+              "humidity-16",
+              "image-16",
+              "important-01-16",
+              "info-01-16",
+              "italics-16",
+              "key-16",
+              "keyboard-16",
+              "layers-16",
+              "leaderboard-16",
+              "leaf-16",
+              "signal-2-16",
+              "light-bulb-16",
+              "light-bulb-off-16",
+              "line-chart-16",
+              "link-16",
+              "app-window-list-16",
+              "livestream-01-16",
+              "livestream-disabled-01-16",
+              "lock-16",
+              "lock-disabled-16",
+              "lock-unlocked-16",
+              "logout-16",
+              "lorry-16",
+              "lowercase-16",
+              "magnifying-glass-16",
+              "male-16",
+              "map-16",
+              "mask-16",
+              "maximize-16",
+              "medical-support-16",
+              "megaphone-16",
+              "computer-chip-16",
+              "memory-stick-16",
+              "speech-bubble-16",
+              "microphone-16",
+              "microphone-disabled-16",
+              "minimize-16",
+              "minus-16",
+              "minus-circle-16",
+              "minus-circle-filled-16",
+              "mobile-16",
+              "monitor-16",
+              "moon-16",
+              "moon-down-16",
+              "moon-up-16",
+              "moonrise-16",
+              "mountain-16",
+              "mouse-16",
+              "move-16",
+              "mug-16",
+              "mug-steam-16",
+              "multiply-16",
+              "music-16",
+              "network-16",
+              "new-document-16",
+              "new-folder-16",
+              "number-00-16",
+              "number-01-16",
+              "number-02-16",
+              "number-03-16",
+              "number-04-16",
+              "number-05-16",
+              "number-06-16",
+              "number-07-16",
+              "number-08-16",
+              "number-09-16",
+              "number-10-16",
+              "number-11-16",
+              "number-12-16",
+              "number-13-16",
+              "number-14-16",
+              "number-15-16",
+              "number-16-16",
+              "number-17-16",
+              "number-18-16",
+              "number-19-16",
+              "number-20-16",
+              "number-21-16",
+              "number-22-16",
+              "number-23-16",
+              "number-24-16",
+              "number-25-16",
+              "number-26-16",
+              "number-27-16",
+              "number-28-16",
+              "number-29-16",
+              "number-30-16",
+              "number-31-16",
+              "number-32-16",
+              "number-33-16",
+              "number-34-16",
+              "number-35-16",
+              "number-36-16",
+              "number-37-16",
+              "number-38-16",
+              "number-39-16",
+              "number-40-16",
+              "number-41-16",
+              "number-42-16",
+              "number-43-16",
+              "number-44-16",
+              "number-45-16",
+              "number-46-16",
+              "number-47-16",
+              "number-48-16",
+              "number-49-16",
+              "number-50-16",
+              "number-51-16",
+              "number-52-16",
+              "number-53-16",
+              "number-54-16",
+              "number-55-16",
+              "number-56-16",
+              "number-57-16",
+              "number-58-16",
+              "number-59-16",
+              "number-60-16",
+              "number-61-16",
+              "number-62-16",
+              "number-63-16",
+              "number-64-16",
+              "number-65-16",
+              "number-66-16",
+              "number-67-16",
+              "number-68-16",
+              "number-69-16",
+              "number-70-16",
+              "number-71-16",
+              "number-72-16",
+              "number-73-16",
+              "number-74-16",
+              "number-75-16",
+              "number-76-16",
+              "number-77-16",
+              "number-78-16",
+              "number-79-16",
+              "number-80-16",
+              "number-81-16",
+              "number-82-16",
+              "number-83-16",
+              "number-84-16",
+              "number-85-16",
+              "number-86-16",
+              "number-87-16",
+              "number-88-16",
+              "number-89-16",
+              "number-90-16",
+              "number-91-16",
+              "number-92-16",
+              "number-93-16",
+              "number-94-16",
+              "number-95-16",
+              "number-96-16",
+              "number-97-16",
+              "number-98-16",
+              "number-99-16",
+              "number-list-16",
+              "paperclip-16",
+              "paragraph-16",
+              "patch-16",
+              "pause-16",
+              "pause-filled-16",
+              "pencil-16",
+              "person-16",
+              "person-circle-16",
+              "person-lines-16",
+              "phone-16",
+              "phone-ringing-16",
+              "pie-chart-16",
+              "pill-16",
+              "pin-16",
+              "pin-disabled-16",
+              "play-16",
+              "play-filled-16",
+              "plug-16",
+              "plus-16",
+              "plus-circle-16",
+              "plus-circle-filled-16",
+              "plus-minus-divide-multiply-16",
+              "plus-square-16",
+              "plus-top-right-square-16",
+              "power-16",
+              "print-16",
+              "question-mark-circle-16",
+              "question-mark-circle-16",
+              "quotation-marks-16",
+              "quote-block-16",
+              "racket-16",
+              "raindrop-16",
+              "raycast-logo-neg-16",
+              "raycast-logo-pos-16",
+              "receipt-16",
+              "redo-16",
+              "remove-person-16",
+              "repeat-16",
+              "replace-16",
+              "replace-one-16",
+              "reply-16",
+              "rewind-16",
+              "rewind-filled-16",
+              "rocket-16",
+              "rosette-16",
+              "rotate-anti-clockwise-16",
+              "rotate-clockwise-16",
+              "rss-16",
+              "ruler-16",
+              "save-document-16",
+              "shield-01-16",
+              "short-paragraph-16",
+              "shuffle-16",
+              "app-window-sidebar-right-16",
+              "signal-0-16",
+              "signal-1-16",
+              "signal-2-16",
+              "signal-3-16",
+              "snippets-16",
+              "snowflake-16",
+              "soccer-ball-16",
+              "speaker-16",
+              "speaker-down-16",
+              "speaker-high-16",
+              "speaker-low-16",
+              "speaker-off-16",
+              "speaker-on-16",
+              "speaker-up-16",
+              "speech-bubble-16",
+              "speech-bubble-active-16",
+              "speech-bubble-important-16",
+              "square-ellipsis-16",
+              "stacked-bars-1-16",
+              "stacked-bars-2-16",
+              "stacked-bars-3-16",
+              "stacked-bars-4-16",
+              "star-16",
+              "star-circle-16",
+              "star-disabled-16",
+              "stars-16",
+              "stop-16",
+              "stop-filled-16",
+              "stopwatch-16",
+              "store-16",
+              "strike-through-16",
+              "sun-16",
+              "sunrise-16",
+              "swatch-16",
+              "switch-16",
+              "syringe-16",
+              "tack-16",
+              "tack-disabled-16",
+              "tag-16",
+              "temperature-16",
+              "tennis-ball-16",
+              "terminal-16",
+              "text-16",
+              "text-cursor-16",
+              "text-input-16",
+              "text-selection-16",
+              "thumbs-down-16",
+              "thumbs-down-filled-16",
+              "thumbs-up-16",
+              "thumbs-up-filled-16",
+              "ticket-16",
+              "torch-16",
+              "train-16",
+              "trash-16",
+              "tray-16",
+              "tree-16",
+              "trophy-16",
+              "two-people-16",
+              "umbrella-16",
+              "underline-16",
+              "undo-16",
+              "upload-16",
+              "uppercase-16",
+              "video-16",
+              "video-disabled-16",
+              "wallet-16",
+              "wand-16",
+              "warning-16",
+              "waveform-16",
+              "weights-16",
+              "wifi-16",
+              "wifi-disabled-16",
+              "wind-16",
+              "app-window-16",
+              "windsock-16",
+              "wrench-screwdriver-16",
+              "wrist-watch-16",
+              "x-mark-circle-16",
+              "x-mark-circle-filled-16",
+              "x-mark-circle-half-dash-16",
+              "x-mark-top-right-square-16",
+              "xmark-16",
+              "arrow-clockwise-16",
+              "eye-disabled-16",
+              "speaker-down-16",
+              "speaker-up-16",
+              "speaker-off-16",
+              "blank-document-16",
+              "x-mark-circle-16"
+            ]
+          },
+          "address": {
+            "type": "string",
+            "description": "The physical address of the location."
+          },
+          "proximity": {
+            "type": "string",
+            "description": "The proximity trigger type. Only pick the value from this list: \"enter\", \"leave\"."
+          },
+          "radius": {
+            "type": "string",
+            "description": "The radius around the location in meters."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "icon",
+          "address",
+          "proximity",
+          "radius"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "get-completed-reminders",
+      "title": "Get Completed Reminders",
+      "description": "Get all completed reminders from Apple Reminders.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "listId": {
+            "type": "string",
+            "description": "The ID of the list to get reminders from."
+          }
+        },
+        "required": []
+      },
+      "confirmation": false
+    }
+  ],
+  "ai": {
+    "instructions": "Always make reminders markdown links using the open URL. Example: Instead of saying \"I have set a reminder for you to walk the dog tomorrow at 8 AM.\", say \"I have set a reminder for you to [walk the dog](x-apple-reminderkit://REMCDReminder/reminder-id) tomorrow at 8 AM.\"\\n- When creating recurring reminders, ensure a due date is specified, if none is provided, use today's date\\n- Do not ask for optional information if not necessary for the task\\n- Keep reminder titles concise and clear\\n- For locations, only suggest addresses that exist in the saved locations list\\n- Do not ask which list to use if there is only one list available",
+    "evals": [
+      {
+        "input": "@apple-reminders Walk the dog tomorrow at 8am",
+        "mocks": {
+          "create-reminder": {
+            "openUrl": "x-apple-reminderkit://REMCDReminder/reminder-id",
+            "title": "Walk the dog",
+            "id": "reminder-id",
+            "isCompleted": false,
+            "dueDate": "2025-01-21T08:00:00+01:00"
+          }
+        },
+        "expected": [
+          {
+            "callsTool": "create-reminder"
+          },
+          {
+            "meetsCriteria": "The reminder is created with the correct title and due date."
+          },
+          {
+            "meetsCriteria": "The answer includes a markdown link to the created reminder."
+          }
+        ]
+      },
+      {
+        "input": "@apple-reminders Fix website bug in work list",
+        "mocks": {
+          "create-reminder": {
+            "openUrl": "x-apple-reminderkit://REMCDReminder/website-bug",
+            "title": "Fix website bug",
+            "id": "website-bug",
+            "list": {
+              "id": "work",
+              "title": "Work"
+            }
+          },
+          "get-lists": [
+            {
+              "id": "reminders",
+              "title": "Reminders"
+            },
+            {
+              "id": "fitness",
+              "title": "Fitness"
+            },
+            {
+              "id": "meetings",
+              "title": "Meetings"
+            },
+            {
+              "id": "work",
+              "title": "Work"
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": "get-lists"
+          },
+          {
+            "callsTool": {
+              "arguments": {
+                "listId": "work",
+                "title": "Fix website bug"
+              },
+              "name": "create-reminder"
+            }
+          },
+          {
+            "meetsCriteria": "The reminder is added to the work list."
+          },
+          {
+            "meetsCriteria": "The answer includes a markdown link to the created reminder."
+          }
+        ]
+      },
+      {
+        "input": "@apple-reminders Remind me to call mom every sunday at 10",
+        "mocks": {
+          "create-reminder": {
+            "openUrl": "x-apple-reminderkit://REMCDReminder/reminder-id",
+            "isRecurring": true,
+            "id": "reminder-id",
+            "title": "Call mom",
+            "recurrenceRule": "Repeats Every Week",
+            "dueDate": "2025-01-26T09:00:00.000Z"
+          }
+        },
+        "expected": [
+          {
+            "callsTool": "create-reminder"
+          },
+          {
+            "meetsCriteria": "The reminder is created with a recurrence rule."
+          }
+        ]
+      },
+      {
+        "input": "@apple-reminders What should I do today?",
+        "mocks": {
+          "get-reminders": [
+            {
+              "openUrl": "x-apple-reminderkit://REMCDReminder/website-bug",
+              "id": "website-bug",
+              "title": "Fix website bug",
+              "dueDate": "2025-01-21",
+              "list": {
+                "id": "work",
+                "title": "Work"
+              }
+            },
+            {
+              "openUrl": "x-apple-reminderkit://REMCDReminder/walk-the-dog",
+              "id": "walk-the-dog",
+              "title": "Walk the dog",
+              "dueDate": "2025-01-21T12:00:00.000Z",
+              "list": {
+                "id": "reminders",
+                "title": "Reminders"
+              }
+            },
+            {
+              "openUrl": "x-apple-reminderkit://REMCDReminder/take-vitamins",
+              "id": "take-vitamins",
+              "title": "Take vitamins",
+              "dueDate": "2025-01-21T18:00:00.000Z",
+              "list": {
+                "id": "reminders",
+                "title": "Reminders"
+              }
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": "get-reminders"
+          },
+          {
+            "meetsCriteria": "The answer includes a list of reminders with the correct title, and details if they have a due date or list."
+          }
+        ]
+      },
+      {
+        "input": "@apple-reminders What have I done last week?",
+        "mocks": {
+          "get-lists": [
+            {
+              "id": "reminders",
+              "title": "Reminders"
+            },
+            {
+              "id": "fitness",
+              "title": "Fitness"
+            },
+            {
+              "id": "work",
+              "title": "Work"
+            },
+            {
+              "id": "home",
+              "title": "Home"
+            }
+          ],
+          "get-completed-reminders": [
+            {
+              "openUrl": "x-apple-reminderkit://REMCDReminder/walk-the-dog",
+              "id": "walk-the-dog",
+              "completionDate": "2025-01-19T10:08:46.595Z",
+              "title": "Walk the dog",
+              "isCompleted": true,
+              "dueDate": "2025-01-21T17:00:00.000Z",
+              "list": {
+                "id": "reminders",
+                "title": "Reminders"
+              }
+            },
+            {
+              "openUrl": "x-apple-reminderkit://REMCDReminder/buy-a-robot-vacuum-cleaner",
+              "id": "buy-a-robot-vacuum-cleaner",
+              "completionDate": "2025-01-17T10:47:01.119Z",
+              "title": "Buy a robot vacuum cleaner",
+              "isCompleted": true,
+              "dueDate": "",
+              "list": {
+                "id": "home",
+                "title": "Home"
+              }
+            },
+            {
+              "openUrl": "x-apple-reminderkit://REMCDReminder/fix-website-bug",
+              "completionDate": "2025-01-16T10:47:01.119Z",
+              "title": "Fix website bug",
+              "id": "fix-website-bug",
+              "isCompleted": true,
+              "list": {
+                "id": "work",
+                "title": "Work"
+              }
+            },
+            {
+              "openUrl": "x-apple-reminderkit://REMCDReminder/workout-at-gym",
+              "id": "workout-at-gym",
+              "completionDate": "2025-01-19T13:41:04.602Z",
+              "title": "Workout at gym",
+              "isCompleted": true,
+              "dueDate": "",
+              "list": {
+                "id": "fitness",
+                "title": "Fitness"
+              }
+            },
+            {
+              "openUrl": "x-apple-reminderkit://REMCDReminder/annual-review",
+              "completionDate": "2024-12-30T18:30:40.642Z",
+              "title": "Annual review",
+              "isCompleted": true,
+              "id": "annual-review",
+              "dueDate": "2024-12-30",
+              "list": {
+                "id": "reminders",
+                "title": "Reminders"
+              }
+            },
+            {
+              "openUrl": "x-apple-reminderkit://REMCDReminder/ship-important-feature",
+              "id": "ship-important-feature",
+              "title": "Ship important feature",
+              "isCompleted": true,
+              "completionDate": "2025-01-21T10:47:09.211Z",
+              "list": {
+                "id": "work",
+                "title": "Work"
+              }
+            },
+            {
+              "openUrl": "x-apple-reminderkit://REMCDReminder/take-vitamins",
+              "completionDate": "2025-01-21T10:47:02.241Z",
+              "title": "Take vitamins",
+              "id": "take-vitamins",
+              "isCompleted": true,
+              "dueDate": "2025-01-21T18:00:00.000Z",
+              "list": {
+                "id": "reminders",
+                "title": "Reminders"
+              }
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": "get-completed-reminders"
+          },
+          {
+            "meetsCriteria": "The answer includes a list of completed reminders with the correct title, and when they were completed."
+          }
+        ]
+      },
+      {
+        "input": "@apple-reminders Remind me to fix the faucet when I come back Home",
+        "mocks": {
+          "get-locations": [
+            {
+              "radius": "100",
+              "id": "home-location",
+              "icon": "house-16",
+              "name": "Home",
+              "proximity": "enter",
+              "address": "123 Main St, Anytown, USA"
+            }
+          ],
+          "create-reminder": {
+            "openUrl": "x-apple-reminderkit://REMCDReminder/fix-the-faucet",
+            "id": "fix-the-faucet",
+            "title": "Fix the faucet",
+            "location": {
+              "address": "123 Main St, Anytown, USA",
+              "radius": 100,
+              "proximity": "enter"
+            }
+          }
+        },
+        "expected": [
+          {
+            "callsTool": "get-locations"
+          },
+          {
+            "callsTool": {
+              "arguments": {
+                "address": "123 Main St, Anytown, USA",
+                "title": "Fix the faucet",
+                "proximity": "enter"
+              },
+              "name": "create-reminder"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "@date-fns/utc": "^1.2.0",
+    "@raycast/api": "^1.91.1",
+    "@raycast/utils": "^1.18.1",
+    "chrono-node": "^2.7.5",
+    "date-fns": "^3.6.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.11",
+    "@types/lodash": "^4.17.0",
+    "@types/node": "^20.12.4",
+    "@types/react": "^18.2.74",
+    "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.2.5",
+    "react": "^18.2.0",
+    "typescript": "^5.4.3"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "npx @raycast/api@latest publish"
+  },
+  "platforms": [
+    "macOS"
+  ]
+}

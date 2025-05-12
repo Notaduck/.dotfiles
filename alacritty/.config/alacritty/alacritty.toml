@@ -1,30 +1,8 @@
-
-[ env ]
+[env]
 TERM = "xterm-256color"
-
-[keyboard]
-bindings = [
-   { key= "Tab",        mods= "Control",        chars= "\\x1b[1;5I" },
-    { key= "Tab",        mods= "Control|Shift",  chars= "\\x1b[1;6I" },
-]
-
-[window]
-decorations = "buttonless"
-dynamic_padding = false
-opacity = 1 
-
-[window.padding]
-x = 25
-y = 20
 
 [font]
 size = 14.0
-
-[general]
-live_config_reload = true
-
-# import = ["~/.config/alacritty/rose-pine-moon.toml"]
-import = ["~/.config/alacritty/alacritty-theme/themes/catppuccin.toml"]
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
@@ -41,3 +19,29 @@ style = "Italic"
 [font.normal]
 family = "JetBrainsMono Nerd Font"
 style = "Regular"
+
+[general]
+import = [
+    "/Users/dagu/.config/alacritty/alacritty-theme/themes/catppuccin.toml",
+    "/Users/dagu/.dotfiles/alacritty/.config/alacritty/themes/themes/catppuccin.toml",
+]
+live_config_reload = true
+
+[[keyboard.bindings]]
+chars = '\x1b[1;5I'
+key = "Tab"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = '\x1b[1;6I'
+key = "Tab"
+mods = "Control|Shift"
+
+[window]
+decorations = "buttonless"
+dynamic_padding = false
+opacity = 1
+
+[window.padding]
+x = 25
+y = 20

@@ -3,8 +3,10 @@ alias ghpr='gh pr create --head $(git branch 2> /dev/null | sed -e "/^[^*]/d" -e
 alias whats_my_ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias vim=nvim
 alias rm=trash
+alias lower_case="for dir in */; do mv "$dir" "$(echo $dir | tr 'A-Z' 'a-z')"; done
 
 export EDITOR="nvim"
+"
 
 # Path Exports
 # Add each component separately for better maintainability
@@ -79,6 +81,9 @@ export PATH="/usr/local/opt/mysql-client@8.4/bin:$PATH"
 # Add the correct line:
 # Add npm global binaries to PATH
 export PATH="$(npm config get prefix)/bin:$PATH"
+
+# Add Cargo binaries to PATH
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Print PATH components for debugging (uncomment to use)
 # echo "PATH components:"
