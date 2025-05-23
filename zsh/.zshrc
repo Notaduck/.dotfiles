@@ -96,3 +96,7 @@ eval "$(direnv hook zsh)"
 export PATH="$(npm config get prefix)/bin:$PATH"
 
 
+
+tmux-git-autofetch() {(/Users/dagu/.tmux/plugins/tmux-git-autofetch/git-autofetch.tmux --current &)}
+add-zsh-hook chpwd tmux-git-autofetch
+    
