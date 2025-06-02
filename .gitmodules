@@ -1,9 +1,3 @@
-; [submodule "nvim/.config/nvim/kickstart.nvim"]
-; 	path = nvim/.config/nvim/kickstart.nvim
-; 	url = git@github.com:Notaduck/kickstart.nvim.git
-; [submodule "nvim/.config/nvim"]
-; 	path = nvim/.config/nvim
-; 	url = git@github.com:Notaduck/kickstart.nvim.git
 [submodule "alacritty/.config/alacritty/alacritty-theme"]
 	path = alacritty/.config/alacritty/alacritty-theme
 	url = https://github.com/alacritty/alacritty-theme
