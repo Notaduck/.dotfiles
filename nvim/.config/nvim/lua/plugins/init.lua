@@ -26,7 +26,6 @@ return {
   { import = 'plugins.indent' },
 
   -- Development Tools
-  { import = 'plugins.mongo' },
   { import = 'plugins.typed-rocks' },
   {
     'folke/todo-comments.nvim',

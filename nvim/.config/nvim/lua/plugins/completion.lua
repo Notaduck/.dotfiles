@@ -1,77 +1,114 @@
 return {
-  'hrsh7th/nvim-cmp',
-  dependencies = {
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-path',
-    'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip',
-    'rafamadriz/friendly-snippets',
-  },
-  config = function()
-    local cmp = require 'cmp'
-    local luasnip = require 'luasnip'
-
-    -- Load snippets from friendly-snippets plugin
-    require('luasnip.loaders.from_vscode').lazy_load()
-
-    -- Load VS Code snippets from the current project's .vscode directory
-    require('luasnip.loaders.from_vscode').load({
-      paths = { ".vscode" }
-    })
-
-    -- Create an autocommand to reload snippets when entering a new project
-    vim.api.nvim_create_autocmd("DirChanged", {
-      pattern = "*",
-      callback = function()
-        require("luasnip.loaders.from_vscode").load({ paths = { ".vscode" } })
-      end,
-    })
-
-    cmp.setup {
-      snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
-      },
-      completion = {
-        completeopt = 'menu,menuone,noinsert',
-      },
-      mapping = cmp.mapping.preset.insert {
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete {},
-        ['<CR>'] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
+  { "L3MON4D3/LuaSnip", keys = {} },
+  {
+    "saghen/blink.cmp",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      'Kaiser-Yang/blink-cmp-avante',
+      "onsails/lspkind.nvim",
+    },
+    version = "*",
+    config = function()
+      require("blink.cmp").setup({
+        snippets = { preset = "luasnip" },
+        -- signature = { enabled = true },
+        -- signature = {
+        --   enabled = true,
+        --   window = { border = "rounded" },
+        -- },
+        appearance = {
+          use_nvim_cmp_as_default = false,
+          -- nerd_font_variant = "normal",
+          nerd_font_variant = "mono",
         },
-        ['<Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-      },
-      sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'buffer' },
-        { name = 'path' },
-      },
-    }
-  end,
+        sources = {
+          default = { "avante", "lsp", "path", "snippets", "buffer" },
+          providers = {
+            cmdline = {
+              min_keyword_length = 2,
+            },
+            avante = {
+              module = 'blink-cmp-avante',
+              name = 'Avante',
+              opts = {
+                -- options for blink-cmp-avante
+              }
+            }
+          },
+        },
+        keymap = {
+          ["<C-f>"] = {},
+          ["<CR>"] = { "accept_and_enter", "fallback" },
+          ["<Tab>"] = {
+            function(cmp)
+              return cmp.select_next()
+            end,
+            "snippet_forward",
+            "fallback",
+          },
+          ["<S-Tab>"] = {
+            function(cmp)
+              return cmp.select_prev()
+            end,
+            "snippet_backward",
+            "fallback",
+          },
+
+          ["<Up>"] = { "select_prev", "fallback" },
+          ["<Down>"] = { "select_next", "fallback" },
+        },
+        cmdline = {
+          enabled = false,
+          completion = { menu = { auto_show = true } },
+          keymap = {
+            ["<CR>"] = { "accept_and_enter", "fallback" },
+          },
+        },
+        completion = {
+          menu = {
+            border = "single",
+            scrolloff = 1,
+            scrollbar = false,
+            winhighlight =
+            'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+            draw = {
+              padding = 4,
+              columns = {
+                { "label" },
+                { "kind_icon", "kind" },
+                -- { "kind_icon" },
+              },
+              components = {
+                kind_icon = {
+                  text = function(item)
+                    local kind = require("lspkind").symbol_map[item.kind] or ""
+                    return kind .. " "
+                  end,
+                  highlight = "CmpItemKind",
+                },
+              }
+            },
+          },
+          documentation = {
+            window = {
+              border = "single",
+              scrollbar = false,
+              winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc',
+            },
+            auto_show = true,
+            auto_show_delay_ms = 500,
+          },
+        },
+      })
+
+      -- Load global snippets from friendly-snippets
+      require("luasnip.loaders.from_vscode").lazy_load()
+
+      -- Load project-specific snippets from .vscode folder if it exists
+      local project_snippets = vim.fn.getcwd() .. "/.vscode"
+      if vim.fn.isdirectory(project_snippets) == 1 then
+        require("luasnip.loaders.from_vscode").lazy_load({ paths = { project_snippets } })
+      end
+    end,
+  },
 }
