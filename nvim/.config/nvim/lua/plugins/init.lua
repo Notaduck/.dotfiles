@@ -22,7 +22,7 @@ return {
   -- { import = 'plugins.autopairs' },
   { import = 'plugins.multi-cursor' },
   { import = 'plugins.surround' },
-  { import = 'plugins.indent' },
+  -- { import = 'plugins.indent' },
 
   -- Development Tools
   { import = 'plugins.typed-rocks' },
