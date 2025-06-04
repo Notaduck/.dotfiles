@@ -38,7 +38,7 @@ return {
         },
         keymap = {
           ["<C-f>"] = {},
-          ["<CR>"] = { "accept_and_enter", "fallback" },
+          ["<CR>"] = { "accept", "fallback" },
           ["<Tab>"] = {
             function(cmp)
               return cmp.select_next()

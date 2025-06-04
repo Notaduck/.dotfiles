@@ -2,8 +2,8 @@
 return {
   -- Core plugins from kickstart
   -- { import = 'kickstart.plugins.debug' },
-  { import = 'kickstart.plugins.gitsigns' },
-  { import = 'kickstart.plugins.lint' },
+  -- { import = 'kickstart.plugins.gitsigns' },
+  -- { import = 'kickstart.plugins.lint' },
 
   -- LSP, Completion & Debugging
   { import = 'plugins.lsp' },
