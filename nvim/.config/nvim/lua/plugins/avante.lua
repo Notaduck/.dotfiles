@@ -6,7 +6,7 @@ return {
   opts = {
     provider = 'copilot',
     copilot = {
-      model = 'claude-3.5-sonnet', -- Best balance of quality and speed
+      model = 'claude-3.7-sonnet', -- Best balance of quality and speed
       -- Other models you might want to try:
       -- model = 'claude-3.5-sonnet', -- Faster, but less capable
       -- model = 'claude-3-haiku',    -- Even faster but less capable
