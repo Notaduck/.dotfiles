@@ -3,7 +3,6 @@ return {
   -- Core plugins from kickstart
   -- { import = 'kickstart.plugins.debug' },
   { import = 'kickstart.plugins.gitsigns' },
-  -- { import = 'kickstart.plugins.indent_line' },
   { import = 'kickstart.plugins.lint' },
 
   -- LSP, Completion & Debugging
@@ -23,10 +22,9 @@ return {
   -- { import = 'plugins.autopairs' },
   { import = 'plugins.multi-cursor' },
   { import = 'plugins.surround' },
-  { import = 'plugins.indent' },
+  -- { import = 'plugins.indent' },
 
   -- Development Tools
-  { import = 'plugins.mongo' },
   { import = 'plugins.typed-rocks' },
   {
     'folke/todo-comments.nvim',
