@@ -38,7 +38,7 @@ return {
         },
         keymap = {
           ["<C-f>"] = {},
-          ["<CR>"] = { "accept_and_enter", "fallback" },
+          ["<CR>"] = { "accept", "fallback" },
           ["<Tab>"] = {
             function(cmp)
               return cmp.select_next()
@@ -96,7 +96,7 @@ return {
               winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc',
             },
             auto_show = true,
-            auto_show_delay_ms = 500,
+            auto_show_delay_ms = 250,
           },
         },
       })
