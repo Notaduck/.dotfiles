@@ -13,6 +13,13 @@ end
 -- Show diagnostic popup on cursor hold (anywhere on the line)
 vim.api.nvim_create_autocmd({"CursorHold"}, {
     callback = function()
+        -- Skip showing diagnostics if we just saved the file
+        local now = vim.loop.now()
+        local last_save = vim._last_save_time or 0
+        if (now - last_save) < 500 then -- 500ms delay after save
+            return
+        end
+
         -- Get current line number (0-indexed)
         local line = vim.api.nvim_win_get_cursor(0)[1] - 1
 
@@ -33,6 +40,13 @@ vim.api.nvim_create_autocmd({"CursorHold"}, {
             }
             vim.diagnostic.open_float(nil, opts)
         end
+    end
+})
+
+-- Track the last save time
+vim.api.nvim_create_autocmd("BufWritePost", {
+    callback = function()
+        vim._last_save_time = vim.loop.now()
     end
 })
 
@@ -88,15 +102,36 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         })
 
         -- Organize imports (handles removing unused imports in most LSPs)
-        local params = vim.lsp.util.make_range_params()
+        -- Get current buffer clients for position encoding
+        local clients = vim.lsp.get_active_clients({
+            bufnr = 0
+        })
+        local position_encoding = nil
+
+        -- Find a client with position encoding
+        if clients and #clients > 0 then
+            position_encoding = clients[1].offset_encoding
+        end
+
+        -- Create params with position encoding
+        local params
+        if vim.fn.has('nvim-0.10') == 1 then
+            -- For Neovim 0.10+
+            params = vim.lsp.util.make_range_params(nil, position_encoding or "utf-16")
+        else
+            -- For older Neovim versions
+            params = vim.lsp.util.make_range_params()
+        end
+
         params.context = {
             only = {"source.organizeImports"}
         }
+
         local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
         for _, res in pairs(result or {}) do
             for _, r in pairs(res.result or {}) do
                 if r.edit then
-                    vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
+                    vim.lsp.util.apply_workspace_edit(r.edit, position_encoding or "utf-16")
                 elseif r.command then
                     vim.lsp.buf.execute_command(r.command)
                 end
