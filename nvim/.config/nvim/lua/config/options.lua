@@ -7,4 +7,10 @@ vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 vim.opt.clipboard = "unnamedplus"
 
-			 vim.cmd.colorscheme("catppuccin-macchiato")
+-- Set colorscheme with a VimEnter event to ensure it happens after plugins load
+vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+        vim.cmd.colorscheme("catppuccin-latte")
+    end,
+    once = true
+})
