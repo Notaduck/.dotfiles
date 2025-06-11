@@ -45,11 +45,9 @@ vim.api.nvim_create_autocmd("FileType", {
             },
             -- Add this on_attach callback
             on_attach = function(client, bufnr)
-                print("🔍 DEBUG: vtsls attached to buffer " .. bufnr)
 
                 -- Enable inlay hints immediately
                 if client.supports_method("textDocument/inlayHint") then
-                    print("✅ Enabling inlay hints for vtsls")
                     vim.lsp.inlay_hint.enable(true, {
                         bufnr = bufnr
                     })

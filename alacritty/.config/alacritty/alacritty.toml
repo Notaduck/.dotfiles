@@ -23,7 +23,7 @@ style = "Regular"
 [general]
 import = [
     "/Users/dagu/.config/alacritty/alacritty-theme/themes/catppuccin.toml",
-    "/Users/dagu/.dotfiles/alacritty/.config/alacritty/themes/themes/catppuccin_mocha.toml",
+    "/Users/dagu/.dotfiles/alacritty/.config/alacritty/themes/themes/rose_pine.toml",
 ]
 live_config_reload = true
 

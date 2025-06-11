@@ -65,32 +65,47 @@ return {
         -- Author: lokesh-krishna
         -- MIT license, see LICENSE for more details.
 
+        -- Create LSP status function
+        local function lsp_status()
+            local clients = vim.lsp.get_clients({ bufnr = 0 })
+            if #clients == 0 then
+                return ""
+            end
+            
+            local client_names = {}
+            for _, client in ipairs(clients) do
+                table.insert(client_names, client.name)
+            end
+            
+            return " " .. table.concat(client_names, ", ")
+        end
+
         require('lualine').setup {
             options = {
                 -- theme =
                 theme = "catppuccin",
                 component_separators = '',
                 section_separators = {
-                    left = '',
-                    right = ''
+                    left = '',
+                    right = ''
                 }
             },
             sections = {
                 lualine_a = {{
                     'mode',
                     separator = {
-                        left = ''
+                        left = ''
                     },
                     right_padding = 2
                 }},
                 lualine_b = {'filename', 'branch'},
                 lualine_c = {'%=', 'filename'},
-                lualine_x = {},
+                lualine_x = {lsp_status}, -- Add LSP status here
                 lualine_y = {'filetype', 'progress'},
                 lualine_z = {{
                     'location',
                     separator = {
-                        right = ''
+                        right = ''
                     },
                     left_padding = 2
                 }}
@@ -106,6 +121,5 @@ return {
             tabline = {},
             extensions = {}
         }
-
     end
 }
