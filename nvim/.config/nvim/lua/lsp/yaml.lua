@@ -1,54 +1,77 @@
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"yaml", "yml"},
-    callback = function()
-        vim.lsp.start({
-            name = "yaml-language-server",
-            cmd = {"yaml-language-server", "--stdio"},
-            root_dir = vim.fs.dirname(vim.fs.find({".git", "docker-compose.yml", "docker-compose.yaml"}, {
-                upward = true
-            })[1] or ""),
-            settings = {
-                yaml = {
-                    schemas = {
-                        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-                        ["https://json.schemastore.org/github-action.json"] = "/.github/actions/*/action.yml",
-                        ["https://json.schemastore.org/docker-compose.json"] = "docker-compose*.{yml,yaml}",
-                        ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose*.{yml,yaml}",
-                        ["https://raw.githubusercontent.com/kubernetes/kubernetes/master/api/openapi-spec/swagger.json"] = "*k8s*.{yml,yaml}"
-                    },
-                    validate = true,
-                    format = {
-                        enable = true
-                    },
-                    hover = true,
-                    completion = true
-                },
-                redhat = {
-                    telemetry = {
-                        enabled = false
-                    }
-                }
-            },
-            on_attach = function(client, bufnr)
-                if client.supports_method("textDocument/inlayHint") then
-                    vim.lsp.inlay_hint.enable(true, {
-                        bufnr = bufnr
-                    })
-                end
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "yaml", "yml" },
+--   callback = function()
+--     -- Determine the file name to help with schema selection
+--     local file_name = vim.fn.expand("%:t")
+--     local file_path = vim.fn.expand("%:p")
 
-                vim.keymap.set('n', '<leader>th', function()
-                    local current = vim.lsp.inlay_hint.is_enabled({
-                        bufnr = bufnr
-                    })
-                    vim.lsp.inlay_hint.enable(not current, {
-                        bufnr = bufnr
-                    })
-                    vim.notify("🔄 Inlay hints " .. (current and "disabled" or "enabled"))
-                end, {
-                    buffer = bufnr,
-                    desc = '[T]oggle Inlay [H]ints'
-                })
-            end
-        })
-    end
-})
+--     vim.lsp.start({
+--       name = "yaml-language-server",
+--       cmd = { "yaml-language-server", "--stdio" },
+--       root_dir = vim.fs.dirname(vim.fs.find({ ".git", "docker-compose.yml", "docker-compose.yaml", "serverless.yml" }, {
+--         upward = true,
+--       })[1] or ""),
+--       settings = {
+--         yaml = {
+--           schemas = {
+--             ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+--             ["https://json.schemastore.org/github-action.json"] = "/.github/actions/*/action.yml",
+--             ["https://json.schemastore.org/docker-compose.json"] = "docker-compose*.{yml,yaml}",
+--             ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose*.{yml,yaml}",
+--             -- Make k8s schema ONLY match files with k8s in the name
+--             ["https://raw.githubusercontent.com/kubernetes/kubernetes/master/api/openapi-spec/swagger.json"] = ["*k8s*.{yml,yaml}", "kube*.{yml,yaml}"],
+--             -- Use the official serverless schema
+--             ["https://raw.githubusercontent.com/serverless/serverless/main/schemas/serverless-schema.json"] =  "*serverless*.{yml,yaml}",
+--           },
+--           schemaStore = {
+--             enable = true,
+--             url = "https://www.schemastore.org/api/json/catalog.json",
+--           },
+--           -- File-specific schema mapping for exact matches
+--           customTags = ["!Ref", "!Sub", "!GetAtt"],
+--           validate = true,
+--           format = {
+--             enable = false,
+--           },
+--           hover = true,
+--           completion = true,
+--         },
+--         redhat = {
+--           telemetry = {
+--             enabled = false,
+--           },
+--         },
+--       },
+--       on_attach = function(client, bufnr)
+--         -- Force the schema for serverless.yml files
+--         if file_name == "serverless.yml" or file_name == "serverless.yaml" then
+--           local uri = vim.uri_from_bufnr(bufnr)
+--           client.notify("json/schemaAssociation", {
+--             uri = uri,
+--             schema = "https://raw.githubusercontent.com/serverless/serverless/main/schemas/serverless-schema.json"
+--           })
+--         end
+
+--         -- Your existing code
+--         if client.supports_method("textDocument/inlayHint") then
+--           vim.lsp.inlay_hint.enable(true, {
+--             bufnr = bufnr,
+--           })
+--         end
+
+--         vim.keymap.set("n", "<leader>th", function()
+--           local current = vim.lsp.inlay_hint.is_enabled({
+--             bufnr = bufnr,
+--           })
+--           vim.lsp.inlay_hint.enable(not current, {
+--             bufnr = bufnr,
+--           })
+--           vim.notify("🔄 Inlay hints " .. (current and "disabled" or "enabled"))
+--         end, {
+--           buffer = bufnr,
+--           desc = "[T]oggle Inlay [H]ints",
+--         })
+--       end,
+--     })
+--   end,
+-- })

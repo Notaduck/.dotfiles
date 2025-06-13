@@ -19,7 +19,15 @@ vim.api.nvim_create_autocmd("FileType", {
                     },
                     preferences = {
                         importModuleSpecifier = "non-relative",
-                        quoteStyle = "single"
+                        quoteStyle = "single",
+                        includeCompletionsForImportStatements = true,
+                        generateReturnInDocTemplate = true, 
+                        includeAutomaticOptionalChainCompletions = true,
+                        allowRenameOfImportPath = true,
+                        allowTextChangesInNewFiles = true,
+                        includeCompletionsWithSnippetText = true,
+                        includeCompletionsWithClassMemberSnippets = true,
+                        includeCompletionsWithInsertText = true,
                     },
                     inlayHints = {
                         parameterNames = {

@@ -19,7 +19,7 @@ return {
         go = { "gofmt", "goimports" },
 
         -- YAML
-        yaml = { "yamlfmt" },
+        -- yaml = { "yamlfmt" },
 
         -- JSON
         json = { "jq" },
