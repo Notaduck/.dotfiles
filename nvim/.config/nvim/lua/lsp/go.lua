@@ -1,7 +1,8 @@
-vim.api.nvim_create_autocmd("FileType", {
+vim.api.nvim_create_autocmd({"FileType", "BufEnter"}, {
     pattern = {"go"},
     callback = function()
-        vim.lsp.start({
+        local lsp = require("core.lsp")
+        lsp.setup_lsp({
             name = "gopls",
             cmd = {"gopls"},
             root_dir = vim.fs.dirname(vim.fs.find({"go.mod", ".git"}, {
@@ -25,27 +26,7 @@ vim.api.nvim_create_autocmd("FileType", {
                         assignVariableTypes = true
                     }
                 }
-            },
-            on_attach = function(client, bufnr)
-                if client.supports_method("textDocument/inlayHint") then
-                    vim.lsp.inlay_hint.enable(true, {
-                        bufnr = bufnr
-                    })
-                end
-
-                vim.keymap.set('n', '<leader>th', function()
-                    local current = vim.lsp.inlay_hint.is_enabled({
-                        bufnr = bufnr
-                    })
-                    vim.lsp.inlay_hint.enable(not current, {
-                        bufnr = bufnr
-                    })
-                    vim.notify("🔄 Inlay hints " .. (current and "disabled" or "enabled"))
-                end, {
-                    buffer = bufnr,
-                    desc = '[T]oggle Inlay [H]ints'
-                })
-            end
+            }
         })
     end
 })
