@@ -53,21 +53,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 -- Reduce the time before showing diagnostics (default is 4000ms)
 vim.opt.updatetime = 300
 
--- Helper: Get active LSP client names for statusline
-local function lsp_client_names()
-    local clients = vim.lsp.get_clients({
-        bufnr = 0
-    })
-    if #clients == 0 then
-        return ""
-    end
-    local names = {}
-    for _, client in ipairs(clients) do
-        table.insert(names, client.name)
-    end
-    return table.concat(names, ", ")
-end
-
 -- Diagnostic config (already good!)
 vim.diagnostic.config({
     virtual_text = {
@@ -105,47 +90,42 @@ vim.diagnostic.config({
     }
 })
 
--- Attach LSP clients to new buffers
--- local function try_attach_lsp(args)
---     local bufnr = args.buf
---     local clients = vim.lsp.get_clients()
---     local filepath = vim.api.nvim_buf_get_name(bufnr)
---     local ft = vim.bo[bufnr].filetype
+-- LSP progress handler (let fidget.nvim handle UI)
+vim.lsp.handlers["$/progress"] = nil
 
---     if filepath == "" or filepath:match("^%a+://") then
---         return
---     end
+local M = {}
 
---     for _, client in ipairs(clients) do
---         local should_attach = false
---         if client.config and client.config.filetypes then
---             for _, supported_ft in ipairs(client.config.filetypes) do
---                 if supported_ft == ft then
---                     should_attach = true
---                     break
---                 end
---             end
---         end
---         if not should_attach then
---             if (ft == "typescript" or ft == "javascript" or ft == "typescriptreact" or ft == "javascriptreact") and
---                 (client.name == "vtsls" or client.name == "tsserver") or (ft == "lua" and client.name == "lua_ls") or
---                 (ft == "python" and client.name == "pyright") or
---                 ((ft == "yaml" or ft == "yml") and client.name == "yamlls") or (ft == "go" and client.name == "gopls") or
---                 ((ft == "json" or ft == "jsonc") and client.name == "jsonls") or
---                 (ft == "dockerfile" and client.name == "dockerls") then
---                 should_attach = true
---             end
---         end
---         if should_attach and not vim.lsp.buf_is_attached(bufnr, client.id) then
---             vim.lsp.buf_attach_client(bufnr, client.id)
---             -- Optionally: vim.notify("Attached " .. client.name .. " to buffer " .. bufnr, vim.log.levels.DEBUG)
---         end
---     end
--- end
+function M.on_attach(client, bufnr)
+    if client.supports_method("textDocument/inlayHint") then
+        vim.lsp.inlay_hint.enable(true, {
+            bufnr = bufnr
+        })
+    end
+    vim.keymap.set('n', '<leader>th', function()
+        local current = vim.lsp.inlay_hint.is_enabled({
+            bufnr = bufnr
+        })
+        vim.lsp.inlay_hint.enable(not current, {
+            bufnr = bufnr
+        })
+        vim.notify("🔄 Inlay hints " .. (current and "disabled" or "enabled"))
+    end, {
+        buffer = bufnr,
+        desc = '[T]oggle Inlay [H]ints'
+    })
+end
 
--- vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile"}, {
---     callback = try_attach_lsp
--- })
+function M.setup_lsp(opts)
+    opts = vim.tbl_deep_extend("force", {
+        single_file_support = true,
+        autostart = true,
+        reuse_client = function(client, config)
+            return client.name == config.name and client.config.root_dir == config.root_dir
+        end,
+        on_attach = M.on_attach
+    }, opts or {})
+    vim.lsp.start(opts)
+end
 
 -- BufWritePre: Format and organize imports
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -178,5 +158,76 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end
 })
 
--- LSP progress handler (let fidget.nvim handle UI)
-vim.lsp.handlers["$/progress"] = nil
+-- Custom :LspInfo command to show all attached LSP clients and their capabilities for the current buffer in a floating scratch buffer
+vim.api.nvim_create_user_command("LspInfo", function()
+    local clients = vim.lsp.get_clients({
+        bufnr = 0
+    })
+    local lines = {}
+    local function add_lines(str)
+        for _, l in ipairs(vim.split(str, "\n")) do
+            table.insert(lines, l)
+        end
+    end
+    if #clients == 0 then
+        add_lines("No LSP clients attached to this buffer.")
+    else
+        add_lines("LSP clients attached to buffer " .. vim.api.nvim_get_current_buf() .. ":")
+        add_lines("")
+        for _, client in ipairs(clients) do
+            add_lines(client.name)
+            add_lines("Capabilities:")
+            for k, v in pairs(client.server_capabilities or {}) do
+                local v_lines = vim.split(vim.inspect(v), "\n")
+                add_lines(k .. ": " .. v_lines[1])
+                for i = 2, #v_lines do
+                    add_lines("  " .. v_lines[i])
+                end
+            end
+            add_lines("")
+        end
+    end
+    -- Create a scratch buffer
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+    -- Floating window config (bigger size)
+    local width = math.min(160, math.max(80, math.floor(vim.o.columns * 0.85)))
+    local height = math.min(40, #lines + 4)
+    local win_opts = {
+        relative = "editor",
+        width = width,
+        height = height,
+        row = math.floor((vim.o.lines - height) / 2),
+        col = math.floor((vim.o.columns - width) / 2),
+        style = "minimal",
+        border = "rounded"
+    }
+    local win = vim.api.nvim_open_win(buf, true, win_opts)
+    vim.api.nvim_buf_set_option(buf, "bufhidden", "wipe")
+    vim.api.nvim_buf_set_option(buf, "filetype", "typescript")
+    vim.keymap.set("n", "q", function()
+        pcall(vim.api.nvim_win_close, win, true)
+    end, {
+        buffer = buf,
+        nowait = true
+    })
+end, {})
+
+-- Custom :LspRestart command to restart all LSP clients attached to the current buffer
+vim.api.nvim_create_user_command("LspRestart", function()
+    local clients = vim.lsp.get_clients({
+        bufnr = 0
+    })
+    if #clients == 0 then
+        print("No LSP clients to restart for this buffer.")
+        return
+    end
+    for _, client in ipairs(clients) do
+        if client and client.stop then
+            client.stop(true) -- true = restart
+            print("Restarted LSP client: " .. client.name)
+        end
+    end
+end, {})
+
+return M
