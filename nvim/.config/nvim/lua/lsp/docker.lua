@@ -1,4 +1,4 @@
-vim.api.nvim_create_autocmd("FileType", {
+vim.api.nvim_create_autocmd({"FileType", "BufEnter"}, {
     pattern = {"dockerfile"},
     callback = function()
         vim.lsp.start({
@@ -32,7 +32,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Docker Compose LSP (separate from Dockerfile LSP)
-vim.api.nvim_create_autocmd("FileType", {
+vim.api.nvim_create_autocmd({"FileType", "BufEnter"}, {
     pattern = {"yaml", "yml"},
     callback = function()
         -- Only attach if file appears to be a docker-compose file

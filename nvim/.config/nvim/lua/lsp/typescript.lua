@@ -1,4 +1,4 @@
-vim.api.nvim_create_autocmd("FileType", {
+vim.api.nvim_create_autocmd({"FileType", "BufEnter"}, {
     pattern = {"typescript", "typescriptreact", "javascript", "javascriptreact"},
     callback = function()
         vim.lsp.start({
@@ -21,13 +21,13 @@ vim.api.nvim_create_autocmd("FileType", {
                         importModuleSpecifier = "non-relative",
                         quoteStyle = "single",
                         includeCompletionsForImportStatements = true,
-                        generateReturnInDocTemplate = true, 
+                        generateReturnInDocTemplate = true,
                         includeAutomaticOptionalChainCompletions = true,
                         allowRenameOfImportPath = true,
                         allowTextChangesInNewFiles = true,
                         includeCompletionsWithSnippetText = true,
                         includeCompletionsWithClassMemberSnippets = true,
-                        includeCompletionsWithInsertText = true,
+                        includeCompletionsWithInsertText = true
                     },
                     inlayHints = {
                         parameterNames = {
@@ -51,7 +51,11 @@ vim.api.nvim_create_autocmd("FileType", {
                     }
                 }
             },
-            -- Add this on_attach callback
+            single_file_support = true,
+            autostart = true,
+            reuse_client = function(client, config)
+                return client.name == config.name and client.config.root_dir == config.root_dir
+            end,
             on_attach = function(client, bufnr)
 
                 -- Enable inlay hints immediately
@@ -78,6 +82,5 @@ vim.api.nvim_create_autocmd("FileType", {
                 })
             end
         })
-    end,
-    once = true
+    end
 })

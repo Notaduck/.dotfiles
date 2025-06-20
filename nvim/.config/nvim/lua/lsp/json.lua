@@ -1,4 +1,4 @@
-vim.api.nvim_create_autocmd("FileType", {
+vim.api.nvim_create_autocmd({"FileType", "BufEnter"}, {
     pattern = {"json", "jsonc"},
     callback = function()
         vim.lsp.start({
@@ -23,6 +23,11 @@ vim.api.nvim_create_autocmd("FileType", {
                 capabilities.textDocument.completion.completionItem.snippetSupport = true
                 return capabilities
             end)(),
+            single_file_support = true,
+            autostart = true,
+            reuse_client = function(client, config)
+                return client.name == config.name and client.config.root_dir == config.root_dir
+            end,
             on_attach = function(client, bufnr)
                 if client.supports_method("textDocument/inlayHint") then
                     vim.lsp.inlay_hint.enable(true, {
