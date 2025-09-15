@@ -26,6 +26,7 @@ return {
         "jq",
         "hadolint",
         "gh-actions-language-server",
+        "css-lsp",
       },
     },
     config = function(_, opts)

@@ -1,77 +1,51 @@
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = { "yaml", "yml" },
---   callback = function()
---     -- Determine the file name to help with schema selection
---     local file_name = vim.fn.expand("%:t")
---     local file_path = vim.fn.expand("%:p")
+-- YAML LSP configuration
+-- Requirements:
+--   1. Install yaml-language-server (npm i -g yaml-language-server)
+--   2. Optional: install schemastore.nvim plugin for rich schema support: b0o/schemastore.nvim
+-- This sets up yamlls with schemastore schemas (if available) and sensible defaults.
+-- Skips docker-compose* files so docker_compose_language_service (docker.lua) can attach.
 
---     vim.lsp.start({
---       name = "yaml-language-server",
---       cmd = { "yaml-language-server", "--stdio" },
---       root_dir = vim.fs.dirname(vim.fs.find({ ".git", "docker-compose.yml", "docker-compose.yaml", "serverless.yml" }, {
---         upward = true,
---       })[1] or ""),
---       settings = {
---         yaml = {
---           schemas = {
---             ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
---             ["https://json.schemastore.org/github-action.json"] = "/.github/actions/*/action.yml",
---             ["https://json.schemastore.org/docker-compose.json"] = "docker-compose*.{yml,yaml}",
---             ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose*.{yml,yaml}",
---             -- Make k8s schema ONLY match files with k8s in the name
---             ["https://raw.githubusercontent.com/kubernetes/kubernetes/master/api/openapi-spec/swagger.json"] = ["*k8s*.{yml,yaml}", "kube*.{yml,yaml}"],
---             -- Use the official serverless schema
---             ["https://raw.githubusercontent.com/serverless/serverless/main/schemas/serverless-schema.json"] =  "*serverless*.{yml,yaml}",
---           },
---           schemaStore = {
---             enable = true,
---             url = "https://www.schemastore.org/api/json/catalog.json",
---           },
---           -- File-specific schema mapping for exact matches
---           customTags = ["!Ref", "!Sub", "!GetAtt"],
---           validate = true,
---           format = {
---             enable = false,
---           },
---           hover = true,
---           completion = true,
---         },
---         redhat = {
---           telemetry = {
---             enabled = false,
---           },
---         },
---       },
---       on_attach = function(client, bufnr)
---         -- Force the schema for serverless.yml files
---         if file_name == "serverless.yml" or file_name == "serverless.yaml" then
---           local uri = vim.uri_from_bufnr(bufnr)
---           client.notify("json/schemaAssociation", {
---             uri = uri,
---             schema = "https://raw.githubusercontent.com/serverless/serverless/main/schemas/serverless-schema.json"
---           })
---         end
+vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+  pattern = { "yaml", "yml" },
+  callback = function()
+    local filename = vim.fn.expand("%:t")
+    if filename:match("docker%-compose") or filename:match("docker%.") then
+      return
+    end
 
---         -- Your existing code
---         if client.supports_method("textDocument/inlayHint") then
---           vim.lsp.inlay_hint.enable(true, {
---             bufnr = bufnr,
---           })
---         end
+    local lsp = require("core.lsp")
 
---         vim.keymap.set("n", "<leader>th", function()
---           local current = vim.lsp.inlay_hint.is_enabled({
---             bufnr = bufnr,
---           })
---           vim.lsp.inlay_hint.enable(not current, {
---             bufnr = bufnr,
---           })
---           vim.notify("🔄 Inlay hints " .. (current and "disabled" or "enabled"))
---         end, {
---           buffer = bufnr,
---           desc = "[T]oggle Inlay [H]ints",
---         })
---       end,
---     })
---   end,
--- })
+    local schemas = {}
+    local ok, schemastore = pcall(require, "schemastore")
+    if ok then
+      schemas = schemastore.yaml.schemas()
+    end
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+    lsp.setup_lsp({
+      name = "yamlls",
+      cmd = { "yaml-language-server", "--stdio" },
+      root_dir = vim.fs.dirname(
+        vim.fs.find({ ".git", "package.json", "helmfile.yaml", "Chart.yaml" }, { upward = true })[1] or ""
+      ),
+      settings = {
+        yaml = {
+          validate = true,
+          hover = true,
+          completion = true,
+          format = { enable = true },
+          keyOrdering = false,
+          schemas = schemas,
+          schemaStore = {
+            enable = false, -- Use schemastore.nvim instead to avoid network fetch each start
+            url = "https://www.schemastore.org/api/json/catalog.json",
+          },
+        },
+      },
+      capabilities = capabilities,
+      single_file_support = true,
+    })
+  end,
+})

@@ -21,6 +21,16 @@ local global_keymaps = {{
     lhs = "<leader>cd",
     rhs = vim.lsp.buf.definition,
     desc = "Goto Definition"
+}, {
+    mode = "n",
+    lhs = "]g",
+    rhs = vim.diagnostic.goto_next,
+    desc = "Next Diagnostic"
+}, {
+    mode = "n",
+    lhs = "[g",
+    rhs = vim.diagnostic.goto_prev,
+    desc = "Prev Diagnostic"
 }}
 
 for _, map in ipairs(global_keymaps) do
