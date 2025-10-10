@@ -20,10 +20,13 @@ style = "Italic"
 family = "JetBrainsMono Nerd Font"
 style = "Regular"
 
+# {}
+# {{}}
 [general]
 import = [
-    "/Users/dagu/.config/alacritty/alacritty-theme/themes/catppuccin.toml",
-    "/Users/dagu/.dotfiles/alacritty/.config/alacritty/themes/themes/rose-pine-dawn.toml",
+    # "/Users/dagu/.config/alacritty/alacritty-theme/themes/catppuccin.toml",
+    # "/Users/dagu/.dotfiles/alacritty/.config/alacritty/themes/themes/rose-pine.toml",
+    "/Users/dagu/.dotfiles/alacritty/.config/alacritty/rose-pine.toml"
 ]
 live_config_reload = true
 
