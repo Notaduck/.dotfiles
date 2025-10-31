@@ -3,6 +3,65 @@ vim.cmd([[
   highlight Parameter guifg=#88CCFF gui=bold
 ]])
 
+local M = {}
+
+local function make_default_capabilities()
+  local ok, blink_cmp = pcall(require, "blink.cmp")
+  if ok and type(blink_cmp.get_lsp_capabilities) == "function" then
+    return blink_cmp.get_lsp_capabilities()
+  end
+
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+      "documentation",
+      "detail",
+      "additionalTextEdits",
+    },
+  }
+  capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+  }
+
+  return capabilities
+end
+
+local default_capabilities = make_default_capabilities()
+M.default_capabilities = default_capabilities
+
+function M.resolve_root(opts)
+  opts = opts or {}
+  local patterns = opts.patterns or { ".git" }
+  local path = opts.path
+
+  if not path or path == "" then
+    path = vim.loop.cwd()
+  end
+
+  local stat = vim.loop.fs_stat(path)
+  if stat and stat.type == "file" then
+    path = vim.fs.dirname(path)
+  elseif not stat then
+    path = vim.loop.cwd()
+  end
+
+  local found = vim.fs.find(patterns, {
+    path = path,
+    upward = true,
+  })[1]
+
+  if found and found ~= "" then
+    local dir = vim.fs.dirname(found)
+    if dir and dir ~= "" then
+      return dir
+    end
+  end
+
+  return opts.fallback or path
+end
+
 -- Move auto-require into a function to avoid circular require
 local function load_all_lsp_modules()
   local lsp_dir = debug.getinfo(1, "S").source:sub(2):match("(.*/)") .. "../lsp"
@@ -137,7 +196,6 @@ vim.diagnostic.config({
 -- LSP progress handler (let fidget.nvim handle UI)
 vim.lsp.handlers["$/progress"] = nil
 
-local M = {}
 M.load_all_lsp_modules = load_all_lsp_modules
 
 function M.on_attach(client, bufnr)
@@ -169,57 +227,85 @@ function M.setup_lsp(opts)
 		end,
 		on_attach = M.on_attach,
 	}, opts or {})
+	opts.capabilities = vim.tbl_deep_extend("force", {}, default_capabilities, opts.capabilities or {})
+	if not opts.root_dir or opts.root_dir == "" then
+		opts.root_dir = vim.loop.cwd()
+	else
+		opts.root_dir = vim.fs.normalize(opts.root_dir)
+	end
 	vim.lsp.start(opts)
 end
 
 -- BufWritePre: Format, remove unused, and organize imports
+local format_group = vim.api.nvim_create_augroup("LspFormatOnSave", { clear = true })
+
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = { "*.ts", "*.tsx", "*.js", "*.jsx", "*.lua", "*.py", "*.go" },
-  callback = function()
-    -- Run formatter (Conform or LSP)
-    vim.lsp.buf.format({
-      async = false,
-      timeout_ms = 5000,
-    })
+	group = format_group,
+	pattern = { "*.ts", "*.tsx", "*.js", "*.jsx", "*.lua", "*.py", "*.go" },
+	callback = function(ev)
+		local bufnr = ev.buf
 
-    local clients = vim.lsp.get_clients({ bufnr = 0 })
-    local position_encoding = clients[1] and clients[1].offset_encoding or "utf-16"
+		local conform_ok, conform = pcall(require, "conform")
+		if conform_ok then
+			conform.format({
+				bufnr = bufnr,
+				async = false,
+				timeout_ms = 5000,
+				lsp_fallback = true,
+				stop_after_first = true,
+			})
+		else
+			vim.lsp.buf.format({
+				async = false,
+				timeout_ms = 5000,
+			})
+		end
 
-    local function apply_source_action(action)
-      local params = vim.lsp.util.make_range_params(nil, position_encoding)
-      params.context = { only = { action } }
-      local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
-      if not result then
-        return
-      end
-      for _, res in pairs(result) do
-        for _, r in pairs(res.result or {}) do
-          if r.edit then
-            vim.lsp.util.apply_workspace_edit(r.edit, position_encoding)
-          end
-          if r.command then
-            vim.lsp.buf.execute_command(r.command)
-          end
-        end
-      end
-    end
+		local clients = vim.lsp.get_clients({ bufnr = bufnr })
+		if vim.tbl_isempty(clients) then
+			return
+		end
 
-    -- First remove unused (vtsls sometimes uses *.ts suffix)
-    apply_source_action("source.removeUnusedImports")
+		local default_encoding = clients[1].offset_encoding or "utf-16"
 
-    -- Then organize imports
-    apply_source_action("source.organizeImports")
+		local function apply_source_action(action)
+			local params = vim.lsp.util.make_range_params(nil, default_encoding)
+			params.context = { only = { action } }
+			local result = vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", params, 3000)
+			if not result then
+				return
+			end
+			for client_id, res in pairs(result) do
+				for _, r in pairs(res.result or {}) do
+					local client = vim.lsp.get_client_by_id(client_id)
+					local encoding = client and client.offset_encoding or default_encoding
+					if r.edit then
+						vim.lsp.util.apply_workspace_edit(r.edit, encoding)
+					end
+					if r.command then
+						vim.lsp.buf.execute_command(r.command)
+					end
+				end
+			end
+		end
 
-    -- Explicitly run vtsls command for unused imports
-    for _, client in ipairs(clients) do
-      if client.name == "vtsls" then
-        client.request("workspace/executeCommand", {
-          command = "typescript.removeUnusedImports",
-          arguments = { vim.api.nvim_buf_get_name(0) }
-        }, function() end, 0)
-      end
-    end
-  end,
+		-- First remove unused (vtsls sometimes uses *.ts suffix)
+		apply_source_action("source.removeUnusedImports")
+
+		-- Then organize imports
+		apply_source_action("source.organizeImports")
+
+		-- Explicitly run vtsls command for unused imports
+		local filename = vim.api.nvim_buf_get_name(bufnr)
+		for _, client in ipairs(clients) do
+			if client.name == "vtsls" then
+				client.request("workspace/executeCommand", {
+					command = "typescript.removeUnusedImports",
+					arguments = { filename },
+				}, function() end, bufnr)
+			end
+		end
+	end,
 })
 
 -- Custom :LspInfo command to show all attached LSP clients and their capabilities for the current buffer in a floating scratch buffer
@@ -295,21 +381,4 @@ vim.api.nvim_create_user_command("LspRestart", function()
 end, {})
 
 -- Remove unused imports automatically on save for TypeScript files (vtsls specific)
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*.ts",
-	callback = function()
-		local clients = vim.lsp.get_clients({
-			bufnr = 0,
-		})
-		for _, client in ipairs(clients) do
-			if client.name == "vtsls" then
-				client.request("workspace/executeCommand", {
-					command = "typescript.removeUnusedImports",
-					arguments = { vim.api.nvim_buf_get_name(0) }
-				}, function() end, 0)
-			end
-		end
-	end,
-})
-
 return M

@@ -17,10 +17,10 @@ local function start_ts_lsp(bufnr)
 		return
 	end
 	local lsp = require("core.lsp")
-	local root = vim.fs.dirname(
-		vim.fs.find({ "package.json", "tsconfig.json", ".git" }, { path = vim.fs.dirname(fname), upward = true })[1]
-			or vim.loop.cwd()
-	)
+	local root = lsp.resolve_root({
+		path = fname,
+		patterns = { "package.json", "tsconfig.json", ".git" },
+	})
 	local use_vtsls = vim.fn.executable("vtsls") == 1
 	local cmd = use_vtsls and { "vtsls", "--stdio" } or { "typescript-language-server", "--stdio" }
 	local name = use_vtsls and "vtsls" or "tsserver"
