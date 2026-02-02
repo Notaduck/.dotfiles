@@ -1,5 +1,7 @@
 return {
   "mistricky/codesnap.nvim",
+  cmd = { "CodeSnap", "CodeSnapSave", "CodeSnapSaveToClipboard" },
+  lazy = true,
   build = "make",
   opts = {
     has_breadcrumbs = true,

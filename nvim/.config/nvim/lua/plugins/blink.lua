@@ -46,27 +46,41 @@ return {
 				keymap = {
 					["<C-f>"] = {},
 					["<CR>"] = { "accept", "fallback" },
-					["<Tab>"] = {
-						function(cmp)
-							return cmp.select_next()
-						end,
-						"snippet_forward",
-						"fallback",
-					},
-					["<S-Tab>"] = {
+					-- ["<Tab>"] = {
+					-- 	function(cmp)
+					-- 		return cmp.select_next()
+					-- 	end,
+					-- 	"snippet_forward",
+					-- 	"fallback",
+					-- },
+					-- ["<S-Tab>"] = {
+					-- 	function(cmp)
+					-- 		return cmp.select_prev()
+					-- 	end,
+					-- 	"snippet_backward",
+					-- 	"fallback",
+					-- },
+
+					-- Let arrow keys prefer completion navigation, but still handle snippets if active.
+					["<Up>"] = {
 						function(cmp)
 							return cmp.select_prev()
 						end,
 						"snippet_backward",
 						"fallback",
 					},
-
-					["<Up>"] = { "snippet_backward", "fallback" },
-					["<Down>"] = { "snippet_forward", "fallback" },
+					["<Down>"] = {
+						function(cmp)
+							return cmp.select_next()
+						end,
+						"snippet_forward",
+						"fallback",
+					},
 				},
 				cmdline = {
 					enabled = false,
 					completion = {
+						ghost_text = { enabled = true },
 						menu = {
 							auto_show = true,
 						},

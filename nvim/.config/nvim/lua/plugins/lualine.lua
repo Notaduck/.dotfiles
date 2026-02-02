@@ -36,7 +36,7 @@ return {
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 		"rose-pine/neovim",
-		"github/copilot.vim", -- or whatever provides Sidekick
+		-- "github/copilot.vim", -- or whatever provides Sidekick
 	},
 	config = function()
 		-- Custom Treesitter context
@@ -121,27 +121,27 @@ return {
 		end
 
 		-- 🔹 Sidekick status component (DieKick integration)
-		local sidekick_component = {
-			function()
-				return " "
-			end,
-			color = function()
-				local status = require("sidekick.status").get()
-				if status then
-					if status.kind == "Error" then
-						return { fg = vim.fn.synIDattr(vim.fn.hlID("DiagnosticError"), "fg") }
-					elseif status.busy then
-						return { fg = vim.fn.synIDattr(vim.fn.hlID("DiagnosticWarn"), "fg") }
-					else
-						return { fg = vim.fn.synIDattr(vim.fn.hlID("Special"), "fg") }
-					end
-				end
-			end,
-			cond = function()
-				local status = require("sidekick.status").get()
-				return status ~= nil
-			end,
-		}
+		-- local sidekick_component = {
+		-- 	function()
+		-- 		return " "
+		-- 	end,
+		-- 	color = function()
+		-- 		local status = require("sidekick.status").get()
+		-- 		if status then
+		-- 			if status.kind == "Error" then
+		-- 				return { fg = vim.fn.synIDattr(vim.fn.hlID("DiagnosticError"), "fg") }
+		-- 			elseif status.busy then
+		-- 				return { fg = vim.fn.synIDattr(vim.fn.hlID("DiagnosticWarn"), "fg") }
+		-- 			else
+		-- 				return { fg = vim.fn.synIDattr(vim.fn.hlID("Special"), "fg") }
+		-- 			end
+		-- 		end
+		-- 	end,
+		-- 	cond = function()
+		-- 		local status = require("sidekick.status").get()
+		-- 		return status ~= nil
+		-- 	end,
+		-- }
 
 		require("lualine").setup({
 			options = {
@@ -155,7 +155,7 @@ return {
 				},
 				lualine_b = { "filename", "branch" },
 				-- 🧩 Insert Sidekick into lualine_c
-				lualine_c = { "%=", treesitter_context, sidekick_component },
+				lualine_c = { "%=", treesitter_context },
 				lualine_x = { lsp_status },
 				lualine_y = { "filetype", "progress" },
 				lualine_z = {
