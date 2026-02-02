@@ -5,7 +5,7 @@
 -- This sets up yamlls with schemastore schemas (if available) and sensible defaults.
 -- Skips docker-compose* files so docker_compose_language_service (docker.lua) can attach.
 
-vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "yaml", "yml" },
 	callback = function(args)
 		local bufname = vim.api.nvim_buf_get_name(args.buf or 0)

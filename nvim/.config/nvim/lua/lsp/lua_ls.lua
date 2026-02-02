@@ -1,4 +1,4 @@
-vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+vim.api.nvim_create_autocmd("FileType", {
   pattern = { "lua" },
   callback = function(args)
     local lsp = require("core.lsp")

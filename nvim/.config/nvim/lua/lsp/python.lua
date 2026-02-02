@@ -1,4 +1,4 @@
-vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+vim.api.nvim_create_autocmd("FileType", {
   pattern = { "python" },
   callback = function(args)
     local lsp = require("core.lsp")
@@ -16,7 +16,7 @@ vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
             typeCheckingMode = "basic",
             autoSearchPaths = true,
             useLibraryCodeForTypes = true,
-            diagnosticMode = "workspace",
+            diagnosticMode = "openFilesOnly",
           },
         },
       },

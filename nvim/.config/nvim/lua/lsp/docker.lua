@@ -1,4 +1,4 @@
-vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "dockerfile" },
 	callback = function(args)
 		local lsp = require("core.lsp")
@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
 })
 
 -- Docker Compose LSP (separate from Dockerfile LSP)
-vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "yaml", "yml" },
 	callback = function(args)
 		local bufname = vim.api.nvim_buf_get_name(args.buf or 0)
