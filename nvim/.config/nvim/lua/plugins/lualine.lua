@@ -39,19 +39,32 @@ return {
 		-- "github/copilot.vim", -- or whatever provides Sidekick
 	},
 	config = function()
+		-- Cache for treesitter context to avoid recalculating on every statusline refresh
+		local ts_cache = { bufnr = -1, line = -1, result = "" }
+
 		-- Custom Treesitter context
 		local function treesitter_context()
+			local bufnr = vim.api.nvim_get_current_buf()
+			local line = vim.api.nvim_win_get_cursor(0)[1]
+
+			-- Return cached result if same position
+			if ts_cache.bufnr == bufnr and ts_cache.line == line then
+				return ts_cache.result
+			end
+
 			local ok, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
 			local parsers_ok, parsers = pcall(require, "nvim-treesitter.parsers")
 			if not ok or not parsers_ok then
+				ts_cache = { bufnr = bufnr, line = line, result = "" }
 				return ""
 			end
-			local bufnr = vim.api.nvim_get_current_buf()
 			if not parsers.has_parser() then
+				ts_cache = { bufnr = bufnr, line = line, result = "" }
 				return ""
 			end
 			local cursor_node = ts_utils.get_node_at_cursor()
 			if not cursor_node then
+				ts_cache = { bufnr = bufnr, line = line, result = "" }
 				return ""
 			end
 
@@ -98,13 +111,17 @@ return {
 			local class_name = get_name(class_node)
 			local func_name = get_name(func_node)
 
+			local result
 			if class_name ~= "" and func_name ~= "" then
-				return class_name .. "." .. func_name .. "()"
+				result = class_name .. "." .. func_name .. "()"
 			elseif func_name ~= "" then
-				return func_name .. "()"
+				result = func_name .. "()"
 			else
-				return ""
+				result = ""
 			end
+
+			ts_cache = { bufnr = bufnr, line = line, result = result }
+			return result
 		end
 
 		-- LSP status function

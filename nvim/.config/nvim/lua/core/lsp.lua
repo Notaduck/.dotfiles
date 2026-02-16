@@ -233,7 +233,7 @@ function M.setup_lsp(opts)
 	vim.lsp.start(opts)
 end
 
--- BufWritePre: Format only (synchronous but fast with reduced timeout)
+-- BufWritePre: Format + organize imports (all synchronous, single save)
 local format_group = vim.api.nvim_create_augroup("LspFormatOnSave", { clear = true })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -242,87 +242,74 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function(ev)
 		local bufnr = ev.buf
 
+		-- 1. Format first
 		local conform_ok, conform = pcall(require, "conform")
 		if conform_ok then
 			conform.format({
 				bufnr = bufnr,
 				async = false,
-				timeout_ms = 2000,
+				timeout_ms = 1500,
 				lsp_fallback = true,
 				stop_after_first = true,
 			})
 		else
 			vim.lsp.buf.format({
 				async = false,
-				timeout_ms = 2000,
+				timeout_ms = 1500,
 			})
 		end
-	end,
-})
 
--- BufWritePost: Organize imports asynchronously (non-blocking)
-local organize_group = vim.api.nvim_create_augroup("LspOrganizeImports", { clear = true })
+		-- 2. Organize imports (skip for lua - no import organization needed)
+		local ft = vim.bo[bufnr].filetype
+		if ft == "lua" then
+			return
+		end
 
-vim.api.nvim_create_autocmd("BufWritePost", {
-	group = organize_group,
-	pattern = { "*.ts", "*.tsx", "*.js", "*.jsx", "*.py", "*.go" },
-	callback = function(ev)
-		local bufnr = ev.buf
 		local clients = vim.lsp.get_clients({ bufnr = bufnr })
 		if vim.tbl_isempty(clients) then
 			return
 		end
 
-		local default_encoding = clients[1].offset_encoding or "utf-16"
-
-		-- Async code action helper
-		local function apply_source_action_async(action)
-			local params = vim.lsp.util.make_range_params(nil, default_encoding)
-			params.context = { only = { action } }
-			vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function(err, result, ctx)
-				if err or not result or vim.tbl_isempty(result) then
-					return
-				end
-				local client = vim.lsp.get_client_by_id(ctx.client_id)
-				local encoding = client and client.offset_encoding or default_encoding
-				for _, r in pairs(result) do
-					if r.edit then
-						vim.lsp.util.apply_workspace_edit(r.edit, encoding)
-						-- Save again after applying edits
-						vim.schedule(function()
-							if vim.api.nvim_buf_is_valid(bufnr) then
-								vim.api.nvim_buf_call(bufnr, function()
-									vim.cmd("silent! noautocmd write")
-								end)
-							end
-						end)
-					end
-					if r.command then
-						vim.lsp.buf.execute_command(r.command)
-					end
-				end
-			end)
-		end
-
-		-- Remove unused imports, then organize
-		apply_source_action_async("source.removeUnusedImports")
-		apply_source_action_async("source.organizeImports")
-
-		-- Explicitly run vtsls command for unused imports
-		local filename = vim.api.nvim_buf_get_name(bufnr)
-		for _, client in ipairs(clients) do
-			if client.name == "vtsls" then
-				client.request("workspace/executeCommand", {
-					command = "typescript.removeUnusedImports",
-					arguments = { filename },
-				}, function() end, bufnr)
+		-- Find a client that supports code actions
+		local client = nil
+		for _, c in ipairs(clients) do
+			if c.supports_method("textDocument/codeAction") then
+				client = c
+				break
 			end
 		end
+		if not client then
+			return
+		end
+
+		local encoding = client.offset_encoding or "utf-16"
+
+		-- Helper: apply a single source action synchronously with short timeout
+		local function apply_source_action(action)
+			local params = vim.lsp.util.make_range_params(nil, encoding)
+			params.context = { only = { action }, diagnostics = {} }
+			local result = vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", params, 800)
+			if not result then
+				return
+			end
+			for client_id, res in pairs(result) do
+				for _, r in pairs(res.result or {}) do
+					if r.edit then
+						local c = vim.lsp.get_client_by_id(client_id)
+						vim.lsp.util.apply_workspace_edit(r.edit, c and c.offset_encoding or encoding)
+					end
+				end
+			end
+		end
+
+		-- Apply in sequence: remove unused first, then organize
+		apply_source_action("source.removeUnusedImports")
+		apply_source_action("source.organizeImports")
 	end,
 })
 
--- Custom :LspInfo command to show all attached LSP clients and their capabilities for the current buffer in a floating scratch buffer
-vim.api.nvim_create_user_command("LspInfo", function()
+-- Custom :LspInfoEx command to show all attached LSP clients and their capabilities for the current buffer in a floating scratch buffer
+vim.api.nvim_create_user_command("LspInfoEx", function()
 	local clients = vim.lsp.get_clients({
 		bufnr = 0,
 	})
