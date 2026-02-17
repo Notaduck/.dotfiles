@@ -28,6 +28,18 @@ return {
 				-- Docker
 				dockerfile = { "hadolint" },
 			},
+			formatters = {
+				prettier = {
+					prepend_args = { "--no-semi", "--single-quote" },
+				},
+				prettierd = {
+					prepend_args = { "--no-semi", "--single-quote" },
+					-- Ensure prettierd uses our config even if project has one
+					env = {
+						PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("~/.prettierrc"),
+					},
+				},
+			},
 			-- Fix eslint_d issues by adding a notify callback
 			notify_on_error = function(err)
 				-- Only show errors when not related to eslint_d JSON parsing

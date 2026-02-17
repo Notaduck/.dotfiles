@@ -21,39 +21,67 @@ local function start_ts_lsp(bufnr)
 		path = fname,
 		patterns = { "package.json", "tsconfig.json", ".git" },
 	})
-	local use_vtsls = vim.fn.executable("vtsls") == 1
-	local cmd = use_vtsls and { "vtsls", "--stdio" } or { "typescript-language-server", "--stdio" }
-	local name = use_vtsls and "vtsls" or "tsserver"
-	if not use_vtsls and vim.fn.executable("typescript-language-server") == 0 then
-		vim.notify("TypeScript LSP: neither vtsls nor typescript-language-server found in PATH", vim.log.levels.ERROR)
+	local cmd = { "tsgo", "--lsp", "--stdio" }
+	local name = "tsgo"
+	if vim.fn.executable("tsgo") == 0 then
+		vim.notify("TypeScript LSP: tsgo not found in PATH. Install via :MasonInstall tsgo", vim.log.levels.ERROR)
 		return
 	end
+	local format_options = {
+		semicolons = "remove",
+		insertSpaceAfterCommaDelimiter = true,
+		insertSpaceAfterSemicolonInForStatements = true,
+		insertSpaceBeforeAndAfterBinaryOperators = true,
+		insertSpaceAfterConstructor = false,
+		insertSpaceAfterKeywordsInControlFlowStatements = true,
+		insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
+		insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis = false,
+		insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets = false,
+		insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true,
+		insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
+		insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces = false,
+		insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces = false,
+		insertSpaceBeforeFunctionParenthesis = false,
+		placeOpenBraceOnNewLineForFunctions = false,
+		placeOpenBraceOnNewLineForControlBlocks = false,
+		indentMultiLineObjectLiteralBeginningOnBlankLine = true,
+	}
+	local preferences = {
+		quotePreference = "single",
+		importModuleSpecifierPreference = "non-relative",
+		importModuleSpecifierEnding = "minimal",
+		includeCompletionsForImportStatements = true,
+		generateReturnInDocTemplate = true,
+		includeAutomaticOptionalChainCompletions = true,
+		allowRenameOfImportPath = true,
+		allowTextChangesInNewFiles = true,
+		includeCompletionsWithSnippetText = true,
+		includeCompletionsWithClassMemberSnippets = true,
+		includeCompletionsWithInsertText = true,
+	}
 	lsp.setup_lsp({
 		name = name,
 		cmd = cmd,
 		root_dir = root,
+		init_options = {
+			preferences = preferences,
+		},
 		settings = {
 			typescript = {
-				format = {
-					semicolons = "remove",
-					preferSingleQuotes = true,
-					insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis = false,
-					insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets = false,
-					insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true,
-					insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
+				format = format_options,
+				preferences = preferences,
+				inlayHints = {
+					parameterNames = { enabled = "all" },
+					parameterTypes = { enabled = true },
+					variableTypes = { enabled = false },
+					propertyDeclarationTypes = { enabled = true },
+					functionLikeReturnTypes = { enabled = true },
+					enumMemberValues = { enabled = true },
 				},
-				preferences = {
-					importModuleSpecifier = "non-relative",
-					quoteStyle = "single",
-					includeCompletionsForImportStatements = true,
-					generateReturnInDocTemplate = true,
-					includeAutomaticOptionalChainCompletions = true,
-					allowRenameOfImportPath = true,
-					allowTextChangesInNewFiles = true,
-					includeCompletionsWithSnippetText = true,
-					includeCompletionsWithClassMemberSnippets = true,
-					includeCompletionsWithInsertText = true,
-				},
+			},
+			javascript = {
+				format = format_options,
+				preferences = preferences,
 				inlayHints = {
 					parameterNames = { enabled = "all" },
 					parameterTypes = { enabled = true },

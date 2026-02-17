@@ -233,7 +233,9 @@ function M.setup_lsp(opts)
 	vim.lsp.start(opts)
 end
 
--- BufWritePre: Format + organize imports (all synchronous, single save)
+-- BufWritePre: Format on save
+-- Note: tsgo import actions disabled - they add semicolons regardless of settings
+-- For import organization, use prettier-plugin-organize-imports
 local format_group = vim.api.nvim_create_augroup("LspFormatOnSave", { clear = true })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -242,7 +244,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function(ev)
 		local bufnr = ev.buf
 
-		-- 1. Format first
+		-- Format with conform/prettier (handles imports if prettier-plugin-organize-imports installed)
+		-- Note: tsgo import actions disabled - they add semicolons regardless of settings
 		local conform_ok, conform = pcall(require, "conform")
 		if conform_ok then
 			conform.format({
@@ -258,53 +261,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 				timeout_ms = 1500,
 			})
 		end
-
-		-- 2. Organize imports (skip for lua - no import organization needed)
-		local ft = vim.bo[bufnr].filetype
-		if ft == "lua" then
-			return
-		end
-
-		local clients = vim.lsp.get_clients({ bufnr = bufnr })
-		if vim.tbl_isempty(clients) then
-			return
-		end
-
-		-- Find a client that supports code actions
-		local client = nil
-		for _, c in ipairs(clients) do
-			if c.supports_method("textDocument/codeAction") then
-				client = c
-				break
-			end
-		end
-		if not client then
-			return
-		end
-
-		local encoding = client.offset_encoding or "utf-16"
-
-		-- Helper: apply a single source action synchronously with short timeout
-		local function apply_source_action(action)
-			local params = vim.lsp.util.make_range_params(nil, encoding)
-			params.context = { only = { action }, diagnostics = {} }
-			local result = vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", params, 800)
-			if not result then
-				return
-			end
-			for client_id, res in pairs(result) do
-				for _, r in pairs(res.result or {}) do
-					if r.edit then
-						local c = vim.lsp.get_client_by_id(client_id)
-						vim.lsp.util.apply_workspace_edit(r.edit, c and c.offset_encoding or encoding)
-					end
-				end
-			end
-		end
-
-		-- Apply in sequence: remove unused first, then organize
-		apply_source_action("source.removeUnusedImports")
-		apply_source_action("source.organizeImports")
 	end,
 })
 
@@ -380,5 +336,5 @@ vim.api.nvim_create_user_command("LspRestart", function()
 	end
 end, {})
 
--- Remove unused imports automatically on save for TypeScript files (vtsls specific)
+-- Remove unused imports automatically on save for TypeScript and other supported files
 return M

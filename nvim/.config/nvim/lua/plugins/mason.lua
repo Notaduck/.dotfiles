@@ -12,7 +12,7 @@ return {
         "lua-language-server",
         "pyright",
         "gopls",
-        "typescript-language-server",
+        "tsgo",
         "yaml-language-server",
         "json-lsp",
         "docker-compose-language-service",
