@@ -164,7 +164,7 @@ apply_stow_configs() {
         return
     fi
 
-    for dir in zsh nvim tmux; do
+    for dir in zsh nvim tmux asdf; do
         if [ -d "./${dir}" ]; then
             log "Applying stow configuration for ${dir}..."
             # The '-R' flag reintegrates files, but you can adjust as needed.
