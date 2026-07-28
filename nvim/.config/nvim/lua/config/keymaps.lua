@@ -1,36 +1,32 @@
 vim.g.mapleader = " "
 
 -- Centralized global keymaps table
+-- Note: LSP-specific keymaps (gd, gr, K, etc.) are set buffer-locally in core/lsp.lua on_attach
 local global_keymaps = {{
-    mode = "n",
-    lhs = "<leader>ca",
-    rhs = vim.lsp.buf.code_action,
-    desc = "Code Action"
-}, {
-    mode = "n",
-    lhs = "<leader>cr",
-    rhs = vim.lsp.buf.rename,
-    desc = "Rename Symbol"
-}, {
     mode = "n",
     lhs = "<leader>cf",
     rhs = vim.lsp.buf.format,
     desc = "Format Buffer"
 }, {
     mode = "n",
-    lhs = "<leader>cd",
-    rhs = vim.lsp.buf.definition,
-    desc = "Goto Definition"
-}, {
-    mode = "n",
-    lhs = "]g",
+    lhs = "]d",
     rhs = vim.diagnostic.goto_next,
     desc = "Next Diagnostic"
 }, {
     mode = "n",
-    lhs = "[g",
+    lhs = "[d",
     rhs = vim.diagnostic.goto_prev,
     desc = "Prev Diagnostic"
+}, {
+    mode = "n",
+    lhs = "<leader>e",
+    rhs = vim.diagnostic.open_float,
+    desc = "Show Diagnostic"
+}, {
+    mode = "n",
+    lhs = "<leader>q",
+    rhs = vim.diagnostic.setloclist,
+    desc = "Diagnostics to Loclist"
 }}
 
 for _, map in ipairs(global_keymaps) do
@@ -51,8 +47,14 @@ if wk_ok then
             a = {"Code Action"},
             r = {"Rename Symbol"},
             f = {"Format Buffer"},
-            d = {"Goto Definition"}
-        }
+            l = {"Run Code Lens"},
+        },
+        e = {"Show Diagnostic"},
+        q = {"Diagnostics to Loclist"},
+        t = {
+            name = "+toggle",
+            h = {"Toggle Inlay Hints"},
+        },
     }, {
         prefix = "<leader>"
     })

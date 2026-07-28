@@ -173,7 +173,16 @@ return {
 				lualine_b = { "filename", "branch" },
 				-- 🧩 Insert Sidekick into lualine_c
 				lualine_c = { "%=", treesitter_context },
-				lualine_x = { lsp_status },
+				lualine_x = {
+					{
+						"diagnostics",
+						sources = { "nvim_diagnostic" },
+						sections = { "error", "warn" },
+						symbols = { error = "󰅚 ", warn = "󰀪 " },
+						always_visible = false,
+					},
+					lsp_status,
+				},
 				lualine_y = { "filetype", "progress" },
 				lualine_z = {
 					{ "location", separator = { right = "" }, left_padding = 2 },

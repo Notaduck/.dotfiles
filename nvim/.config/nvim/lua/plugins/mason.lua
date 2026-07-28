@@ -1,7 +1,8 @@
 return {
   {
     "williamboman/mason.nvim",
-    cmd = "Mason",
+    lazy = false, -- mason must load before core.lsp so its bin dir is on $PATH
+    priority = 100,
     keys = { {
       "<leader>cm",
       "<cmd>Mason<cr>",
@@ -27,6 +28,7 @@ return {
         "hadolint",
         "gh-actions-language-server",
         "css-lsp",
+        "eslint-lsp",
       },
     },
     config = function(_, opts)
@@ -85,7 +87,7 @@ return {
         -- Show in a floating window
         local buf = vim.api.nvim_create_buf(false, true)
         vim.api.nvim_buf_set_lines(buf, 0, -1, true, lines)
-        vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+        vim.bo[buf].filetype = "markdown"
 
         local width = math.min(60, vim.o.columns - 4)
         local height = math.min(#lines + 2, vim.o.lines - 4)
@@ -103,8 +105,8 @@ return {
         }
 
         local win = vim.api.nvim_open_win(buf, true, opts)
-        vim.api.nvim_win_set_option(win, "conceallevel", 2)
-        vim.api.nvim_win_set_option(win, "foldenable", false)
+        vim.wo[win].conceallevel = 2
+        vim.wo[win].foldenable = false
 
         -- Close with q or ESC
         vim.keymap.set("n", "q", "<cmd>close<CR>", {
@@ -122,12 +124,5 @@ return {
         vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
       end, {})
     end,
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    opts = {
-      automatic_installation = true,
-      ensure_installed = nil, -- Use the list from mason.nvim
-    },
   },
 }

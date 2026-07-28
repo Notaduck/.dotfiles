@@ -4,10 +4,10 @@ return {
 		opts = {
 			formatters_by_ft = {
 				-- JavaScript/TypeScript
-				javascript = { "prettier", "prettierd" },
-				javascriptreact = { "prettier", "prettierd" },
-				typescript = { "prettier", "prettierd" },
-				typescriptreact = { "prettier", "prettierd" },
+				javascript = { "prettierd", "prettier" },
+				javascriptreact = { "prettierd", "prettier" },
+				typescript = { "prettierd", "prettier" },
+				typescriptreact = { "prettierd", "prettier" },
 
 				-- Add Lua formatting
 				lua = { "stylua" },

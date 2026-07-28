@@ -1,37 +1,28 @@
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "dockerfile" },
-	callback = function(args)
-		local lsp = require("core.lsp")
-		local fname = vim.api.nvim_buf_get_name(args.buf or 0)
-		lsp.setup_lsp({
-			name = "dockerls",
-			cmd = { "docker-langserver", "--stdio" },
-			root_dir = lsp.resolve_root({
-				path = fname,
-				patterns = { ".git", "Dockerfile", "docker-compose.yml", "docker-compose.yaml" },
-			}),
-		})
-	end,
+-- Dockerfile LSP
+vim.lsp.config("dockerls", {
+	cmd = { "docker-langserver", "--stdio" },
+	filetypes = { "dockerfile" },
+	root_markers = { "Dockerfile", ".git" },
 })
+vim.lsp.enable("dockerls")
 
--- Docker Compose LSP (separate from Dockerfile LSP)
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "yaml", "yml" },
-	callback = function(args)
-		local bufname = vim.api.nvim_buf_get_name(args.buf or 0)
-		local filename = vim.fn.fnamemodify(bufname, ":t")
-		-- Only attach if file appears to be a docker-compose file
-		if not filename:match("docker%-compose") and not filename:match("docker%.") then
+-- docker-compose LSP (attaches only to docker-compose yaml files)
+local function is_docker_compose(bufnr)
+	local fname = vim.api.nvim_buf_get_name(bufnr)
+	local basename = vim.fn.fnamemodify(fname, ":t")
+	return basename:match("docker%-compose") ~= nil or basename:match("docker%.") ~= nil
+end
+
+vim.lsp.config("docker_compose_language_service", {
+	cmd = { "docker-compose-langserver", "--stdio" },
+	filetypes = { "yaml" },
+	root_dir = function(bufnr, on_dir)
+		if not is_docker_compose(bufnr) then
 			return
 		end
-		local lsp = require("core.lsp")
-		lsp.setup_lsp({
-			name = "docker_compose_language_service",
-			cmd = { "docker-compose-langserver", "--stdio" },
-			root_dir = lsp.resolve_root({
-				path = bufname,
-				patterns = { ".git", "docker-compose.yml", "docker-compose.yaml" },
-			}),
-		})
+		local fname = vim.api.nvim_buf_get_name(bufnr)
+		local root = vim.fs.root(fname, { "docker-compose.yml", "docker-compose.yaml", ".git" })
+		on_dir(root or vim.fn.getcwd())
 	end,
 })
+vim.lsp.enable("docker_compose_language_service")

@@ -63,13 +63,18 @@ M.keys = { -- Top Pickers & Explorer
 	{
 		"<leader>ff",
 		function()
-			vim.notify("FF command triggered", vim.log.levels.INFO)
 			Snacks.picker.files({
 				find_command = { "rg", "--files" },
-				sorter = function(curr, next, debug)
-					-- Enable debug logging
-					local debug_enabled = true
-
+				sorter = function(curr, next)
+					local function get_path(item)
+						if type(item) == "string" then
+							return item
+						end
+						if type(item) == "table" then
+							return item.file or item.path or item.text or item[1] or ""
+						end
+						return ""
+					end
 					-- Helper function to extract service name from path
 					local function get_service_base(file)
 						-- Extract the base service name without Interface/Logger/Test suffixes
@@ -95,20 +100,15 @@ M.keys = { -- Top Pickers & Explorer
 						-- Main implementation files get priority 1
 						return 1
 					end
-
-					-- Debug logging using the debug parameter
-					-- if debug_enabled and debug then
-					--     debug.log(string.format("Comparing files:\n%s\nvs\n%s", curr, next))
-					--     debug.log(string.format("Base names: %s vs %s", curr_base, next_base))
-					-- end
-
-					-- If they're part of the same service group
-					-- vim.notify(string.format("Base names: %s vs %s", curr_base, next_base), vim.log.levels.INFO)
+					local curr_path = get_path(curr)
+					local next_path = get_path(next)
+					local curr_base = get_service_base(curr_path)
+					local next_base = get_service_base(next_path)
 
 					-- If they're part of the same service group
 					if curr_base == next_base then
-						local curr_priority = get_file_priority(curr)
-						local next_priority = get_file_priority(next)
+						local curr_priority = get_file_priority(curr_path)
+						local next_priority = get_file_priority(next_path)
 						-- Sort by priority within the same service group
 						return curr_priority < next_priority
 					end
