@@ -46,6 +46,7 @@ define_app_lists() {
         gh
         
         # Additional utilities
+        sesh
         zoxide
         btop
         tree

@@ -90,3 +90,8 @@ aws_profile_prompt() {
 
 # direnv integration
 eval "$(direnv hook zsh)"
+
+# Track frequently used directories for the on-demand Sesh project picker.
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
