@@ -62,6 +62,7 @@ define_app_lists() {
     CASK_APPS=(
         # Terminal and utilities
         alacritty
+        ghostty
         docker
         
         # Productivity
@@ -164,7 +165,7 @@ apply_stow_configs() {
         return
     fi
 
-    for dir in zsh nvim tmux asdf; do
+    for dir in zsh nvim tmux ghostty zellij asdf; do
         if [ -d "./${dir}" ]; then
             log "Applying stow configuration for ${dir}..."
             # The '-R' flag reintegrates files, but you can adjust as needed.

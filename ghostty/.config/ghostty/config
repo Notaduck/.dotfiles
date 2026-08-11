@@ -1,19 +1,17 @@
-#theme = Rose Pine 
-theme = rose-pine-dawn
+# Ghostty's native TERM advertises synchronized updates and richer terminal
+# capabilities to tmux. Do not override it with xterm-256color.
 
-font-family = "JetBrainsMono Nerd Font"
-font-family-bold = "JetBrainsMono Nerd Font"
-font-family-italic = "JetBrainsMono Nerd Font"
-font-family-bold-italic = "JetBrainsMono Nerd Font"
-font-size = 15.5
+font-family = JetBrainsMono Nerd Font
+font-style = Regular
+font-style-bold = Bold
+font-style-italic = Italic
+font-style-bold-italic = "Bold Italic"
+font-size = 14.5
 
-term = xterm-256color
-
-macos-titlebar-style = hidden
+theme = Rose Pine
+background-opacity = 1.0
 window-padding-x = 25
 window-padding-y = 20
 
-keybind = ctrl+tab=text:\x1b[1;5I
-keybind = ctrl+shift+tab=text:\x1b[1;6I
-
-window-padding-color = background
+keybind = ctrl+tab=esc:[1;5I
+keybind = ctrl+shift+tab=esc:[1;6I

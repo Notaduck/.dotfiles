@@ -1,0 +1,48 @@
+// Keep Zellij close to the useful parts of the tmux setup without rebuilding
+// tmux's plugin stack. Zellij's shipped keybindings already provide:
+//   Ctrl-b + h/j/k/l   focus panes
+//   Ctrl-b + c         new tab (tmux window)
+//   Ctrl-b + [         scroll/copy mode
+//   Ctrl-b + Space     next automatic layout
+//   Alt-h/j/k/l        focus panes without a prefix
+//   Alt-[ / Alt-]      previous/next automatic layout
+keybinds {
+    tmux {
+        // Match tmux-sessionx's old prefix + s entry point, backed by Zellij's
+        // native active/exited session manager and resurrection support.
+        bind "s" {
+            LaunchOrFocusPlugin "session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+            SwitchToMode "Normal"
+        }
+
+        // Preserve the familiar tmux layout-cycle keys. Unlike the old fixed
+        // layouts, Zellij chooses a suitable variant for the current pane count.
+        bind "(" { PreviousSwapLayout; SwitchToMode "Normal"; }
+        bind ")" { NextSwapLayout; SwitchToMode "Normal"; }
+    }
+}
+
+theme "rose-pine-dawn"
+default_layout "compact-top"
+
+// These replace tmux-resurrect and tmux-continuum. Viewport/scrollback capture
+// stays off intentionally to keep serialization lightweight.
+session_serialization true
+serialize_pane_viewport false
+
+mouse_mode true
+copy_on_select true
+pane_frames true
+auto_layout true
+on_force_close "detach"
+
+// Keep startup quiet after the first installation.
+show_startup_tips false
+show_release_notes false
+
+// This is a local terminal multiplexer; do not start or expose the web client.
+web_server false
+web_sharing "disabled"

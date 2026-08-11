@@ -1,0 +1,7 @@
+// A one-line native status/tab bar, placed at the top like the tmux config.
+layout {
+    pane size=1 borderless=true {
+        plugin location="compact-bar"
+    }
+    pane
+}
