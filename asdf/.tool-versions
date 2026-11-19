@@ -1,4 +1,2 @@
-nodejs 22.9.0
-golang 1.24.1
-rust 1.80.0
-pnpm 11.6.0
+nodejs 26.5.0
+lua 5.1.5

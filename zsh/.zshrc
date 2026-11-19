@@ -12,6 +12,10 @@ lower_case() {
   done
 }
 
+jwt-decode() {
+  jq -R 'split(".") |.[0:2] | map(@base64d) | map(fromjson)' <<< $1
+}
+
 # Editor
 export EDITOR="nvim"
 
@@ -30,6 +34,11 @@ export PATH="$HOME/.local/bin:$PATH"                     # Local binaries
 export PATH="$HOME/bin:$PATH"                            # Home bin
 export PATH="$HOME/.bin:$PATH"                           # Home bin
 
+# NPM global binaries
+if command -v npm > /dev/null 2>&1; then
+  export PATH="$(npm config get prefix)/bin:$PATH"
+fi
+
 # Cargo binaries
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -45,7 +54,10 @@ export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # Avoid compounding duplicate PATH entries in nested tmux shells.
 typeset -U path PATH
 
-# asdf 0.16+ is a standalone binary; only its completions need adding.
+# asdf 0.16+ is a standalone binary: put its shims on PATH and add completions.
+if command -v asdf > /dev/null 2>&1; then
+  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+fi
 if [ -d /opt/homebrew/opt/asdf/share/zsh/site-functions ]; then
   fpath=(/opt/homebrew/opt/asdf/share/zsh/site-functions $fpath)
 fi
@@ -95,3 +107,37 @@ eval "$(direnv hook zsh)"
 if (( $+commands[zoxide] )); then
   eval "$(zoxide init zsh)"
 fi
+
+# ghcpr <num> -> checkout PR in a worktree + new tmux pane
+ghcpr() {
+  if [[ "$1" != <-> ]]; then
+    echo "usage: ghcpr <pr-number>" >&2
+    return 1
+  fi
+  local pr=$1
+  local root
+  root=$(command git rev-parse --show-toplevel 2>/dev/null) || { echo "not in a git repo" >&2; return 1 }
+  local dir="$root/.worktrees/pr-$pr"
+  if [[ ! -d "$dir" ]]; then
+    command git -C "$root" fetch origin "pull/$pr/head" || return
+    grep -qx '.worktrees/' "$root/.git/info/exclude" 2>/dev/null || echo '.worktrees/' >> "$root/.git/info/exclude"
+    command git -C "$root" worktree add --detach "$dir" FETCH_HEAD || return
+  fi
+  if [[ -n "$TMUX" ]]; then
+    tmux split-window -h -c "$dir" "gh pr checkout $pr; exec zsh"
+  else
+    echo "not inside tmux; worktree ready at $dir"
+    ( cd "$dir" && gh pr checkout "$pr" )
+  fi
+}
+
+# warn when a misnamed asdf version file would be silently ignored
+asdf_typo_check() {
+  local f
+  for f in .tool-version .toolversions .tool_versions .asdfrc.local; do
+    [[ -e $f ]] && echo "⚠ '$f' is ignored by asdf — rename it to '.tool-versions'" >&2
+  done
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd asdf_typo_check
+asdf_typo_check

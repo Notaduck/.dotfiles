@@ -1,72 +1,79 @@
-```  
-██████╗  ██████╗ ████████╗███████╗██╗██╗     ███████╗███████╗  
-██╔══██╗██╔═══██╗╚══██╔══╝██╔════╝██║██║     ██╔════╝██╔════╝  
-██║  ██║██║   ██║   ██║   █████╗  ██║██║     █████╗  ███████╗  
-██║  ██║██║   ██║   ██║   ██╔══╝  ██║██║     ██╔══╝  ╚════██║  
-██████╔╝╚██████╔╝   ██║   ██║     ██║███████╗███████╗███████║  
-╚═════╝  ╚═════╝    ╚═╝   ╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝                                                               
-```
-### Description
-> - Browser == `Firefox` 
-> - Network manager == `networkmanager_dmenu` 
-> - PDF viewer == `Zathura`
-> - Program launcher == `dmenu` 
-> - Terminal == `st` 
-> - Text editor == `neovim`
-> - Window manager == `dwm`
-> - Shell == `ZSH`
+# dotfiles
 
+macOS dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/).
+Each top-level directory is a stow package that mirrors `$HOME`, so
+`zsh/.zshrc` becomes `~/.zshrc` and `nvim/.config/nvim` becomes `~/.config/nvim`.
 
-### Installation
+## Packages
 
-##
+| Package | Installs | Notes |
+|---|---|---|
+| `zsh` | `~/.zshrc` | zinit plugins, pure prompt, asdf shims, direnv, zoxide, loads `~/.env` |
+| `nvim` | `~/.config/nvim` | lazy.nvim, native LSP configs in `lua/lsp/`, blink completion, snacks |
+| `tmux` | `~/.tmux.conf` | `prefix s` opens the sesh session picker; resurrect + continuum |
+| `ghostty` | `~/.config/ghostty` | JetBrainsMono Nerd Font, rose-pine themes |
+| `asdf` | `~/.tool-versions`, `~/.default-npm-packages` | global runtime versions |
+| `bat` | `~/.config/bat/themes` | Catppuccin themes (run `bat cache --build` after stowing) |
+| `btop` | `~/.config/btop/btop.conf` | |
+| `wallpapers` | `~/.wallpapers` | |
 
-##
+Other files in the repo root:
 
-The dotfiles are managed with stow and are thefore dead simple to install and uninstall again.  
-If you aren't sure about what you are doing then please make a backup of your current dootfiles.  
-#### Requirements
-- [GNU stow](https://www.gnu.org/software/stow/)
+- `Brewfile`: every Homebrew formula, cask and font the setup needs.
+- `setup_mac.sh`: bootstraps a new Mac (see below).
+- `.stowrc`: sets the stow target to `~` and ignores `.DS_Store`, so
+  `stow <pkg>` works from the repo root without extra flags.
 
-To clone this repository along with its submodules, run:
-```
-git clone --recursive https://github.com/notaduck/.dotfiles.git ~/.dotfiles
-```
-If you’ve already cloned the repository without the submodules, you can initialize and update them by running:
+## New machine
+
 ```sh
-git submodule update --init --recursive
-```
-
-Navigate to the newly cloned repo.
-```
+git clone https://github.com/Notaduck/.dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
+./setup_mac.sh
 ```
-Now that you are in the dotfiles repository you simply have to rund the cmd:
-```
-stow <conf-dir>
-```
-Example:
-```
-stow nvim
-```
-you can now see that `init.vim` points to `.config/nvim/init.vim -> ../../.dotfiles/neovim/.config/nvim/init.vim`
-and stow wil automaticly create symblinks to `~/.config/nvim/init.vim`, in order to uninstall the dotfiles again you can simply have to run:
-```
-stow -Dv <conf-dir>
-```
-where the `D` stands for delete and `v` is to increase the verbosity level, which you can change whitin an range from [0,1,2,3,4]
 
-### Screenshots
+The script:
 
-#### dwm
-![alt texxt](https://i.imgur.com/ijEdETz.png)  
-![alt texxt](https://i.imgur.com/ljf56Ka.png)  
-![alt texxt](https://i.imgur.com/Yukl747.png)  
- <!-- ![alt texxt](https://i.imgur.com/pHEGg3i.png) -->
+1. installs or updates Homebrew,
+2. runs `brew bundle` against the `Brewfile`,
+3. stows every package listed in `STOW_PACKAGES`,
+4. adds the asdf plugins named in `~/.tool-versions` and installs those versions.
 
+Stow refuses to overwrite real files. If the machine already has a `~/.zshrc`
+or similar, move it aside (or merge it into the package) and re-run the script.
 
-#### ~~i3~~
-![alt text](https://i.imgur.com/CMjN0CF.jpg "Clean")
-![alt text](https://i.imgur.com/sLYPCZQ.jpg "Zathura and ")
-![alt text](https://i.imgur.com/cA3L5dw.jpg "Stow dir and neofetch")
-![alt text](https://i.imgur.com/4p3Ikoj.jpg "Dotfiles and nvim conf")
+## Day to day
+
+```sh
+stow nvim        # link a package
+stow -R nvim     # relink after adding or removing files in it
+stow -D nvim     # unlink
+```
+
+Edit configs in place: `~/.zshrc` and the other targets are symlinks into this
+repo, so every change shows up in `git status` here.
+
+### Adding a package
+
+1. Create `<name>/` mirroring the path under `$HOME`, e.g.
+   `lazygit/.config/lazygit/config.yml`.
+2. Move the existing config into it and run `stow <name>`.
+3. Add `<name>` to `STOW_PACKAGES` in `setup_mac.sh` and to the table above.
+4. If it needs software, add it to the `Brewfile`.
+
+### Checking for drift
+
+Apps sometimes replace a symlink with a real file when they save (Karabiner is
+the classic offender). A dry run reports any target that is no longer a link:
+
+```sh
+cd ~/.dotfiles && for p in */; do stow -n -R "${p%/}"; done 2>&1 | grep -v 'simulation mode'
+```
+
+No output means everything is linked. For a conflict, diff the real file
+against the repo copy, merge, delete the real file and run `stow -R <pkg>`.
+
+## Secrets
+
+Nothing secret belongs in this repo. Machine-specific or sensitive values go in
+`~/.env` (sourced by `.zshrc`) or `~/.zshenv`, neither of which is tracked.
