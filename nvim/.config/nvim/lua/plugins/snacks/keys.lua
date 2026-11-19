@@ -31,13 +31,6 @@ M.keys = { -- Top Pickers & Explorer
 		desc = "Command History",
 	},
 	{
-		"<leader>n",
-		function()
-			Snacks.picker.notifications()
-		end,
-		desc = "Notification History",
-	},
-	{
 		"<leader>e",
 		function()
 			Snacks.explorer()
@@ -64,8 +57,12 @@ M.keys = { -- Top Pickers & Explorer
 		"<leader>ff",
 		function()
 			Snacks.picker.files({
-				find_command = { "rg", "--files" },
-				sorter = function(curr, next)
+				matcher = { sort_empty = true },
+				-- Best match first; equally-scored files (e.g. empty query) are grouped by service
+				sort = function(curr, next)
+					if curr.score ~= next.score then
+						return curr.score > next.score
+					end
 					local function get_path(item)
 						if type(item) == "string" then
 							return item
@@ -125,8 +122,9 @@ M.keys = { -- Top Pickers & Explorer
 		function()
 			Snacks.picker.files({
 				-- Only include test/spec files
-				find_command = { "rg", "--files", "--glob", "**/*.{test,spec}.*" },
-				prompt_title = "Test Files",
+				cmd = "rg",
+				args = { "--glob", "**/*.{test,spec}.*" },
+				title = "Test Files",
 			})
 		end,
 		desc = "Find Test Files",
@@ -153,18 +151,11 @@ M.keys = { -- Top Pickers & Explorer
 		desc = "Recent",
 	}, -- git
 	{
-		"<leader>gb",
+		"<leader>gc",
 		function()
 			Snacks.picker.git_branches()
 		end,
-		desc = "Git Branches",
-	},
-	{
-		"<leader>gl",
-		function()
-			Snacks.picker.git_log()
-		end,
-		desc = "Git Log",
+		desc = "Git Branches (checkout)",
 	},
 	{
 		"<leader>gL",
@@ -194,13 +185,7 @@ M.keys = { -- Top Pickers & Explorer
 		end,
 		desc = "Git Diff (Hunks)",
 	},
-	{
-		"<leader>gf",
-		function()
-			Snacks.picker.git_log_file()
-		end,
-		desc = "Git Log File",
-	}, -- Grep
+ -- Grep
 	{
 		"<leader>sb",
 		function()
@@ -250,13 +235,6 @@ M.keys = { -- Top Pickers & Explorer
 			Snacks.picker.autocmds()
 		end,
 		desc = "Autocmds",
-	},
-	{
-		"<leader>sb",
-		function()
-			Snacks.picker.lines()
-		end,
-		desc = "Buffer Lines",
 	},
 	{
 		"<leader>sc",
@@ -392,11 +370,10 @@ M.keys = { -- Top Pickers & Explorer
 		desc = "Goto Declaration",
 	},
 	{
-		"gr",
+		"grr",
 		function()
 			Snacks.picker.lsp_references()
 		end,
-		nowait = true,
 		desc = "References",
 	},
 	{
@@ -573,65 +550,12 @@ M.keys = { -- Top Pickers & Explorer
 			local config_path = vim.fn.stdpath("config")
 			Snacks.picker.files({
 				cwd = config_path,
-				prompt_title = "Lua Files",
-				find_command = { "rg", "--files", "--iglob", "*.lua" },
+				title = "Lua Files",
+				ft = "lua",
 			})
 		end,
 		desc = "Find Lua Files in nvim config",
 	},
 }
-
-M.init = function()
-	vim.api.nvim_create_autocmd("User", {
-		pattern = "VeryLazy",
-		callback = function()
-			-- Setup some globals for debugging (lazy-loaded)
-			-- Use _G.Snacks to avoid undefined global warnings
-			_G.dd = function(...)
-				_G.Snacks.debug.inspect(...)
-			end
-			_G.bt = function()
-				_G.Snacks.debug.backtrace()
-			end
-			vim.print = _G.dd -- Override print to use snacks for `:=` command
-
-			-- Create some toggle mappings
-			Snacks.toggle
-				.option("spell", {
-					name = "Spelling",
-				})
-				:map("<leader>us")
-			Snacks.toggle
-				.option("wrap", {
-					name = "Wrap",
-				})
-				:map("<leader>uw")
-			Snacks.toggle
-				.option("relativenumber", {
-					name = "Relative Number",
-				})
-				:map("<leader>uL")
-			Snacks.toggle.diagnostics():map("<leader>ud")
-			Snacks.toggle.line_number():map("<leader>ul")
-			Snacks.toggle
-				.option("conceallevel", {
-					off = 0,
-					on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
-				})
-				:map("<leader>uc")
-			Snacks.toggle.treesitter():map("<leader>uT")
-			Snacks.toggle
-				.option("background", {
-					off = "light",
-					on = "dark",
-					name = "Dark Background",
-				})
-				:map("<leader>ub")
-			Snacks.toggle.inlay_hints():map("<leader>uh")
-			Snacks.toggle.indent():map("<leader>ug")
-			Snacks.toggle.dim():map("<leader>uD")
-		end,
-	})
-end
 
 return M

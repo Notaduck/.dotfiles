@@ -1,6 +1,6 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     lazy = false, -- mason must load before core.lsp so its bin dir is on $PATH
     priority = 100,
     keys = { {
@@ -22,7 +22,7 @@ return {
         "isort",
         "black",
         "goimports",
-        "yamlfmt",
+        "prettierd",
         "prettier",
         "jq",
         "hadolint",
@@ -38,8 +38,10 @@ return {
       local mr = require("mason-registry")
       local function ensure_installed()
         for _, tool in ipairs(opts.ensure_installed) do
-          local p = mr.get_package(tool)
-          if not p:is_installed() then
+          local ok, p = pcall(mr.get_package, tool)
+          if not ok then
+            vim.notify("Mason: unknown package " .. tool, vim.log.levels.WARN)
+          elseif not p:is_installed() then
             p:install()
           end
         end

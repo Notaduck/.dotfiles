@@ -6,9 +6,9 @@ font-style = Regular
 font-style-bold = Bold
 font-style-italic = Italic
 font-style-bold-italic = "Bold Italic"
-font-size = 14.5
+font-size = 15
 
-theme = Rose Pine
+theme = rose-pine-dawn
 background-opacity = 1.0
 window-padding-x = 25
 window-padding-y = 20

@@ -3,8 +3,6 @@
 
 vim.api.nvim_set_hl(0, "Parameter", { fg = "#88CCFF", bold = true })
 
-vim.opt.updatetime = 300
-
 local function make_default_capabilities()
 	local ok, blink_cmp = pcall(require, "blink.cmp")
 	if ok and type(blink_cmp.get_lsp_capabilities) == "function" then
@@ -86,16 +84,13 @@ do
 	end
 end
 
--- Let fidget.nvim handle progress UI
-vim.lsp.handlers["$/progress"] = nil
-
 -- Show diagnostic float on CursorHold (skip immediately after save)
+local last_save_time = 0
 vim.api.nvim_create_autocmd("CursorHold", {
 	group = vim.api.nvim_create_augroup("UserDiagnosticHover", { clear = true }),
 	callback = function()
 		local now = vim.uv.now()
-		local last_save = vim._last_save_time or 0
-		if (now - last_save) < 500 then
+		if (now - last_save_time) < 500 then
 			return
 		end
 
@@ -117,7 +112,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 vim.api.nvim_create_autocmd("BufWritePost", {
 	group = vim.api.nvim_create_augroup("UserTrackSaveTime", { clear = true }),
 	callback = function()
-		vim._last_save_time = vim.uv.now()
+		last_save_time = vim.uv.now()
 	end,
 })
 
@@ -131,9 +126,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
 		end
 
-		-- Navigation (gr* prefix is native default in 0.11+: grr/gri/grn/grt/gra)
-		map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
-		map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
+		-- Navigation (gd/gD/grr/gI/gy) is handled by Snacks pickers in plugins/snacks/keys.lua;
+		-- grn/gra/gri/grt are native defaults.
 
 		-- Hover and signature
 		map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
@@ -156,25 +150,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
--- Format on save via conform (with LSP fallback)
-vim.api.nvim_create_autocmd("BufWritePre", {
-	group = vim.api.nvim_create_augroup("UserLspFormatOnSave", { clear = true }),
-	pattern = { "*.ts", "*.tsx", "*.js", "*.jsx", "*.lua", "*.py", "*.go" },
-	callback = function(ev)
-		local conform_ok, conform = pcall(require, "conform")
-		if conform_ok then
-			conform.format({
-				bufnr = ev.buf,
-				async = false,
-				timeout_ms = 1500,
-				lsp_fallback = true,
-				stop_after_first = true,
-			})
-		else
-			vim.lsp.buf.format({ async = false, timeout_ms = 1500 })
-		end
-	end,
-})
+-- Format on save is configured in plugins/conform.lua (format_on_save)
 
 -- Load all per-server configs
 local lsp_dir = debug.getinfo(1, "S").source:sub(2):match("(.*/)") .. "../lsp"

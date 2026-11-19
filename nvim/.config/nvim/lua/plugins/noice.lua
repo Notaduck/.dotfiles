@@ -9,10 +9,10 @@ return {
 				override = {
 					["vim.lsp.util.convert_input_to_markdown_lines"] = false,
 					["vim.lsp.util.stylize_markdown"] = false,
-					["cmp.entry.get_documentation"] = true,
 				},
+				-- fidget.nvim handles progress; noice's mini view stacks over the statusline
 				progress = {
-					enabled = true,
+					enabled = false,
 				},
 				hover = {
 					enabled = true,

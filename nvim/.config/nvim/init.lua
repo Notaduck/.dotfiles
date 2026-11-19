@@ -18,12 +18,11 @@ local function safe_require(mod)
 	end
 end
 
-if vim.loader and vim.loader.enable then
-	vim.loader.enable()
-end
+vim.loader.enable()
 
 safe_require("config.options")
 safe_require("config.keymaps")
 safe_require("config.autocmds")
 safe_require("core.lazy")
 safe_require("core.lsp")
+safe_require("core.node_eval")

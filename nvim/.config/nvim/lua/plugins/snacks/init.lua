@@ -1,12 +1,6 @@
 -- lua/custom/plugins/snacks/init.lua
 local config = require 'plugins.snacks.config'
 local keys = require 'plugins.snacks.keys'
--- local autocmds = require 'plugins.snacks.autocmds'
--- Load our npm scripts module
-local npm_scripts = require 'plugins.snacks.npm_scripts'
-
--- Set up any autocommands you need on startup
--- autocmds.setup()
 
 return {
     'folke/snacks.nvim',
@@ -48,7 +42,8 @@ return {
                     off = 'light',
                     on = 'dark',
                     name = 'Dark Background'
-                })
+                }):map '<leader>ub'
+                Snacks.toggle.inlay_hints():map '<leader>uh'
                 Snacks.toggle.indent():map '<leader>ug'
                 Snacks.toggle.dim():map '<leader>uD'
 
@@ -66,8 +61,9 @@ return {
                 })
             end
         })
-        vim.api.nvim_create_user_command("SearchFolder", function()
-            Snacks.grep.dir()
-        end, {})
+        vim.api.nvim_create_user_command("SearchFolder", function(cmd)
+            local dir = cmd.args ~= "" and cmd.args or vim.fn.expand("%:p:h")
+            Snacks.picker.grep({ dirs = { vim.fn.fnamemodify(dir, ":p") } })
+        end, { nargs = "?", complete = "dir", desc = "Grep in a folder (default: current file's folder)" })
     end
 }

@@ -1,5 +1,7 @@
 return {
   "rose-pine/neovim",
+  lazy = false,
+  priority = 1000,
   config = function()
     require("rose-pine").setup({
       variant = "dawn",   -- auto, main, moon, or dawn
@@ -65,6 +67,15 @@ return {
         -- StatusLine = { fg = "love", bg = "love", blend = 15 },
         -- VertSplit = { fg = "muted", bg = "muted" },
         -- Visual = { fg = "base", bg = "text", inherit = false },
+
+        -- Snacks windows (explorer sidebar, pickers, terminal, lazygit)
+        -- default to NormalFloat, whose panel bg (`surface`) reads as white
+        -- next to the editor's `base` — anchor them to `base` instead
+        SnacksNormal = { bg = "base" },
+        SnacksNormalNC = { bg = "base" },
+        SnacksPicker = { bg = "base" },
+        SnacksPickerBorder = { fg = "muted", bg = "base" },
+        SnacksPickerTitle = { fg = "foam", bg = "base", bold = true },
       },
 
       before_highlight = function(group, highlight, palette)

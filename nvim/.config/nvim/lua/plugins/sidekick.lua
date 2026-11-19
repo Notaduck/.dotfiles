@@ -26,8 +26,6 @@ return {
        expr = true,
        desc = "Goto/Apply Next Edit Suggestion",
      },
-     -- <leader>a* bindings removed to avoid conflicts with avante.nvim.
-     -- Use the sidekick.cli API directly if needed.
      {
        "<c-.>",
        function() require("sidekick.cli").focus() end,
@@ -39,8 +37,8 @@ return {
 		-- Make sure to set this up properly if you have lazy=true
 		"MeanderingProgrammer/render-markdown.nvim",
 		opts = {
-			file_types = { "markdown", "Avante" },
+			file_types = { "markdown" },
 		},
-		ft = { "markdown", "Avante" },
+		ft = { "markdown" },
 	},
 }

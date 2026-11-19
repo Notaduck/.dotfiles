@@ -130,16 +130,6 @@ local opts = {
 			-- wo = { wrap = true },
 		},
 	},
-	---@class snacks.picker.debug
-	debug = {
-		scores = true, -- show scores in the list
-		leaks = false, -- show when pickers don't get garbage collected
-		explorer = false, -- show explorer debug info
-		files = true, -- show file debug info
-		grep = false, -- show file debug info
-		proc = false, -- show proc debug info
-		extmarks = false, -- show extmarks errors
-	},
 }
 
 return { opts = opts }

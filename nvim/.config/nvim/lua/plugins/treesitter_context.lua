@@ -2,7 +2,7 @@ return {
   "nvim-treesitter/nvim-treesitter-context",
   keys = {
     {
-      "<leader>uC",
+      "<leader>ut",
       function()
         require("treesitter-context").toggle()
       end,

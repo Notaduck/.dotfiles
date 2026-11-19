@@ -1,69 +1,70 @@
+-- Filetypes formatted automatically on save
+local format_on_save_ft = {
+	javascript = true,
+	javascriptreact = true,
+	typescript = true,
+	typescriptreact = true,
+	lua = true,
+	python = true,
+	go = true,
+}
+
+local function format(bufnr)
+	require("conform").format({
+		bufnr = bufnr,
+		timeout_ms = 3000,
+		lsp_format = "fallback",
+	})
+end
+
 return {
 	{
 		"stevearc/conform.nvim",
+		event = "BufWritePre",
+		cmd = "ConformInfo",
+		keys = {
+			{ "<leader>cf", function() format() end, mode = { "n", "v" }, desc = "Format Buffer" },
+			{ "<leader>fm", function() format() end, mode = { "n", "v" }, desc = "Format file or range" },
+		},
 		opts = {
 			formatters_by_ft = {
 				-- JavaScript/TypeScript
-				javascript = { "prettierd", "prettier" },
-				javascriptreact = { "prettierd", "prettier" },
-				typescript = { "prettierd", "prettier" },
-				typescriptreact = { "prettierd", "prettier" },
+				javascript = { "prettierd", "prettier", stop_after_first = true },
+				javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+				typescript = { "prettierd", "prettier", stop_after_first = true },
+				typescriptreact = { "prettierd", "prettier", stop_after_first = true },
 
 				-- Add Lua formatting
 				lua = { "stylua" },
 
-				-- Python
+				-- Python (both run in sequence)
 				python = { "isort", "black" },
 
-				-- Go
-				go = { "gofmt", "goimports" },
-
-				-- YAML
-				-- yaml = { "yamlfmt" },
+				-- Go (goimports also applies gofmt formatting)
+				go = { "goimports" },
 
 				-- JSON
 				json = { "jq" },
 				jsonc = { "jq" },
-
-				-- Docker
-				dockerfile = { "hadolint" },
 			},
 			formatters = {
+				-- Personal style (no semicolons, single quotes) applies only when the
+				-- project has no prettier config of its own.
 				prettier = {
-					prepend_args = { "--no-semi", "--single-quote" },
+					prepend_args = { "--config-precedence", "prefer-file", "--no-semi", "--single-quote" },
 				},
 				prettierd = {
-					prepend_args = { "--no-semi", "--single-quote" },
-					-- Ensure prettierd uses our config even if project has one
 					env = {
-						PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("~/.prettierrc"),
+						PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath("config") .. "/.prettierrc.json",
 					},
 				},
 			},
-			-- Fix eslint_d issues by adding a notify callback
-			notify_on_error = function(err)
-				-- Only show errors when not related to eslint_d JSON parsing
-				if not err:match("eslint_d: SyntaxError: Unexpected token") then
-					vim.notify("Formatting error: " .. err, vim.log.levels.ERROR)
+			format_on_save = function(bufnr)
+				if not format_on_save_ft[vim.bo[bufnr].filetype] then
+					return
 				end
+				return { timeout_ms = 1500, lsp_format = "fallback" }
 			end,
 		},
-		config = function(_, opts)
-			local conform = require("conform")
-
-			-- Add formatter configurations
-			conform.setup(opts)
-
-			-- Add key mappings for manual formatting
-			vim.keymap.set({ "n", "v" }, "<leader>fm", function()
-				conform.format({
-					timeout_ms = 3000,
-					lsp_fallback = true,
-					stop_after_first = true, -- Also stop after first successful formatter when using the mapping
-				})
-			end, {
-				desc = "Format file or range",
-			})
-		end,
 	},
 }

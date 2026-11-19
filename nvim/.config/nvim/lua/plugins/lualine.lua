@@ -52,18 +52,9 @@ return {
 				return ts_cache.result
 			end
 
-			local ok, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
-			local parsers_ok, parsers = pcall(require, "nvim-treesitter.parsers")
-			if not ok or not parsers_ok then
-				ts_cache = { bufnr = bufnr, line = line, result = "" }
-				return ""
-			end
-			if not parsers.has_parser() then
-				ts_cache = { bufnr = bufnr, line = line, result = "" }
-				return ""
-			end
-			local cursor_node = ts_utils.get_node_at_cursor()
-			if not cursor_node then
+			-- get_node returns nil (or errors) when the buffer has no parser
+			local ok, cursor_node = pcall(vim.treesitter.get_node, { bufnr = bufnr })
+			if not ok or not cursor_node then
 				ts_cache = { bufnr = bufnr, line = line, result = "" }
 				return ""
 			end
@@ -137,7 +128,7 @@ return {
 			return " " .. table.concat(client_names, ", ")
 		end
 
-		-- 🔹 Sidekick status component (DieKick integration)
+		-- 🔹 Sidekick status component
 		-- local sidekick_component = {
 		-- 	function()
 		-- 		return " "

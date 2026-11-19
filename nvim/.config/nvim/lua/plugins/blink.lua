@@ -1,16 +1,12 @@
 return {
 	{
-		"L3MON4D3/LuaSnip",
-		keys = {},
-	},
-	{
 		"saghen/blink.cmp",
-		dependencies = { "rafamadriz/friendly-snippets", "Kaiser-Yang/blink-cmp-avante", "onsails/lspkind.nvim" },
+		dependencies = { "rafamadriz/friendly-snippets" },
 		version = "*",
 		config = function()
 			require("blink.cmp").setup({
 				snippets = {
-					preset = "luasnip",
+					preset = "default", -- vim.snippet + friendly-snippets
 				},
 				signature = {
 					enabled = true,
@@ -28,18 +24,11 @@ return {
 					nerd_font_variant = "mono",
 				},
 				sources = {
-					default = { "avante", "lsp", "path", "snippets", "buffer" },
+					default = { "lsp", "path", "snippets", "buffer" },
 					providers = {
 						cmdline = {
 							enabled = true,
 							min_keyword_length = 2,
-						},
-						avante = {
-							module = "blink-cmp-avante",
-							name = "Avante",
-							opts = {
-								-- options for blink-cmp-avante
-							},
 						},
 					},
 				},
@@ -100,15 +89,6 @@ return {
 							columns = {
 								{ "label" },
 								{ "kind_icon", "kind" }, -- { "kind_icon" },
-							},
-							components = {
-								kind_icon = {
-									text = function(item)
-										local kind = require("lspkind").symbol_map[item.kind] or ""
-										return kind .. " "
-									end,
-									highlight = "CmpItemKind",
-								},
 							},
 						},
 					},
