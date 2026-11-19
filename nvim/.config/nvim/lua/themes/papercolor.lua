@@ -1,3 +1,0 @@
-return {
-  'NLKNguyen/papercolor-theme'
-}
