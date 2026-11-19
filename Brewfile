@@ -7,7 +7,6 @@ brew "bash"
 brew "bat"
 brew "fd"
 brew "ripgrep"
-brew "trash"
 
 # Development tools
 brew "neovim"
@@ -31,7 +30,7 @@ brew "ncdu"
 
 # Apps
 cask "ghostty"
-cask "docker"
+cask "docker-desktop"
 cask "monitorcontrol"
 cask "visual-studio-code"
 cask "postman"
