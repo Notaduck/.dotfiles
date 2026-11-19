@@ -1,0 +1,1 @@
+-- Styles only (sidebar-session.css); Tern needs a host or window entry to load a plugin.

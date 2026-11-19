@@ -1,0 +1,6 @@
+schema = 1
+id = "nvim-open"
+name = "Open Links in Neovim"
+version = "0.1.0"
+description = "Clicked file links open in nvim beside the pane; files Tern shows better keep Tern's own view"
+window = "window.luau"

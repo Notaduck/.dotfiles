@@ -1,0 +1,24 @@
+{
+  "theme": "Dark",
+  "font_family": "JetBrainsMono Nerd Font",
+  "tabs": "Vertical",
+  "surface_fold": true,
+  "share_sessions": false,
+  "reconnect_hosts": false,
+  "crash_reports": false,
+  "file_tree": {
+    "width": 560
+  },
+  "git": {
+    "inspector_width": 280.0,
+    "path_tree": true
+  },
+  "keybinds": {
+    "ctrl+b>h": "focus_pane:left",
+    "ctrl+b>j": "focus_pane:down",
+    "ctrl+b>k": "focus_pane:up",
+    "ctrl+b>l": "focus_pane:right",
+    "ctrl+b>v": "plugin.pane-keys.move_mode"
+  },
+  "secure_keyboard_entry": true
+}

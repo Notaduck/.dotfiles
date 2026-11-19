@@ -1,7 +1,2 @@
--- Set colorscheme with a VimEnter event to ensure it happens after plugins load
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    vim.cmd.colorscheme("rose-pine-dawn")
-  end,
-  once = true,
-})
+-- The colorscheme is applied in core/lazy.lua through config/theme.lua, which
+-- follows the `theme` command. Nothing here may set one.

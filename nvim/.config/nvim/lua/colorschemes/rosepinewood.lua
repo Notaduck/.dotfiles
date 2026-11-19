@@ -90,9 +90,6 @@ return {
         -- end
       end,
     })
-
-    vim.cmd("colorscheme rose-pine-dawn")
-    -- vim.cmd("colorscheme rose-pine-main")
-    -- vim.cmd("colorscheme rose-pine-moon")
+    -- The colorscheme itself is chosen by config/theme.lua.
   end,
 }

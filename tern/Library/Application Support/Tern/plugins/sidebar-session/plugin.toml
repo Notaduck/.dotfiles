@@ -1,0 +1,7 @@
+schema = 1
+id = "sidebar-session"
+name = "Sidebar Session"
+version = "0.1.0"
+description = "Tiles layout with vertical tabs: the avatar and session switcher sit at the top of the sidebar, and the titlebar's + button is hidden"
+styles = ["sidebar-session.css"]
+window = "window.luau"

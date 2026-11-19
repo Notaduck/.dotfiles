@@ -1,0 +1,13 @@
+schema = 1
+id = "jira-sprint"
+name = "Work"
+version = "0.3.0"
+description = "Jira sprint, ideas and omp sessions in one sidebar: your open-sprint issues, the ~/ideas store, omp sessions to jump to or resume, Implement and load-into-omp"
+host = "host.luau"
+window = "window.luau"
+
+[[blocks]]
+id = "sprint"
+title = "Work"
+icon = "list"
+palette = true

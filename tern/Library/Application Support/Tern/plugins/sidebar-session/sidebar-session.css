@@ -1,0 +1,57 @@
+/* Tiles layout, vertical tabs: move the avatar and the session switcher out of the titlebar into the top of
+   the sidebar, under the traffic lights, and hide the titlebar's + button.
+   Tern paints #tabbar's children only inside .tb-in's box, so .tb-in is stretched over the sidebar column and
+   one extra row down. That box ignores the pointer (and so doesn't block the panel's top edge); its children
+   take it back, and the spacer keeps the titlebar draggable. */
+html.lay-tiles.tabs-v:not(.tabs-auto) {
+	#tabbar {
+		left: 0;
+		height: 80px;
+		align-items: flex-start;
+		padding: 0 12px 0 0;
+		pointer-events: none;
+	}
+	#tabbar .tb-in {
+		height: 80px;
+		align-self: flex-start;
+		align-items: flex-start;
+		padding: 6px 0 0 calc(var(--vt-room) + 12px);
+		pointer-events: none;
+		> * {
+			pointer-events: auto;
+		}
+		> .tb-sp {
+			align-self: flex-start;
+			height: 40px;
+			margin-top: -6px;
+			-webkit-app-region: drag;
+		}
+	}
+	#tabbar .tn-peers,
+	#tabbar .tn-session-tab {
+		position: fixed;
+		top: 46px;
+		height: 28px;
+		margin: 0;
+	}
+	#tabbar .tn-peers {
+		left: 10px;
+	}
+	#tabbar .tn-session-tab {
+		left: 44px;
+		width: calc(var(--vt-w) - 50px);
+		justify-content: flex-start;
+		.nm {
+			min-width: 0;
+		}
+		&::after {
+			display: none;
+		}
+	}
+	#tabbar .tb-add {
+		display: none;
+	}
+	#sidebar > .tn-vt {
+		margin-top: 36px;
+	}
+}

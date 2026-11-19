@@ -1,0 +1,7 @@
+schema = 1
+id = "tiling"
+name = "Tiling Layouts"
+version = "0.1.0"
+description = "dwm-style per-tab layouts: tile, monocle, fibonacci spiral, dwindle and grid"
+icon = "columns"
+window = "window.luau"

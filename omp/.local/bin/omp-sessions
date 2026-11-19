@@ -1,0 +1,5 @@
+#!/bin/sh
+# Find and resume omp sessions by Jira key, idea, id or words (omp-sessions.ts next to this file).
+PATH="$HOME/.asdf/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+export PATH
+exec node --no-warnings "$HOME/.local/bin/omp-sessions.ts" "$@"

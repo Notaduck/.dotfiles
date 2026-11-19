@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# What changed in Tern since the plugins were last audited: version, release notes, the plugin API
+# (`tern plugin types`) and plugins that no longer load. Prints "STATUS: unchanged" or
+# "STATUS: changed". `--accept` records the running Tern's version and API as audited.
+set -euo pipefail
+
+TERN=${TERN:-$HOME/.local/bin/tern}
+LIB=/Applications/Tern.app/Contents/Frameworks/libtern.dylib
+STATE=${XDG_STATE_HOME:-$HOME/.local/state}/tern-plugin-audit
+mkdir -p "$STATE"
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+version=$("$TERN" --version | awk '{print $2}')
+last=$(cat "$STATE/version" 2>/dev/null || echo none)
+"$TERN" plugin types "$tmp" >/dev/null
+
+if [[ ${1:-} == --accept ]]; then
+	cp "$tmp/tern.d.luau" "$STATE/tern.d.luau"
+	echo "$version" >"$STATE/version"
+	echo "audited: tern $version"
+	exit 0
+fi
+
+echo "tern $version, last audited: $last"
+
+echo
+echo "## Plugin health"
+"$TERN" plugin list --json | jq -r '
+	(.problems[]? | "problem: \(tojson)"),
+	(.plugins[] | select(.status != "ready") | "\(.id): \(.status) \(del(.css, .blocks, .lenses) | tojson)")
+' | sed 's/^/  /'
+echo "  (plugins not listed above are ready)"
+
+if [[ $version == "$last" ]] && cmp -s "$tmp/tern.d.luau" "$STATE/tern.d.luau"; then
+	echo
+	echo "STATUS: unchanged"
+	exit 0
+fi
+
+echo
+echo "## Release notes since $last"
+# The changelog is embedded in the library twice; print the first copy down to the audited version
+# (only the newest section when nothing was audited yet).
+strings -n 3 "$LIB" | awk -v last="## $last" -v max="$([[ $last == none ]] && echo 1 || echo 30)" '
+	/^## [0-9]+\.[0-9]+\.[0-9]+$/ { if ($0 == last || ++sections > max) exit }
+	sections
+'
+
+echo
+echo "## Plugin API diff (tern.d.luau)"
+if [[ -f $STATE/tern.d.luau ]]; then
+	diff -u "$STATE/tern.d.luau" "$tmp/tern.d.luau" || true
+else
+	echo "no audited snapshot yet"
+fi
+
+echo
+echo "STATUS: changed"

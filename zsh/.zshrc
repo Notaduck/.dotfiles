@@ -1,9 +1,10 @@
-# Aliases
+# PATH is built in .zprofile. A non-login shell whose parent never ran it (a
+# terminal spawned straight from a GUI app) picks it up here.
+[[ -o login ]] || (( ${path[(Ie)$HOME/.local/bin]} )) || source "$HOME/.zprofile"
+
+# Aliases (rm is at the bottom, see there)
 alias gl=glab
-alias ghpr='gh pr create --head $(git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/\1/") --base'
-alias whats_my_ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias vim=nvim
-alias rm=trash
 
 # Function to lowercase directory names
 lower_case() {
@@ -12,100 +13,126 @@ lower_case() {
   done
 }
 
-jwt-decode() {
-  jq -R 'split(".") |.[0:2] | map(@base64d) | map(fromjson)' <<< $1
+# Editor, and vi keys on the command line. zsh would pick vi mode anyway
+# because EDITOR contains "vi"; say so explicitly. KEYTIMEOUT is the wait after
+# Esc in 1/100 s: 1 makes the switch to normal mode instant instead of 0.4 s.
+export EDITOR="nvim"
+bindkey -v
+KEYTIMEOUT=1
+
+# Colour scheme: `theme <name>` switches Ghostty, tmux, Neovim and bat together
+# (see theme/.local/bin/theme). bat only reads BAT_THEME at startup, so the
+# wrapper re-exports it for the current shell after a switch.
+[ -r "$HOME/.local/state/theme/bat" ] && export BAT_THEME="$(<"$HOME/.local/state/theme/bat")"
+theme() {
+  command theme "$@" || return
+  [ -r "$HOME/.local/state/theme/bat" ] && export BAT_THEME="$(<"$HOME/.local/state/theme/bat")"
 }
 
-# Editor
-export EDITOR="nvim"
+# History: one big file shared by every tab, tmux pane and session. Each command
+# is appended the moment it runs; Ctrl-R re-reads the file (see bottom) so it
+# searches everything, while Up-arrow stays local to the current shell.
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=1000000
+SAVEHIST=1000000
+setopt EXTENDED_HISTORY       # store timestamp + duration
+setopt INC_APPEND_HISTORY     # write immediately, not on shell exit
+setopt HIST_FCNTL_LOCK        # safe concurrent writes from many shells
+setopt HIST_IGNORE_ALL_DUPS   # keep only the latest copy of a command
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_SPACE      # prefix a command with a space to keep it out
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY            # !! / !$ expand into the line instead of running
 
-# Load environment variables from ~/.env (safer for special characters)
-if [ -f "$HOME/.env" ]; then
-  set -a
-  source "$HOME/.env"
-  set +a
+# Secrets live in the login Keychain, not in the environment, so they are not
+# handed to every child process. `secret NAME` prints one, e.g.
+#   STRIPE_API_KEY=$(secret STRIPE_CLI_READ_ONLY_KEY) stripe ...
+# Add or replace one (prompts for the value):
+#   security add-generic-password -U -a "$USER" -s NAME -w
+secret() {
+  security find-generic-password -a "$USER" -s "$1" -w
+}
+
+# Completion. omp only ships a generator, so its output is cached in fpath and
+# regenerated when the binary is newer than the cached copy.
+typeset -U fpath
+zsh_comp_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
+if (( $+commands[omp] )) && [[ ! "$zsh_comp_cache/_omp" -nt $commands[omp] ]]; then
+  mkdir -p "$zsh_comp_cache"
+  omp completions zsh >| "$zsh_comp_cache/_omp" 2> /dev/null
 fi
+fpath=("$zsh_comp_cache" $fpath)
 
-# Path Exports (order matters)
-export PATH="$HOME/go/bin:$PATH"                         # Go binaries
-export PATH="/usr/local/opt/mysql-client/bin:$PATH"      # MySQL client
-export PATH="/usr/local/opt/mysql-client@8.4/bin:$PATH"  # MySQL client 8.4
-export PATH="$HOME/.local/bin:$PATH"                     # Local binaries
-export PATH="$HOME/bin:$PATH"                            # Home bin
-export PATH="$HOME/.bin:$PATH"                           # Home bin
-
-# NPM global binaries
-if command -v npm > /dev/null 2>&1; then
-  export PATH="$(npm config get prefix)/bin:$PATH"
-fi
-
-# Cargo binaries
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# Homebrew binaries
-export PATH="/opt/homebrew/bin:$PATH"
-
-# Zinit extras
-export PATH="$HOME/.local/share/zinit/polaris/bin:$PATH"
-
-# Ensure system paths are included
-export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-
-# Avoid compounding duplicate PATH entries in nested tmux shells.
-typeset -U path PATH
-
-# asdf 0.16+ is a standalone binary: put its shims on PATH and add completions.
-if command -v asdf > /dev/null 2>&1; then
-  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-fi
-if [ -d /opt/homebrew/opt/asdf/share/zsh/site-functions ]; then
-  fpath=(/opt/homebrew/opt/asdf/share/zsh/site-functions $fpath)
-fi
-
-# Reuse the generated completion dump. Rebuild it after the shell config or
-# Homebrew completion directory changes, then use the fast path thereafter.
+# Reuse the generated completion dump. Rebuild it after the shell config or a
+# completion directory changes, then use the fast path thereafter.
 autoload -Uz compinit
 zcompdump_path="${ZDOTDIR:-$HOME}/.zcompdump"
 if [ -s "$zcompdump_path" ] \
   && [ "$zcompdump_path" -nt "$HOME/.zshrc" ] \
-  && [ "$zcompdump_path" -nt /opt/homebrew/share/zsh/site-functions ]; then
+  && [ "$zcompdump_path" -nt /opt/homebrew/share/zsh/site-functions ] \
+  && [ "$zcompdump_path" -nt "$zsh_comp_cache" ]; then
   compinit -C -d "$zcompdump_path"
 else
   compinit -d "$zcompdump_path"
 fi
-unset zcompdump_path
+unset zcompdump_path zsh_comp_cache
 
-# Zinit Plugin Manager Setup
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-if [[ ! -d $ZINIT_HOME ]]; then
-  mkdir -p "$(dirname $ZINIT_HOME)"
-  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+zstyle ':completion:*' menu select                      # Tab again to walk the list
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}'  # exact first, then ignore case
+zstyle ':completion:*' list-colors ''
+
+# aws ships a bash-style completer.
+if (( $+commands[aws_completer] )); then
+  autoload -Uz bashcompinit && bashcompinit
+  complete -C aws_completer aws
 fi
-source "${ZINIT_HOME}/zinit.zsh"
 
-# Zinit Plugins
-zinit snippet OMZ::plugins/aws/aws.plugin.zsh
-zinit light zdharma-continuum/history-search-multi-word
-zinit light zsh-users/zsh-autosuggestions
-zinit light KulkarniKaustubh/fzf-dir-navigator
-zinit light zdharma-continuum/fast-syntax-highlighting
+# Prompt and plugins are Homebrew formulae (see Brewfile); `brew upgrade`
+# updates them.
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+autoload -Uz promptinit && promptinit
+prompt pure
 
-# Pure theme with async loading
-zinit ice pick"async.zsh" src"pure.zsh"
-zinit light sindresorhus/pure
+# Keep fast-syntax-highlighting after pure: pure registers ZLE hooks through
+# add-zle-hook-widget. If a terminal integration (Tern) already installed that
+# dispatcher, loading FSH first makes pure re-add FSH's wrapper as a hook,
+# which calls the dispatcher again -> "zle-line-finish: maximum nested
+# function level reached" on every Enter.
+source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
-# AWS Profile Prompt (add to PROMPT or RPROMPT to display)
-aws_profile_prompt() {
-  local profile=${AWS_PROFILE:-default}
-  echo "%F{black}%K{yellow} AWS: $profile %k%f"
-}
+# fzf: Ctrl-R history search, Ctrl-T file picker, Alt-C cd. Ctrl-R first pulls in
+# commands other shells have written since this one started. Enter runs the
+# picked command straight away; Tab drops it on the prompt for editing instead.
+if (( $+commands[fzf] )); then
+  source <(fzf --zsh)
+  _fzf_hist_edit_flag="${TMPDIR:-/tmp}/fzf-hist-edit.$$"
+  export FZF_CTRL_R_OPTS="--bind 'tab:execute-silent(touch ${_fzf_hist_edit_flag})+accept' --header 'enter: run · tab: edit'"
+  fzf-history-widget-all() {
+    command rm -f "$_fzf_hist_edit_flag"
+    fc -RI
+    zle fzf-history-widget || return
+    if [[ -e $_fzf_hist_edit_flag ]]; then
+      command rm -f "$_fzf_hist_edit_flag"
+    elif [[ -n $BUFFER && -n ${history[(Re)$BUFFER]} ]]; then
+      zle accept-line
+    fi
+  }
+  zle -N fzf-history-widget-all
+  bindkey -M emacs '^R' fzf-history-widget-all
+  bindkey -M viins '^R' fzf-history-widget-all
+  bindkey -M vicmd '^R' fzf-history-widget-all
+fi
 
 # direnv integration
-eval "$(direnv hook zsh)"
+if (( $+commands[direnv] )); then
+  eval "$(direnv hook zsh)"
+fi
 
-# Track frequently used directories for the on-demand Sesh project picker.
+# zoxide takes over cd: `cd foo` still enters ./foo, and otherwise jumps to the
+# best-ranked directory matching "foo"; `cdi` picks one interactively. The same
+# database feeds the on-demand Sesh project picker.
 if (( $+commands[zoxide] )); then
-  eval "$(zoxide init zsh)"
+  eval "$(zoxide init zsh --cmd cd)"
 fi
 
 # ghcpr <num> -> checkout PR in a worktree + new tmux pane
@@ -141,3 +168,38 @@ asdf_typo_check() {
 autoload -Uz add-zsh-hook
 add-zsh-hook chpwd asdf_typo_check
 asdf_typo_check
+
+# rm moves things to the Trash instead of deleting them. /usr/bin/trash rejects
+# rm's flags, so they are dropped (directories need no -r); -f keeps its
+# "missing files are fine" meaning. Hard delete: `command rm` or /bin/rm.
+#
+# Keep the alias last in this file. An alias is expanded where a function is
+# defined, so anything defined after it that calls rm on its own temp files
+# would send them to the Trash (and fail on -f before this wrapper existed).
+rm_to_trash() {
+  local -a files present
+  local arg force
+  while (( $# )); do
+    arg=$1
+    shift
+    case $arg in
+      --) files+=("$@"); break ;;
+      -f*|-[!-]*f*|--force) force=1 ;;
+      -?*) ;;
+      *) files+=("$arg") ;;
+    esac
+  done
+  if [[ -n $force ]]; then
+    for arg in "${files[@]}"; do
+      [[ -e $arg || -L $arg ]] && present+=("$arg")
+    done
+    files=("${present[@]}")
+  fi
+  if (( ! $#files )); then
+    [[ -n $force ]] && return 0
+    print -u2 "usage: rm [-rf] file ..."
+    return 64
+  fi
+  trash "${files[@]/#-/./-}"
+}
+alias rm=rm_to_trash

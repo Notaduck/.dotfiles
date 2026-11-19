@@ -8,7 +8,10 @@ font-style-italic = Italic
 font-style-bold-italic = "Bold Italic"
 font-size = 15
 
-theme = rose-pine-dawn
+# `theme <name>` writes ~/.local/state/theme/ghostty, which overrides the theme
+# below. The line here is only the fallback before that command has ever run.
+theme = Catppuccin Mocha
+config-file = ?~/.local/state/theme/ghostty
 background-opacity = 1.0
 window-padding-x = 25
 window-padding-y = 20

@@ -1,0 +1,51 @@
+bash:
+  patterns:
+    - approval: deny
+      match: launchctl
+    - approval: deny
+      match: launchctl *
+    - approval: deny
+      match: "*/launchctl *"
+    - approval: deny
+      match: plutil
+    - approval: deny
+      match: plutil *
+    - approval: deny
+      match: "*/plutil *"
+browser:
+  relay: true
+claudeResets:
+  autoRedeem5h: "no"
+compaction:
+  handoffSaveToDisk: true
+  idleEnabled: true
+dev:
+  autoqaConsent: denied
+hideThinkingBlock: true
+memory:
+  backend: local
+modelRoles:
+  default: anthropic/claude-opus-5-5:high
+plan:
+  autosave: true
+  enabled: true
+secrets:
+  enabled: true
+setupVersion: 3
+statusLine:
+  preset: default
+  separator: block
+  transparent: false
+symbolPreset: nerd
+telemetry:
+  otlpExportEnabled: false
+terminal:
+  showProgress: false
+theme:
+  dark: dark-catppuccin
+  light: dark-catppuccin
+tui:
+  vimMode: true
+  vimModeDisplay: icon
+update:
+  auto: true

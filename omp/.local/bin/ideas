@@ -1,0 +1,6 @@
+#!/bin/sh
+# The ideas CLI (omp extension `ideas`, store.ts). Callable from GUI apps (Tern) whose PATH lacks asdf.
+PATH="$HOME/.asdf/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+export PATH
+cd "$HOME" || exit 1
+exec node --no-warnings "$HOME/.omp/agent/extensions/ideas/cli.ts" "$@"

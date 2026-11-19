@@ -1,0 +1,6 @@
+schema = 1
+id = "pane-keys"
+name = "Pane Keys"
+version = "0.1.0"
+description = "tmux-style pane focus, a move-pane mode and stronger dimming of unfocused panes"
+window = "window.luau"

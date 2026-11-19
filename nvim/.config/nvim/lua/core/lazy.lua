@@ -13,3 +13,7 @@ require("lazy").setup({{
     lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json",
     rocks = { hererocks = false },
 })
+
+-- Colorscheme plugins load eagerly above; pick the one the `theme` command
+-- selected (see config/theme.lua).
+require("config.theme").apply()

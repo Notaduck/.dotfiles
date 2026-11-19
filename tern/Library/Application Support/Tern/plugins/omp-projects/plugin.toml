@@ -1,0 +1,6 @@
+schema = 1
+id = "omp-projects"
+name = "Claude Projects"
+version = "0.1.0"
+description = "Claude-Desktop-style projects: one session per project, every new tab a Claude Code chat in the project's folder"
+window = "window.luau"

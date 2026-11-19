@@ -1,0 +1,13 @@
+schema = 1
+id = "gh-actions"
+name = "GitHub Actions"
+version = "0.1.0"
+description = "Running GitHub Actions workflows of the repository the focused terminal is in"
+host = "host.luau"
+window = "window.luau"
+
+[[blocks]]
+id = "runs"
+title = "GitHub Actions"
+icon = "activity"
+palette = true
