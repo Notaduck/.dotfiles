@@ -10,8 +10,7 @@ brew "ripgrep"
 
 # Development tools
 brew "neovim"
-brew "tmux"
-brew "pam-reattach" # Touch ID for sudo inside tmux
+brew "pam-reattach" # Touch ID for sudo in Tern panes (see setup_mac.sh)
 brew "fzf"
 brew "asdf"
 brew "direnv"
@@ -26,7 +25,6 @@ tap "can1357/tap"
 brew "can1357/tap/omp" # omp coding agent (config in the omp package)
 
 # Terminal workflow
-brew "sesh"
 brew "zoxide"
 brew "btop"
 brew "tree"

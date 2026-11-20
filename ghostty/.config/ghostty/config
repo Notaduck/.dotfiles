@@ -1,5 +1,5 @@
-# Ghostty's native TERM advertises synchronized updates and richer terminal
-# capabilities to tmux. Do not override it with xterm-256color.
+# Ghostty is the backup terminal; Tern is the main one. Keep Ghostty's native
+# TERM (xterm-ghostty); do not override it with xterm-256color.
 
 font-family = JetBrainsMono Nerd Font
 font-style = Regular

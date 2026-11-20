@@ -20,7 +20,7 @@ export EDITOR="nvim"
 bindkey -v
 KEYTIMEOUT=1
 
-# Colour scheme: `theme <name>` switches Ghostty, tmux, Neovim and bat together
+# Colour scheme: `theme <name>` switches Ghostty, Neovim, bat, omp and Tern together
 # (see theme/.local/bin/theme). bat only reads BAT_THEME at startup, so the
 # wrapper re-exports it for the current shell after a switch.
 [ -r "$HOME/.local/state/theme/bat" ] && export BAT_THEME="$(<"$HOME/.local/state/theme/bat")"
@@ -29,7 +29,7 @@ theme() {
   [ -r "$HOME/.local/state/theme/bat" ] && export BAT_THEME="$(<"$HOME/.local/state/theme/bat")"
 }
 
-# History: one big file shared by every tab, tmux pane and session. Each command
+# History: one big file shared by every tab, pane and session. Each command
 # is appended the moment it runs; Ctrl-R re-reads the file (see bottom) so it
 # searches everything, while Up-arrow stays local to the current shell.
 HISTFILE="$HOME/.zsh_history"
@@ -129,13 +129,12 @@ if (( $+commands[direnv] )); then
 fi
 
 # zoxide takes over cd: `cd foo` still enters ./foo, and otherwise jumps to the
-# best-ranked directory matching "foo"; `cdi` picks one interactively. The same
-# database feeds the on-demand Sesh project picker.
+# best-ranked directory matching "foo"; `cdi` picks one interactively.
 if (( $+commands[zoxide] )); then
   eval "$(zoxide init zsh --cmd cd)"
 fi
 
-# ghcpr <num> -> checkout PR in a worktree + new tmux pane
+# ghcpr <num> -> checkout PR in a worktree + new Tern split beside this pane
 ghcpr() {
   if [[ "$1" != <-> ]]; then
     echo "usage: ghcpr <pr-number>" >&2
@@ -150,10 +149,10 @@ ghcpr() {
     grep -qx '.worktrees/' "$root/.git/info/exclude" 2>/dev/null || echo '.worktrees/' >> "$root/.git/info/exclude"
     command git -C "$root" worktree add --detach "$dir" FETCH_HEAD || return
   fi
-  if [[ -n "$TMUX" ]]; then
-    tmux split-window -h -c "$dir" "gh pr checkout $pr; exec zsh"
+  if [[ -n "$TERN_PANE" ]]; then
+    tern split @focused right --cwd "$dir" -- zsh -c "gh pr checkout $pr; exec zsh" > /dev/null
   else
-    echo "not inside tmux; worktree ready at $dir"
+    echo "not inside Tern; worktree ready at $dir"
     ( cd "$dir" && gh pr checkout "$pr" )
   fi
 }

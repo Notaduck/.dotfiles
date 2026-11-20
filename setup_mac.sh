@@ -3,7 +3,7 @@
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-STOW_PACKAGES=(zsh nvim tmux ghostty theme asdf bat btop tern omp)
+STOW_PACKAGES=(zsh nvim ghostty theme asdf bat btop tern omp)
 
 log() {
     echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*"
@@ -54,7 +54,7 @@ setup_asdf() {
 
 setup_touch_id_sudo() {
     # /etc/pam.d/sudo already includes sudo_local, which survives OS updates.
-    # pam_reattach makes Touch ID work inside tmux.
+    # pam_reattach keeps Touch ID working for programs Tern's session daemon runs.
     local pam_file=/etc/pam.d/sudo_local
     if [[ -f "$pam_file" ]] && grep -q pam_tid.so "$pam_file"; then
         log "Touch ID for sudo already configured."

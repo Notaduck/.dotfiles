@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # theme: switch Ghostty, Neovim, bat, omp and Tern to one colour scheme.
-# tmux is not switched: ~/.tmux.conf always sources the catppuccin-mocha palette.
 #
 #   theme                  open the picker (needs fzf) when run from a terminal
 #   theme <name>           switch every program to <name>, reload the running ones

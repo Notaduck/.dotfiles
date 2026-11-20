@@ -5,7 +5,6 @@
 *.log
 .nvimlog
 vim-markdown-preview.html
-tmux/.tmux/resurrect/*
 
 # Local Claude Code settings
 .claude/settings.local.json

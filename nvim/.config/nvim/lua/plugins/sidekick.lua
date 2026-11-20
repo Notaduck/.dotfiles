@@ -6,12 +6,6 @@ return {
 			enabled = true,
 		},
 		-- add any options here
-		cli = {
-			mux = {
-				backend = "tmux",
-				enabled = true,
-			},
-		},
 	},
    -- stylua: ignore
    keys = {
