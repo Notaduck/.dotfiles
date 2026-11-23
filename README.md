@@ -142,6 +142,7 @@ tracked.
 | `plan-panel` | The agent's todo list in a panel on the left. <kbd>Ctrl</kbd>+<kbd>\\</kbd> toggles it |
 | `scheduled-prompt` | Runs a prompt in the chat at a set time; `/schedule` manages them |
 | `turn-times` | A dim `↳ sent 14:02:11 · replied 14:03:40 · 1m29s` row after each run, never sent to the model |
+| `git-card` | After a turn that changed a git repo, a card with the branch, the branch it came from and the changed files. **View diff** opens `/annotate` on everything since that branch; **Open pull request** has the agent commit, push and open a PR from the repo's template, assigned to me. `/git-card [diff\|pr]` in a plain terminal |
 | `query-cache` | Keeps read-only AWS CLI and MCP results for 30 days in `~/.cache/omp/query-cache.sqlite`; the agent looks them up with `query_cache` and never gets an answer from it automatically |
 
 Two scripts in `~/.local/bin` wrap them for GUI apps such as Tern:
