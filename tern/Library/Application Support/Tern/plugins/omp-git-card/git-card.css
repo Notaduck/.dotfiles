@@ -1,0 +1,43 @@
+/* omp's git card (~/.dotfiles/omp/.omp/agent/extensions/git-card.ts): a collapsible section whose body holds one
+   `fold` column, which holds the `inner` column with the content. omp keeps the body when collapsed, so the body's
+   single grid row can glide between 1fr and 0fr instead of Tern's display: none. */
+.sf-section[data-role='omp.git-card'] > .sf-section-body {
+	display: grid;
+	grid-template-rows: 1fr;
+	margin: 0;
+	padding: 0 0 0 22px;
+	box-shadow: none;
+	transition: grid-template-rows 0.26s var(--out);
+}
+.sf-section[data-role='omp.git-card'].collapsed > .sf-section-body {
+	display: grid;
+	grid-template-rows: 0fr;
+}
+.sf-section[data-role='omp.git-card'] > .sf-section-body > .sf-col {
+	min-height: 0;
+	overflow: hidden;
+	transition: opacity 0.2s var(--ease);
+}
+.sf-section[data-role='omp.git-card'].collapsed > .sf-section-body > .sf-col {
+	opacity: 0;
+}
+/* The space under the title sits inside the fold, so it closes with it. */
+.sf-section[data-role='omp.git-card'] > .sf-section-body > .sf-col > .sf-col {
+	padding-top: 4px;
+}
+/* A file row opens its diff on click: the normal arrow, and the hovered file's name underlined. */
+.sf-row[data-role='omp.git-card.file'],
+.sf-row[data-role='omp.git-card.file'] * {
+	cursor: default;
+}
+.sf-row[data-role='omp.git-card.file']:hover > .sf-text:first-child > span:last-child {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sf-section[data-role='omp.git-card'] > .sf-section-body,
+	.sf-section[data-role='omp.git-card'] > .sf-section-body > .sf-col {
+		transition: none;
+	}
+}

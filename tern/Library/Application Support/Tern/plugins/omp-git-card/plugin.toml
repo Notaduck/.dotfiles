@@ -1,0 +1,7 @@
+schema = 1
+id = "omp-git-card"
+name = "omp Git Card"
+version = "0.1.0"
+description = "Styles omp's git card above the prompt: the body folds and unfolds smoothly, with no guide line beside it"
+styles = ["git-card.css"]
+window = "window.luau"

@@ -104,6 +104,7 @@ from the repo root.
 | `nvim-open` | Clicked file links open in Neovim beside the pane |
 | `omp-projects` | Claude-Desktop-style projects: one session per project, every new tab a chat in that folder |
 | `sidebar-session` | CSS only. In the Tiles layout with vertical tabs it moves the avatar and session switcher into the sidebar and hides the titlebar's + button |
+| `omp-git-card` | CSS only. Makes the collapse of omp's git card (the `git-card` extension) glide open and shut, without the guide line beside its body, and underlines the hovered file |
 
 Plus the notebook-paper theme and `tern-plugin-audit`, which reports what
 changed in Tern's plugin API since the plugins were last checked.
