@@ -34,7 +34,7 @@ machine, and one command switches the colour scheme everywhere.
   <tr>
     <td width="33%" valign="top"><h3>🖥️ Tern</h3>Terminal and multiplexer in one: vertical tabs, sessions kept alive by its daemon, <kbd>Ctrl</kbd>+<kbd>B</kbd> pane keys.</td>
     <td width="34%" valign="top"><h3>🧩 Tern plugins</h3>Luau plugins: a Jira sprint sidebar, dwm-style tiling, GitHub Actions status, file links that open in Neovim.</td>
-    <td width="33%" valign="top"><h3>🤖 omp</h3>Coding-agent config: Atlassian and Notion MCP, Jira <code>/implement</code>, an ideas store, a query cache.</td>
+    <td width="33%" valign="top"><h3>🤖 omp</h3>Coding-agent config: Atlassian and Notion MCP, Jira <code>/implement</code>, a git card with diff and PR buttons, an ideas store, a query cache.</td>
   </tr>
   <tr>
     <td width="33%" valign="top"><h3>✍️ Editor</h3><b>Neovim</b> on lazy.nvim, native LSP for TypeScript, Go, Python, Lua, Docker, YAML and more, blink completion, snacks.</td>
