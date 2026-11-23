@@ -25,6 +25,11 @@ machine, and one command switches the colour scheme everywhere.
 > These are my personal configs. Read `setup_mac.sh` before you run it: among
 > other things it writes `/etc/pam.d/sudo_local` to turn on Touch ID for `sudo`.
 
+> [!CAUTION]
+> Don't copy the git habits here. This is only my dotfiles, so I commit straight
+> to `master`, skip branches and pull requests, and write commit messages for
+> myself. Do it properly in real projects.
+
 <table width="100%">
   <tr>
     <td width="33%" valign="top"><h3>🖥️ Tern</h3>Terminal and multiplexer in one: vertical tabs, sessions kept alive by its daemon, <kbd>Ctrl</kbd>+<kbd>B</kbd> pane keys.</td>
